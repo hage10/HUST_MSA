@@ -1,0 +1,71 @@
+<template>
+  <div class="main-content">
+    <div class="header-content">
+      <div class="title-content">Bài tập</div>
+    </div>
+    <div class="assignment-content">
+      <div class="title-assignment">
+        Thí nghiệm 1. Phần mềm nhúng giao tiếp GPIO trên Raspberry Pi
+      </div>
+      <div class="date-assignment">Due June 4, 2022 5:30 PM</div>
+      <div class="instruction-assignment">
+        Instructions
+        <div class="content-instruction">
+          Nộp báo cáo thí nghiệm theo từng cá nhân (Đặt tên file [Mã lớp
+          TN]_NhomX_TN1_Hovaten.docx)
+        </div>
+      </div>
+      <div class="content-assignment">
+        My work
+        <div class="file-assignment"></div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+// import Button from '@/components/base/Button.vue';
+export default {
+  name: "TheButton",
+  components: {
+    // Button
+  },
+};
+</script>
+<style>
+.main-content {
+  display: flex;
+  flex-direction: column;
+  background-color: #f4f5f8;
+  width: 100%;
+  height: calc(100% - 48px);
+  padding: 0 20px 20px 20px;
+  box-sizing: border-box;
+}
+.assignment-content {
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+.title-assignment {
+  font-size: 20px;
+  font-weight: 600;
+}
+.instruction-assignment {
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+.content-instruction {
+  font-size: 13px;
+  font-weight: 100;
+}
+.content-assignment {
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+</style>
