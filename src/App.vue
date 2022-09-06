@@ -1,13 +1,16 @@
 <template>
-  <the-container/>
+  <!-- <the-container/> -->
+  <TheLogin></TheLogin>
 </template>
 
 <script>
-import TheContainer from './components/layout/TheContainer.vue'
+// import TheContainer from './components/layout/TheContainer.vue'
+import TheLogin from './components/layout/TheLogin.vue';
 export default {
   name: 'App',
   components: {
-    TheContainer,
+    // TheContainer,
+    TheLogin
   },
 }
 </script>
@@ -23,9 +26,12 @@ export default {
 }
 .input-24{
 width: 100%;
-height: 32px;
+}
+.input-350{
+width: 350px;
 }
 .m-input {
+    height: 32px;
     border: 1px solid #BBBBBB;
     border-radius: 2px;
     padding: 0 12px 0 10px;
@@ -36,6 +42,7 @@ height: 32px;
 .m-input:focus {
     border: 1px solid #3f97e4;
 }
+
 
 @font-face {
   font-family: "GoogleSans-Bold";

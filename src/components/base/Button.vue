@@ -45,7 +45,7 @@
   }
   
   .button-primary:hover {
-    background-color: #689cc9 !important;
+    background-color: #ffdb7a !important;
   }
   
   .button-secondary {
@@ -55,6 +55,9 @@
   }
   .btn-120{
     width: 120px;
+  }
+  .btn-350{
+    width: 350px;
   }
   .button-secondary:hover {
     background-color: #d2d3d6 !important;
