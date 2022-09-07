@@ -1,16 +1,16 @@
 <template>
   <!-- <the-container/> -->
-  <TheLogin></TheLogin>
+  <router-view></router-view>
 </template>
 
 <script>
 // import TheContainer from './components/layout/TheContainer.vue'
-import TheLogin from './components/layout/TheLogin.vue';
+// import TheLogin from './components/layout/TheLogin.vue';
 export default {
   name: 'App',
   components: {
     // TheContainer,
-    TheLogin
+    // TheLogin
   },
 }
 </script>
@@ -19,6 +19,12 @@ export default {
 * {
   font-family: "GoogleSans-Regular";
   font-size: 13px;
+  
+}
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: none;
 }
 .icon-24{
   height: 24px;

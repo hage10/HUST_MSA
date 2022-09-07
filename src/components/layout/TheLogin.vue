@@ -13,6 +13,7 @@
               class="input-login"
               type="text"
               placeholder="Tên đăng nhập"
+              v-model="username"
             />
           </div>
           <div class="form-group">
@@ -23,6 +24,7 @@
               name=""
               id="password"
               placeholder="Mật khẩu"
+              v-model="pass"
             />
           </div>
           <div class="show-pass">
@@ -36,12 +38,13 @@
               <p>Hiển thị mật khẩu</p>
             </label>
           </div>
-          <div class="btn-login">
+          <router-link :to="role" class="btn-login">
             <Button
               buttonText="Đăng nhập"
               buttonClass="button-primary btn-350"
+              @click="btnLogin"
             />
-          </div>
+          </router-link>
         </div>
         <div class="download-app">
           <p>Tải app tại</p>
@@ -73,6 +76,9 @@ export default {
   data() {
     return {
       visibility: "password",
+      role:'',
+      username:'',
+      pass:''
     };
   },
 
@@ -83,7 +89,19 @@ export default {
     hidePass() {
       this.visibility = "password";
     },
+    btnLogin(){
+    if (this.username == "student" && this.pass== "student") {
+      this.role="/student"
+    }
+    if (this.username == "teacher" && this.pass== "teacher") {
+      this.role="/teacher"
+    }
+    if (this.username == "admin" && this.pass== "admin") {
+      this.role="/admin"
+    }
+    }
   },
+
 };
 </script>
 <style>
@@ -96,7 +114,6 @@ export default {
   font-family: GoogleSans-Regular;
   font-size: 13px;
 }
-
 .background {
   display: flex;
   flex-direction: row;

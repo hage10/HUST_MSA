@@ -8,7 +8,8 @@
         </div>
         <div class="menu-list">
             <div class="tooltip">
-                <router-link to="/infostudent" class="tooltip-content ">
+                <router-link to="/detail" class="tooltip-content ">
+                    
                     <div class="icon-tooltip dashboard-icon">
                         <font-awesome-icon class="icon-24" icon="user"/>
                     </div>
@@ -91,7 +92,7 @@ font-size: 13px;
 
 }
 
-.router-link-active {
+.tooltip .router-link-active {
 background-color: #58595d;
 border-left: 8px solid #ffcb3e;
 box-sizing: border-box;
