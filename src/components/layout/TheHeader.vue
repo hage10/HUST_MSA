@@ -2,14 +2,15 @@
   <div class="header">
     <div class="title-header">
       <img src="../../assets/imgs/logo.png" alt="">
-      <p>Hệ thống quản lý sinh viên Hust MSA</p>
+      <p>HỆ THỐNG QUẢN LÝ SINH VIÊN HUST MSA
+      </p>
     </div>
     <div class="user">
-      <div class="user-rell" >
-        <font-awesome-icon class="icon-24" icon="bell" @btnClick="btnNotiOnClick"/>
+      <div class="icon-rell" >
+        <font-awesome-icon class="icon-20" icon="bell" @btnClick="btnNotiOnClick"/>
       </div>
       <div class="user-icon">
-        <font-awesome-icon class="icon-24" icon="user" />
+        <font-awesome-icon class="icon-20" icon="user" />
       </div>
       <div class="user-name">Trịnh Quang Trung</div>
     </div>
@@ -49,7 +50,7 @@ export default {
 .title-header{
   display: flex;
   color: #000;
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 600;
   align-items: center;
 }
@@ -60,7 +61,8 @@ export default {
 
 }
 .title-header>p{
-  font-size: 20px;
+  font-size: 14px;
+  padding-left: 10px;
 }
 .header .user {
   display: flex;
@@ -68,8 +70,9 @@ export default {
   align-items: center;
   color: #000;
 }
-.user > div {
-  padding-left: 6px;
-  padding-right: 6px;
+.user-icon, .icon-rell {
+  margin-left: 10px;
+  margin-right: 10px;
 }
+
 </style>

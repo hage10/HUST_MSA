@@ -1,18 +1,18 @@
 <template>
     <div class="container">
-        <TheMenuContainer/>
+        <MenuBarTeacher/>
         <TheAreaContent/>
     </div>
 </template>
 
 <script>
-import TheMenuContainer from './TheMenuContainer.vue';
-import TheAreaContent from './TheAreaContent.vue';
+import MenuBarTeacher from './MenuBarTeacher.vue';
+import TheAreaContent from '../../components/layout/TheAreaContent.vue';
 export default {
   name: 'TheContainer',
   components: {
-    TheMenuContainer,
     TheAreaContent,
+    MenuBarTeacher
 }
 }
 </script>

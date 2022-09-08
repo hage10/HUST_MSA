@@ -11,7 +11,7 @@
                 <router-link to="/detail" class="tooltip-content ">
                     
                     <div class="icon-tooltip dashboard-icon">
-                        <font-awesome-icon class="icon-24" icon="user"/>
+                        <font-awesome-icon class="icon-20" icon="user"/>
                     </div>
                     <div class="title-tooltip">Thông tin cá nhân</div>
                 </router-link>
@@ -19,7 +19,7 @@
             <div class="tooltip">
                 <router-link to="/assignment" class="tooltip-content ">
                     <div class="icon-tooltip dashboard-icon">
-                        <font-awesome-icon class="icon-24" icon="book" />
+                        <font-awesome-icon class="icon-20" icon="book" />
                     </div>
                     <div class="title-tooltip">Bài tập</div>
                 </router-link>

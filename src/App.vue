@@ -26,15 +26,21 @@ a:-webkit-any-link {
     cursor: pointer;
     text-decoration: none;
 }
-.icon-24{
-  height: 24px;
-  width: 24px;
+.icon-20{
+  height: 20px;
+  width: 20px;
 }
 .input-24{
 width: 100%;
 }
+.input-240{
+width: 240px;
+}
 .input-350{
 width: 350px;
+}
+.input-padding-right{
+  padding-right: 32px !important;
 }
 .m-input {
     height: 32px;
