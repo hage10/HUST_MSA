@@ -31,17 +31,17 @@ export default {
 .menu-container {
 display: flex;
 flex-direction: column;
-background-color: rgb(44, 44, 44);
+background-color: rgb(56, 57, 61);
 min-width: 208px;
 }
 .menu-container .logo-container {
 display: flex;
 flex-direction: row;
 height: 48px;
-background-color: rgb(44, 44, 44);
+background-color: rgb(56, 57, 61);
 justify-items: center;
 align-items: center;
-border-bottom: 5px solid #ffcb3e;
+
 }
 
 .logo-container .menu-container-option {

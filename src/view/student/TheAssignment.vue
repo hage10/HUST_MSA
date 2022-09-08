@@ -33,15 +33,7 @@ export default {
 };
 </script>
 <style>
-.main-content {
-  display: flex;
-  flex-direction: column;
-  background-color: #f4f5f8;
-  width: 100%;
-  height: calc(100% - 48px);
-  padding: 0 20px 20px 20px;
-  box-sizing: border-box;
-}
+
 .assignment-content {
   background-color: #fff;
   width: 100%;

@@ -41,7 +41,7 @@ export default {
 <style>
 .area-content .header {
   display: flex;
-  background-color: #ffcb3e;
+  background-color: #fff;
   justify-content: space-between;
   align-items: center;
   padding: 8px 20px 8px 20px;
@@ -55,9 +55,10 @@ export default {
   align-items: center;
 }
 .title-header>img{
-  height: 90px;
-    margin-left: -35px;
-    margin-right: -20px;
+  height: 15px;
+    margin-left: -10px;
+    margin-right: 5px;
+    opacity: 0.7;
 
 }
 .title-header>p{

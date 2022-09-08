@@ -25,18 +25,16 @@ export default {
     width: 42%;
 }
 
-.area-content .main-content {
-    background-color: #e5e5e5;
-    flex-grow: 2;
-}
-
 
 .main-content {
-    display: flex;
-    max-width: 100%;
-    flex-direction: column;
-    padding-left: 20px;
-    padding-right: 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: #f4f5f8;
+  width: 100%;
+  height: calc(100% - 48px);
+  padding: 0 30px 20px 20px;
+  box-sizing: border-box;
+
 }
 
 .main-content .header-content {

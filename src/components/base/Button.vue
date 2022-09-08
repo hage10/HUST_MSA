@@ -30,7 +30,6 @@
     display: flex;
     justify-content: center;
   }
-  
   .button p {
     line-height: 36px;
     margin: 0;
@@ -58,6 +57,9 @@
   }
   .btn-350{
     width: 350px;
+  }
+  .btn-50{
+    width: 70px;
   }
   .button-secondary:hover {
     background-color: #d2d3d6 !important;

@@ -33,6 +33,10 @@ a:-webkit-any-link {
 .input-24{
 width: 100%;
 }
+::placeholder {
+    font-family: "GoogleSans-Italic";
+    font-size: 13px;
+}
 .input-240{
 width: 240px;
 }
@@ -52,9 +56,34 @@ width: 350px;
 }
 
 .m-input:focus {
-    border: 1px solid #3f97e4;
+    border: 1px solid #ffcb3e;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #f1f1f1;
 }
 
+::-webkit-scrollbar-thumb {
+  background-color: #b8bcc3;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #888888;
+}
+
+::-webkit-scrollbar:horizontal {
+  height: 10px;
+  background-color: #f1f1f1;
+  z-index: 30000;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  background: #b8bcc3;
+}
+
+::-webkit-scrollbar-thumb:horizontal:hover {
+  background: #888888;
+}
 
 @font-face {
   font-family: "GoogleSans-Bold";

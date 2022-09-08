@@ -92,16 +92,6 @@ export default {
 };
 </script>
 <style>
-.main-content {
-  display: flex;
-  flex-direction: column;
-  /* background-color: #fffbd2; */
-  /* background-image: url('../../assets/imgs/background/14.jpg'); */
-  width: 100%;
-  height: calc(100% - 48px);
-  padding: 0 20px 20px 20px;
-  box-sizing: border-box;
-}
 .student-detail {
   background-color: #fff;
   width: 100%;
@@ -150,7 +140,7 @@ export default {
 }
 .prop-item > p {
   font-weight: 600;
-  margin-bottom: 2px;
+  margin-bottom: 5px;
 }
 .your-info {
   width: 50%;
