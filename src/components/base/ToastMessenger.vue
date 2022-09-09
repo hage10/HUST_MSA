@@ -12,10 +12,12 @@
       },
     ]"
   >
-    <div v-if="mesType == 'warning'" class="mes-icon icon-warning"></div>
+    <div v-if="mesType == 'warning'" class="mes-icon icon-warning">
     <div v-if="mesType == 'question'" class="mes-icon icon-question"></div>
     <div v-if="mesType == 'danger'" class="mes-icon icon-danger"></div>
-    <div v-if="mesType == 'success'" class="mes-icon icon-success"></div>
+    <div v-if="mesType == 'success'" class="mes-icon icon-succses">
+      </div>
+    </div>
     <div class="mes-content">{{ mesText }}</div>
   </div>
 </template>
@@ -36,7 +38,7 @@ export default {
     isShowMes: {
       type: Boolean,
       default: false,
-    },
+    }
   },
   watch: {
     // mỗi khi toastMessenger hiện lên thì cho ẩn đi sau đúng 3s
@@ -46,9 +48,9 @@ export default {
           this.emitter("hideMes");
         }, 3000);
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 
@@ -87,5 +89,11 @@ export default {
   right: -405px;
   opacity: 0.1;
   transition: 0.7s;
+}
+.mes-icon{
+  font-size: 24px;
+  width: 50px;
+  background-color: #2ca01c;
+  height: 100%;
 }
 </style>

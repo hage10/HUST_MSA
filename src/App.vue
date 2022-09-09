@@ -46,9 +46,6 @@ export default {
           if (this.modeForPopup == "delete") {
             this.emitter.emit("confirmToDelete");
             this.isShowPopup = false;
-          } else if (this.modeForPopup == "saveChange") {
-            this.emitter.emit("confirmToSaveChange");
-            this.isShowPopup = false;
           }
         /*Không*/
           break;

@@ -6,6 +6,13 @@ export const accountColumns = [{
         style: "text-align: center;",
     },
     {
+        fieldName: "bankAccountNumber",
+        displayName: "MẬT KHẨU",
+        formatType: "",
+        width: "min-width: 227.4px;",
+        style: "text-align: left",
+    },
+    {
         fieldName: "fullName",
         displayName: "HỌ VÀ TÊN",
         formatType: "",

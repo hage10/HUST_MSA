@@ -14,7 +14,9 @@ export default {
   },
   data() {
     return {
-      isSelect: false,
+      isHide: true,
+      myEmployeeId: "",
+      myEmployeeCode: "",
     };
   },
   methods: {

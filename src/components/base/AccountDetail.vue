@@ -14,27 +14,51 @@
       <div class="popup-body">
         <div class="prop-item">
           <p>Tài khoản<font color="red">*</font></p>
-          <input type="text" class="m-input input-24" />
+          <input
+            type="text"
+            class="m-input input-24"
+            v-model="employeeModel.employeeCode"
+          />
         </div>
         <div class="prop-item">
           <p>Mật khẩu<font color="red">*</font></p>
-          <input type="text" class="m-input input-24" />
+          <input
+            type="text"
+            class="m-input input-24"
+            v-model="employeeModel.bankAccountNumber"
+          />
         </div>
         <div class="prop-item">
           <p>Họ tên</p>
-          <input type="text" class="m-input input-24" />
+          <input
+            type="text"
+            class="m-input input-24"
+            v-model="employeeModel.fullName"
+          />
         </div>
         <div class="prop-item">
           <p>MSSV</p>
-          <input type="text" class="m-input input-24" />
+          <input
+            type="text"
+            class="m-input input-24"
+            v-model="employeeModel.gender"
+          />
         </div>
         <div class="prop-item">
           <p>Số điện thoại</p>
-          <input type="text" class="m-input input-24" />
+          <input
+            type="text"
+            class="m-input input-24"
+            v-model="employeeModel.phoneNumber"
+          />
         </div>
         <div class="prop-item">
           <p>Email</p>
-          <input type="text" class="m-input input-24" />
+          <input
+            type="text"
+            class="m-input input-24"
+            v-model="employeeModel.email"
+          />
         </div>
       </div>
       <div class="popup-footer">
@@ -49,7 +73,7 @@
           <Button
             buttonText="Lưu"
             buttonClass="button-primary"
-            @Click="btnUpdateOnClick"
+            @Click="btnSaveOnClick"
           />
         </div>
       </div>
@@ -57,7 +81,9 @@
   </div>
 </template>
 <script>
+// import { EmployeeModel } from "@/models/EmployeeModels";
 import Button from "./Button.vue";
+import EmployeeApi from "@/api/entities/EmployeeApi";
 export default {
   name: "AccountDetail",
   components: {
@@ -68,6 +94,19 @@ export default {
       type: Boolean,
       default: false,
     },
+    mode: {
+      type: String,
+      default: "add",
+    },
+    employeeId: {
+      type: String,
+      default: "",
+    },
+  },
+  data() {
+    return {
+      employeeModel: {},
+    };
   },
   methods: {
     btnCloseOnClick() {
@@ -76,6 +115,59 @@ export default {
     btnCancleOnClick() {
       this.$emit("closeForm");
     },
+    save() {
+      if (this.mode == "add") {
+        EmployeeApi.add(this.employeeModel)
+          .then((res) => {
+            console.log(res);
+            this.$emit("closeForm");
+          })
+          .catch((err) => {
+            this.errorMsg(err);
+          });
+      } else if (this.mode == "edit") {
+        console.log(this.employeeModel);
+        EmployeeApi.update(this.employeeId, this.employeeModel)
+          .then(async (res) => {
+            console.log(res);
+            this.emitter.emit("showMes", "Cập nhật thành công!###success");
+            this.$emit("closeForm");
+          })
+          .catch((err) => {
+            this.errorMsg(err);
+          });
+      }
+    },
+    btnSaveOnClick() {
+      this.save("save");
+    },
+  },
+  created() {
+    if (this.mode == "add") {
+      EmployeeApi.getNewCode()
+        .then((res) => {
+          let newEmployeeCode = res.data.data;
+          this.employeeModel.employeeCode = newEmployeeCode;
+          this.$refs.txtEmployeeCodeRef.focus();
+          this.employeeModel.gender = 1;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }else if (this.mode == "edit") {
+      /**
+       * đầu vào là mode edit thì gọi api lấy mã nhân viên theo Id
+       * Author: TrungTQ
+       */
+      console.log("lấy nhân viên có id ", this.employeeId);
+      EmployeeApi.getById(this.employeeId).then((res) => {
+        console.log(res);
+        this.employeeModel = res.data.data;
+        this.reSelectCbb = !this.reSelectCbb;
+        this.originalModel = Object.assign({}, this.employeeModel);
+        this.$refs.txtEmployeeCodeRef.focus();
+      });
+    }
   },
 };
 </script>
@@ -150,8 +242,7 @@ export default {
   align-items: center;
   border-top: 1px solid #e0e0e0;
 }
-.function-btn{
+.function-btn {
   margin-left: 16px;
 }
-
 </style>

@@ -166,11 +166,13 @@ th p {
 td {
   height: 44px;
   box-sizing: border-box;
+
 }
 
 td p {
   height: 44px;
   display: block;
+  width: 100%;
   margin: 0;
   border-right: 1px dotted #c7c7c7;
   padding-left: 10px;
@@ -180,6 +182,9 @@ td p {
   white-space: nowrap !important;
   text-overflow: ellipsis !important;
 }
+td:last-child{
+  display: flex !important;
+  justify-content: center;}
 
 tbody tr {
   border-bottom: 1px solid #c7c7c7;
