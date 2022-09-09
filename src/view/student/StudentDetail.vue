@@ -110,8 +110,8 @@ export default {
 
 .avatar-img > img {
   width: 270px;
-  height: 400px;
-  border: 2px solid #ffdb7a;
+  height: 350px;
+  border: 2px solid #eceef1;
   border-radius: 4px;
 }
 .student-id {
@@ -146,7 +146,7 @@ export default {
   width: 50%;
   display: flex;
   flex-direction: column;
-  border: 2px solid #ffdb7a;
+  border: 2px solid #eceef1;
   border-radius: 4px;
   margin-right: 20px;
 }
@@ -154,7 +154,7 @@ export default {
 .header-change-pass {
   display: flex;
   align-items: center;
-  background-color: #fffbd2;
+  background-color: #eceef1;
   height: 30px;
   width: 100%;
   color: #000;
@@ -175,7 +175,7 @@ export default {
   width: 50%;
   display: flex;
   flex-direction: column;
-  border: 2px solid #ffdb7a;
+  border: 2px solid #eceef1;
   border-radius: 4px;
   margin-right: 20px;
 }

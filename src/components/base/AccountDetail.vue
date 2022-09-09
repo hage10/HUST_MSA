@@ -47,14 +47,9 @@
         </div>
         <div class="function-btn">
           <Button
-            buttonText="Sửa"
+            buttonText="Lưu"
             buttonClass="button-primary"
             @Click="btnUpdateOnClick"
-          />
-          <Button
-            buttonText="Xóa"
-            buttonClass="button-primary"
-            @Click="btnDeleteOnClick"
           />
         </div>
       </div>
@@ -151,13 +146,12 @@ export default {
   height: 75px;
   box-sizing: border-box;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   border-top: 1px solid #e0e0e0;
 }
-.function-btn {
-  display: flex;
-  width: 140px;
-  justify-content: space-between;
+.function-btn{
+  margin-left: 16px;
 }
+
 </style>

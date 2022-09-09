@@ -72,7 +72,7 @@
                 @hideFunctionList="hideFunctionList"
                 :toolId="item.id"
                 :toolCode="item.employeeCode"
-                @btnEditOnClick="btnEditOnClick"
+                @btnDeleteOnClick="btnDeleteOnClick"
               />
             </p>
           </td>
@@ -80,27 +80,32 @@
       </tbody>
     </table>
     <slot name="pagingbar"></slot>
-    <FunctionToolList />
   </div>
 </template>
 
 <script>
-
+import FunctionTool from './FunctionTool.vue';
 export default {
   name: "TheTable",
   components: {
+    FunctionTool
   },
   props: {
     tableColumns: Array,
     tableDataList: Array,
   },
+  methods:{
+    trOnDbClick(id) {
+      this.$emit("chooseAnEmployee",id);
+    },
+  }
 };
 </script>
 
 <style >
 .grid {
   width: 100%;
-  height: calc(100% - 410px);
+  height: 100%;
   overflow-y: scroll;
   background-color: #fff;
   box-sizing: border-box;
@@ -112,7 +117,7 @@ export default {
 
 table {
   border-collapse: collapse;
-  width: auto;
+  width: 100%;
   height: auto;
   display: table;
 }

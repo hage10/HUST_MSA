@@ -147,8 +147,7 @@ export default {
   },
 
   created() {
-    this.emitter.on("btnEditOnClick", (id) => {
-      this.isShowDialog = true;
+    this.emitter.on("btnDeleteOnClick", (id) => {
       this.dialogMode = "edit";
       this.myEmployeeId = id;
     });
@@ -160,12 +159,6 @@ export default {
     this.emitter.on("hideDialog", () => {
       this.isShowDialog = false;
     });
-    // lắng nghe sự kiện nhân bản nhân viên
-    this.emitter.on("cloneEmployee", (employeeId) => {
-      this.isShowDialog = true;
-      this.dialogMode = "clone";
-      this.myEmployeeId = employeeId;
-    });
   },
 };
 </script>
@@ -173,10 +166,10 @@ export default {
   <style>
 .manage-content {
   background-color: #fff;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+    width: 100%;
+    height: calc(100vh - 152px);
+    display: flex;
+    flex-direction: column;
 }
 .search-account {
   display: flex;
@@ -198,5 +191,6 @@ export default {
 .table-account {
   width: 100%;
   padding: 0 20px 20px 20px;
+  height: calc(100% - 68px);
 }
 </style>
