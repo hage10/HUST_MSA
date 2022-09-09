@@ -45,7 +45,6 @@ import TheTable from "../../components/base/Table.vue";
 import { accountColumns } from "./AccountColumns.js";
 import EmployeeApi from "../../api/entities/EmployeeApi";
 import Button from "@/components/base/Button.vue";
-// import { accountColumns } from "./accountColumns.js";
 import AccountDetail from "@/components/base/AccountDetail.vue";
 export default {
   name: "TheButton",

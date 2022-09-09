@@ -12,11 +12,12 @@
       },
     ]"
   >
-    <div v-if="mesType == 'warning'" class="mes-icon icon-warning">
-    <div v-if="mesType == 'question'" class="mes-icon icon-question"></div>
-    <div v-if="mesType == 'danger'" class="mes-icon icon-danger"></div>
-    <div v-if="mesType == 'success'" class="mes-icon icon-succses">
-      </div>
+    <div v-if="mesType == 'warning'">
+      <font-awesome-icon icon="circle-exclamation" class="mes-icon icon-warning" /></div>
+    <div v-if="mesType == 'danger'" >
+      <font-awesome-icon icon="circle-check" class="mes-icon icon-danger" /></div>
+    <div v-if="mesType == 'success'" >
+      <font-awesome-icon icon="circle-check" class="mes-icon icon-succses"/>
     </div>
     <div class="mes-content">{{ mesText }}</div>
   </div>
@@ -45,7 +46,7 @@ export default {
     isShowMes() {
       if (this.isShowMes == true) {
         setTimeout(() => {
-          this.emitter("hideMes");
+          this.emitter.emit("hideMes");
         }, 3000);
       }
     }
@@ -74,7 +75,12 @@ export default {
 .border-success {
   border: 1px solid #2ca01c;
 }
-
+.border-warning {
+  border: 1px solid #ffcb3e;
+}
+.border-danger {
+  border: 1px solid #ff7777;
+}
 .mes-content {
   margin-left: 5px;
 }
@@ -91,9 +97,16 @@ export default {
   transition: 0.7s;
 }
 .mes-icon{
-  font-size: 24px;
-  width: 50px;
-  background-color: #2ca01c;
-  height: 100%;
+  font-size: 34px;
 }
+.icon-succses{
+  color: #2ca01c;
+}
+.icon-warning{
+  color: #ffcb3e;
+}
+.icon-danger{
+  color: #ff7777;
+}
+
 </style>
