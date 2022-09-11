@@ -22,7 +22,7 @@
           <div class="main-info">
             <div class="prop-item">
               <p>Họ và tên</p>
-              <input type="text" class="m-input input-24" />
+              <input type="text" class="m-input input-24"  disabled/>
             </div>
             <div class="prop-item">
               <p>Giới tính</p>

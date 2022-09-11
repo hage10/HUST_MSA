@@ -42,22 +42,5 @@ export default {
   flex-direction: column;
   padding: 16px;
 }
-.title-assignment {
-  font-size: 20px;
-  font-weight: 600;
-}
-.instruction-assignment {
-  margin-top: 10px;
-  font-size: 15px;
-  font-weight: 600;
-}
-.content-instruction {
-  font-size: 13px;
-  font-weight: 100;
-}
-.content-assignment {
-  margin-top: 10px;
-  font-size: 15px;
-  font-weight: 600;
-}
+
 </style>

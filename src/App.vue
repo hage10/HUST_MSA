@@ -152,6 +152,18 @@ a:-webkit-any-link {
 .m-input:focus {
   border: 1px solid #ffcb3e;
 }
+.m-textarea{
+  height: auto;
+  border: 1px solid #bbbbbb;
+  border-radius: 2px;
+  padding: 10px;
+  outline: none;
+  font-size: 13px;
+}
+.m-textarea:focus{
+  border: 1px solid #ffcb3e;
+
+}
 ::-webkit-scrollbar {
   width: 10px;
   background-color: #f1f1f1;
