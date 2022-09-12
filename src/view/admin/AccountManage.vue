@@ -64,7 +64,7 @@ export default {
       // các biến lưu dữ liệu của paging
       totalRecord: 0,
       currentPage: 1,
-      pagingSize: 20,
+      pagingSize: 100,
       // các biến liên quan đến xử lí với dialog
       isShowDialog: false,
       dialogMode: "",
@@ -101,19 +101,19 @@ export default {
      * @param newPagingSize
      * Author TrungTQ
      */
-    changePagingSize(newPagingSize) {
-      this.pagingSize = newPagingSize;
-      this.load();
-    },
+    // changePagingSize(newPagingSize) {
+    //   this.pagingSize = newPagingSize;
+    //   this.load();
+    // },
     /**
      * Thay đổi currentPage
      * @param newCurentPage
      * Author TrungTQ
      */
-    changeCurrentPage(newCurentPage) {
-      this.currentPage = newCurentPage;
-      this.load();
-    },
+    // changeCurrentPage(newCurentPage) {
+    //   this.currentPage = newCurentPage;
+    //   this.load();
+    // },
     /**
      * Từ searchTerms, pagingSize, currentPage => load ra query tương ứng để gọi api filter
      * Author TrungTQ
@@ -185,7 +185,7 @@ export default {
 .search-account {
   display: flex;
   justify-content: end;
-  width: 100%;
+  /* width: 100%; */
   height: 68px;
   padding: 16px 20px;
   box-sizing: border-box;

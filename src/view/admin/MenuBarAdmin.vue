@@ -8,7 +8,7 @@
         </div>
         <div class="menu-list">
             <div class="tooltip">
-                <router-link to="/accountmanage" class="tooltip-content ">
+                <router-link to="/admin/accountmanage" class="tooltip-content ">
                     
                     <div class="icon-tooltip dashboard-icon">
                         <font-awesome-icon class="icon-20" icon="list-check"/>
@@ -87,18 +87,22 @@ font-size: 13px;
 
 .tooltip .router-link-active {
 background-color: #58595d;
-border-left: 8px solid #ffcb3e;
+border-left: 8px solid #6558ef;
 box-sizing: border-box;
-font-weight: 700;
+font-weight: 600;
 }
 
 .router-link-active .icon-tooltip {
 position: relative;
+font-weight: 600;
+
 left: -8px;
 }
 
 .router-link-active .title-tooltip {
 position: relative;
+font-weight: 600;
+/* color: #ffcb3e; */
 left: -8px;
 }
 

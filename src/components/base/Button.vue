@@ -39,12 +39,12 @@
   
   .button-primary {
     border: 1px solid transparent;
-    color: #000;
-    background-color: #ffcb3e;
+    color: #fff;
+    background-color: #6558ef;
   }
   
   .button-primary:hover {
-    background-color: #ffdb7a !important;
+    background-color: #7d72f7 !important;
   }
   
   .button-secondary {

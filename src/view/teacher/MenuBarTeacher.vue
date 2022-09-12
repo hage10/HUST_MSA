@@ -8,7 +8,7 @@
         </div>
         <div class="menu-list">
             <div class="tooltip">
-                <router-link to="/detailteacher" class="tooltip-content ">
+                <router-link to="/teacher/detailteacher" class="tooltip-content ">
                     
                     <div class="icon-tooltip dashboard-icon">
                         <font-awesome-icon class="icon-20" icon="user"/>
@@ -17,25 +17,16 @@
                 </router-link>
             </div>
             <div class="tooltip">
-                <router-link to="/assignmentteacher" class="tooltip-content ">
+                <router-link to="/teacher/homeassignment" class="tooltip-content ">
                     
                     <div class="icon-tooltip dashboard-icon">
                         <font-awesome-icon class="icon-20" icon="book"/>
                     </div>
-                    <div class="title-tooltip">Tạo Assignment</div>
+                    <div class="title-tooltip">Assignment</div>
                 </router-link>
             </div>
             <div class="tooltip">
-                <router-link to="/granding" class="tooltip-content ">
-                    
-                    <div class="icon-tooltip dashboard-icon">
-                        <font-awesome-icon class="icon-20" icon="graduation-cap" />
-                    </div>
-                    <div class="title-tooltip">Chấm điểm</div>
-                </router-link>
-            </div>
-            <div class="tooltip">
-                <router-link to="/grading" class="tooltip-content ">
+                <router-link to="/teacher/classmanage" class="tooltip-content ">
                     <div class="icon-tooltip dashboard-icon">
                         <font-awesome-icon class="icon-20" icon="people-roof" />
                     </div>

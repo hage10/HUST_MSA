@@ -14,16 +14,39 @@
     :isShowMes="isShowMes"
     :hideMes="hideMes"
   />
+  <Loader :isShowLoader="isShowLoader" />
+  <AddClass
+    v-if="isShowAddClass"
+    @hideAddClass="
+      () => {
+        isShowAddClass = false;
+      }
+    "
+  />
+  <PopupAddStudent
+    v-if="isShowAddStudent"
+    @hideAddStudent="
+      () => {
+        isShowAddStudent = false;
+      }
+    "
+  />
 </template>
 
 <script>
 import DialogConfirm from "./components/base/DialogConfirm.vue";
 import ToastMessenger from "./components/base/ToastMessenger.vue";
+import Loader from "./components/base/Loader.vue";
+import AddClass from "./components/base/AddClass.vue";
+import PopupAddStudent from "./components/base/PopupAddStudent.vue";
 export default {
   name: "App",
   components: {
     DialogConfirm,
     ToastMessenger,
+    Loader,
+    AddClass,
+    PopupAddStudent
   },
   data() {
     return {
@@ -36,6 +59,9 @@ export default {
       isShowMes: false,
       mesText: "",
       mesType: "",
+      isShowLoader: false,
+      isShowAddClass: false,
+      isShowAddStudent:false,
     };
   },
   methods: {
@@ -47,7 +73,7 @@ export default {
             this.emitter.emit("confirmToDelete");
             this.isShowPopup = false;
           }
-        /*Không*/
+          /*Không*/
           break;
         case "y":
           if (this.modeForPopup == "saveChange") {
@@ -106,6 +132,18 @@ export default {
     this.emitter.on("hideMes", () => {
       this.isShowMes = false;
     });
+    this.emitter.on("showLoader", () => {
+      this.isShowLoader = true;
+    });
+    this.emitter.on("hideLoader", () => {
+      this.isShowLoader = false;
+    });
+    this.emitter.on("showAddClass", () => {
+      this.isShowAddClass = true;
+    });
+    this.emitter.on("showAddStudent", () => {
+      this.isShowAddStudent = true;
+    });
   },
 };
 </script>
@@ -150,9 +188,9 @@ a:-webkit-any-link {
 }
 
 .m-input:focus {
-  border: 1px solid #ffcb3e;
+  border: 1px solid #6558ef;
 }
-.m-textarea{
+.m-textarea {
   height: auto;
   border: 1px solid #bbbbbb;
   border-radius: 2px;
@@ -160,9 +198,8 @@ a:-webkit-any-link {
   outline: none;
   font-size: 13px;
 }
-.m-textarea:focus{
+.m-textarea:focus {
   border: 1px solid #ffcb3e;
-
 }
 ::-webkit-scrollbar {
   width: 10px;
@@ -211,4 +248,5 @@ a:-webkit-any-link {
   font-family: "GoogleSans-Regular";
   src: url("./assets/fonts/notosans-regular.2cb88a13.woff2") format("opentype");
 }
+
 </style>

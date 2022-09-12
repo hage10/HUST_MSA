@@ -9,7 +9,7 @@
       @blur="cbbOnBlur"
     />
     <button class="combobox-option" @click="comboboxOptionOnClick">
-      <div class="combobox-icon position-icon-down-black"></div>
+      <font-awesome-icon icon="caret-down" />
     </button>
     <div v-if="isShowListDepartment" class="combobox-data">
       <div class="data-header">
@@ -162,7 +162,7 @@ export default {
 .combobox {
   position: relative;
   float: left;
-  width: 50%;
+  width: 30%;
 }
 
 .combobox-search {
@@ -181,7 +181,7 @@ width: 100%;
 }
 
 .combobox-search:focus {
-  border-color: #ffcb3e;
+  border-color: #6558ef;
 }
 
 .combobox-option {
@@ -204,7 +204,7 @@ width: 100%;
 }
 
 .combobox-option:focus {
-  background-color: #e0e0e0;
+  background-color: #6558ef;
 }
 
 .combobox-data {

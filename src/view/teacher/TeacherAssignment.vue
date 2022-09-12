@@ -1,41 +1,41 @@
 <template>
   <div class="main-content">
     <div class="header-content">
-      <div class="title-content">Bài tập</div>
+      <div class="title-content">Assignment</div>
     </div>
     <div class="assignment-content">
-      <div class="form-assignment">
+      <div class="toolbar-header">
         <span>Chọn lớp</span>
         <combobox></combobox>
-        <div class="line"></div>
       </div>
       <div class="main-assignment">
+        <div class="line"></div>
         <div class="form-wrapper">
-          <div class="form-assignment">
-            <span>Tiêu đề</span>
-            <input type="text" class="m-input" />
+          <div class="title-and-content">
+            <div class="form-assignment">
+              <span>Tiêu đề</span>
+              <input type="text" class="m-input" />
+            </div>
+            <div class="form-assignment">
+              <span>Nội dung</span>
+              <textarea name="" id="" rows="14" class="m-textarea"></textarea>
+            </div>
           </div>
-          <div class="form-assignment">
-            <span>Nội dung</span>
-            <textarea name="" id="" rows="10" class="m-textarea"></textarea>
-          </div>
-
-          <div class="form-assignment">
-            <span>File đính kèm</span>
-            <input type="file" id="file-uploader" />
-          </div>
-        </div>
-        <div class="form-wrapper">
-          <div class="form-assignment">
+          <div class="due-and-file">
+            <div class="form-assignment">
+              <span>File đính kèm</span>
+              <input type="file" id="file-uploader" />
+            </div>
+            <div class="form-assignment">
             <span>Thời hạn</span>
-            <input type="date" name="" id="" class="m-input" />
+            <input type="date" name="" id="" class="m-input input-240" />
+          </div>
           </div>
         </div>
-      </div>
-      <div class="line"></div>
-
-      <div class="assignment-footer">
-        <Button buttonText="Tạo Assignment" buttonClass="button-primary" />
+        <div class="line"></div>
+        <div class="footer-assignment">
+          <Button buttonText="Tạo Assignment" buttonClass="button-primary" />
+        </div>
       </div>
     </div>
   </div>
@@ -51,53 +51,73 @@ export default {
 };
 </script>
 <style>
-/* .assignment-content {
+.assignment-content {
+  background-color: #fff;
+  width: 100%;
+  height: calc(100vh - 154px);
   display: flex;
-  height: 600px;
-} */
+  flex-direction: column;
+}
+.toolbar-header {
+  display: flex;
+  padding: 16px 20px;
+  flex-direction: column;
+  font-weight: 600;
+}
+.toolbar-header>span{
+  font-size: 16px;
+  margin-bottom: 5px;
+}
 .main-assignment {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
   justify-content: space-between;
-  height: 65%;
-}
-.line {
-  height: 16px;
-  border-bottom: 1px solid #ffcb3e;
-  margin-bottom: -6px;
+  padding: 0 20px 20px 20px;
+  height: 100%;
 }
 .form-wrapper {
   display: flex;
-  width: 50%;
-  flex-direction: column;
+  height: 90%;
+  justify-content: space-between;
 }
-.form-wrapper:last-child {
-  width: 45%;
+.title-and-content,
+.due-and-file {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.title-and-content{
+  width: 60%;
+}
+.due-and-file{
+  width: 35%;
+}
+.footer-assignment {
+  display: flex;
+  height: 10%;
+  justify-content: center;
+  align-items: flex-end;
 }
 .form-assignment {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  margin-bottom: 24px;
-}
-.form-assignment > span {
   font-weight: 600;
-  margin-bottom: 5px;
+  margin-top: 24px;
 }
 .form-assignment > textarea {
   resize: none;
 }
-.content-input {
-  height: 400px;
+.form-assignment > span {
+  resize: none;
+  margin-bottom: 6px;
+  font-size: 16px;
 }
-.header-assignment {
-  display: flex;
-}
-.assignment-footer {
-  height: 78px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
+.line {
+  display: block;
+  height: 1px;
+  width: 100%;
+  background-color: #ffcb3e;
+  margin: 5px 0;
 }
 </style>

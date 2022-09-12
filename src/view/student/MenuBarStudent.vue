@@ -8,7 +8,7 @@
         </div>
         <div class="menu-list">
             <div class="tooltip">
-                <router-link to="/detail" class="tooltip-content ">
+                <router-link to="/student/detail" class="tooltip-content ">
                     
                     <div class="icon-tooltip dashboard-icon">
                         <font-awesome-icon class="icon-20" icon="user"/>
@@ -17,7 +17,7 @@
                 </router-link>
             </div>
             <div class="tooltip">
-                <router-link to="/assignment" class="tooltip-content ">
+                <router-link to="/student/assignment" class="tooltip-content ">
                     <div class="icon-tooltip dashboard-icon">
                         <font-awesome-icon class="icon-20" icon="book" />
                     </div>

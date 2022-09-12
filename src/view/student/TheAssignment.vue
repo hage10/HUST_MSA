@@ -34,13 +34,5 @@ export default {
 </script>
 <style>
 
-.assignment-content {
-  background-color: #fff;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 26px 16px 16px 26px;
-}
 
 </style>

@@ -7,8 +7,9 @@ import StudentDetail from './view/student/StudentDetail'
 import TeacherContainer from './view/teacher/TeacherContainer'
 import TeacherDetail from './view/teacher/TeacherDetail'
 import ClassManage from './view/teacher/ClassManage'
-import TeacherAssignment from './view/teacher/TeacherAssignment'
-import GradingAssignment from './view/teacher/GradingAssignment'
+// import TeacherAssignment from './view/teacher/TeacherAssignment'
+import HomeAssignmentTeacher from './view/teacher/HomeAssignmentTeacher'
+import ClassAssignment from './view/teacher/ClassAssignment'
 
 import AdminContainer from './view/admin/AdminContainer'
 import AccountManage from './view/admin/AccountManage'
@@ -20,46 +21,52 @@ const routes = [
     },
     {
         path: "/student",
+        name:'student',
         component: StudentContainer,
         children:[
             {
-                path: '/detail',
+                path: '/student/detail',
                 component: StudentDetail
               },
               {
-                path: '/assignment',
+                path: '/student/assignment',
                 component: TheAssignment
               },
         ]
     },
     {
         path: "/teacher",
+        name:'teacher',
         component: TeacherContainer,
         children:[
             {
-                path: '/detailteacher',
+                path: '/teacher/detailteacher',
                 component: TeacherDetail
               },
               {
-                path: '/assignmentteacher',
-                component: TeacherAssignment
+                path: '/teacher/homeassignment/',
+                component: HomeAssignmentTeacher,
+                children:[
+                  {
+                      path: '/teacher/homeassignment/classassignment',
+                      component: ClassAssignment
+                    },
+
+              ]
               },
               {
-                path: '/classmanage',
+                path: '/teacher/classmanage',
                 component: ClassManage
-              },
-              {
-                path: '/grading',
-                component: GradingAssignment
               },
         ]
     },
     {
         path: "/admin",
+        name:'admin',
         component: AdminContainer,
         children:[
             {
-                path: '/accountmanage',
+                path: '/admin/accountmanage',
                 component: AccountManage
               },
         ]
