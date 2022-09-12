@@ -8,6 +8,7 @@ import TeacherContainer from './view/teacher/TeacherContainer'
 import TeacherDetail from './view/teacher/TeacherDetail'
 import ClassManage from './view/teacher/ClassManage'
 import TeacherAssignment from './view/teacher/TeacherAssignment'
+import GradingAssignment from './view/teacher/GradingAssignment'
 
 import AdminContainer from './view/admin/AdminContainer'
 import AccountManage from './view/admin/AccountManage'
@@ -46,6 +47,10 @@ const routes = [
               {
                 path: '/classmanage',
                 component: ClassManage
+              },
+              {
+                path: '/grading',
+                component: GradingAssignment
               },
         ]
     },

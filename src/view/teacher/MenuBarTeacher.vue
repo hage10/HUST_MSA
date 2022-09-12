@@ -22,11 +22,20 @@
                     <div class="icon-tooltip dashboard-icon">
                         <font-awesome-icon class="icon-20" icon="book"/>
                     </div>
-                    <div class="title-tooltip">Quản lý Assignment</div>
+                    <div class="title-tooltip">Tạo Assignment</div>
                 </router-link>
             </div>
             <div class="tooltip">
-                <router-link to="/classmanage" class="tooltip-content ">
+                <router-link to="/granding" class="tooltip-content ">
+                    
+                    <div class="icon-tooltip dashboard-icon">
+                        <font-awesome-icon class="icon-20" icon="graduation-cap" />
+                    </div>
+                    <div class="title-tooltip">Chấm điểm</div>
+                </router-link>
+            </div>
+            <div class="tooltip">
+                <router-link to="/grading" class="tooltip-content ">
                     <div class="icon-tooltip dashboard-icon">
                         <font-awesome-icon class="icon-20" icon="people-roof" />
                     </div>

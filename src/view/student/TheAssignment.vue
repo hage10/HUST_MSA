@@ -40,7 +40,7 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 16px;
+  padding: 26px 16px 16px 26px;
 }
 
 </style>
