@@ -3,7 +3,7 @@
     <div class="header-content">
       <div class="title-content">Assignment</div>
     </div>
-    <router-view></router-view>
+    <!-- <router-view></router-view> -->
     <div class="assignment-content">
       <div class="header-assignment">
         <!-- <div class="position-fixed"> -->
@@ -12,8 +12,8 @@
       </div>
       <div tag="main" name="card" class="body-content">
         <div class="classroom-group">
-          <router-link
-            to="/teacher/homeassignment/classes"
+          <!-- <router-link -->
+            <div
             v-for="column in classList"
             :key="column.className"
             class="card"
@@ -23,24 +23,38 @@
             <div class="description">
               <span>{{ column.className }}</span>
             </div>
-          </router-link>
+          </div>
+          <!-- </router-link> -->
         </div>
       </div>
     </div>
   </div>
+  <PopupDetailClass v-if="isShowPopupDetailClass" :isShowPopupDetailClass="isShowPopupDetailClass"     @goBack="
+      () => {
+        isShowPopupDetailClass = false;
+      }
+    "/>
 </template>
 <script>
 import Button from "@/components/base/Button.vue";
 import { classNames } from "./className";
+import PopupDetailClass from "./PopupDetailClass.vue";
 export default {
   components: {
     Button,
-  },
+    PopupDetailClass,
+},
   data() {
     return {
       classList: classNames,
+      isShowPopupDetailClass: '',
     };
   },
+  methods:{
+    goTodetail(){
+      this.isShowPopupDetailClass=true;
+    }
+  }
 
 };
 </script>
@@ -60,11 +74,13 @@ export default {
   /* height: 72px; */
   background-color: #fff;
   z-index: 2;
+  box-shadow: 0 4px 2px -2px rgb(0 0 0 / 10%);
 }
 .classroom-group {
   display: flex;
   width: 100%;
   flex-wrap: wrap;
+  margin-top: 14px;
 }
 
 .card {
@@ -77,6 +93,7 @@ export default {
   border: 4px solid #e6e6e6;
   box-shadow: 0 40px 40px -20px rgba(0, 0, 0, 0.2);
   transition: 0.3s ease-in-out transform;
+  cursor: pointer;
 }
 
 .card:hover {

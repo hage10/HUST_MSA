@@ -12,7 +12,7 @@
       <div class="user-icon">
         <font-awesome-icon class="icon-20" icon="user" />
       </div>
-      <div class="user-name">Trịnh Quang Trung</div>
+      <div class="user-name">Nguyễn Văn An</div>
     </div>
   </div>
   <notification v-if="isShowNoti" />

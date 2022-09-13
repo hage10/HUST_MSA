@@ -9,7 +9,7 @@ import TeacherDetail from './view/teacher/TeacherDetail'
 import ClassManage from './view/teacher/ClassManage'
 // import TeacherAssignment from './view/teacher/TeacherAssignment'
 import HomeAssignmentTeacher from './view/teacher/HomeAssignmentTeacher'
-import ClassAssignment from './view/teacher/ClassAssignment'
+// import ClassAssignment from './view/teacher/ClassAssignment'
 
 import AdminContainer from './view/admin/AdminContainer'
 import AccountManage from './view/admin/AccountManage'
@@ -46,13 +46,13 @@ const routes = [
               {
                 path: '/teacher/homeassignment/',
                 component: HomeAssignmentTeacher,
-                children:[
-                  {
-                      path: '/teacher/homeassignment/classassignment',
-                      component: ClassAssignment
-                    },
+                // children:[
+                //   {
+                //       path: '/teacher/homeassignment/classassignment',
+                //       component: ClassAssignment
+                //     },
 
-              ]
+              // ]
               },
               {
                 path: '/teacher/classmanage',
