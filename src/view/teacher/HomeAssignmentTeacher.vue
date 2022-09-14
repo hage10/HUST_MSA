@@ -5,15 +5,10 @@
     </div>
     <!-- <router-view></router-view> -->
     <div class="assignment-content">
-      <div class="header-assignment">
-        <!-- <div class="position-fixed"> -->
-        <Button buttonText="Điểm Assignment" buttonClass="button-primary" />
-        <!-- </div> -->
-      </div>
       <div tag="main" name="card" class="body-content">
         <div class="classroom-group">
-          <!-- <router-link -->
-            <div
+          <router-link
+          to="/teacher/homeassignment/detailassignment"
             v-for="column in classList"
             :key="column.className"
             class="card"
@@ -23,8 +18,8 @@
             <div class="description">
               <span>{{ column.className }}</span>
             </div>
-          </div>
-          <!-- </router-link> -->
+          <!-- </div> -->
+          </router-link>
         </div>
       </div>
     </div>
@@ -36,12 +31,10 @@
     "/>
 </template>
 <script>
-import Button from "@/components/base/Button.vue";
 import { classNames } from "./className";
 import PopupDetailClass from "./PopupDetailClass.vue";
 export default {
   components: {
-    Button,
     PopupDetailClass,
 },
   data() {
@@ -67,20 +60,12 @@ export default {
   flex-direction: column;
   overflow: auto;
 }
-.header-assignment {
-  position: sticky;
-  top: 0;
-  padding: 24px 40px;
-  /* height: 72px; */
-  background-color: #fff;
-  z-index: 2;
-  box-shadow: 0 4px 2px -2px rgb(0 0 0 / 10%);
-}
+
 .classroom-group {
   display: flex;
   width: 100%;
   flex-wrap: wrap;
-  margin-top: 14px;
+  margin-top: 30px;
 }
 
 .card {

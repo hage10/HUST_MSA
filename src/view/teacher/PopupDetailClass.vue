@@ -11,54 +11,41 @@
       ]"
     >
       <div class="popup-assgiment-header">
-        <font-awesome-icon icon="square-caret-left" class="icon-back" @click="goBackHomeAssignment"/>
-        <div :class="['assignment-button',{
-          'color-show': isShowPopupDetailClass,
-          'color-hide': !isShowPopupDetailClass,
-        }]">Assignment</div>
-        <div class="grade-button">Grade</div>
-      </div>
-      <div class="popup-assgiment-body">
-        <div
-          class="assginment-list"
-          v-for="assignment in assigmentList"
-          :key="assignment.assignmentId"
+        <router-link to="/teacher/homeassignment">
+          <font-awesome-icon
+            icon="square-caret-left"
+            class="icon-back"
+            @click="goBackHomeAssignment"
+          />
+        </router-link>
+        <router-link
+          to="/teacher/homeassignment/detailassignment"
+          class="button-header"
+          >Assignments</router-link
         >
-          <div class="wrapper-asignment">
-            <div class="assignment-popup-title">
-              {{ assignment.assignmentTitle }}
-            </div>
-            <div class="assignment-popup-due">
-              {{ assignment.assignmentDue }}
-            </div>
-            <div class="assignment-popup-content">
-              {{ assignment.assignmentContent }}
-            </div>
-          </div>
-        </div>
+        <router-link
+          to="/teacher/homeassignment/createassignment"
+          class="button-header"
+          >Create a new Assignment</router-link
+        >
       </div>
+      <router-view></router-view>
     </div>
   </div>
 </template>
       <script>
-import { assignments } from "./assignmentName";
 export default {
-  data() {
-    return {
-      assigmentList: assignments,
-    };
-  },
   props: {
     isShowPopupDetailClass: {
       type: Boolean,
       default: false,
     },
   },
-  methods:{
-    goBackHomeAssignment(){
+  methods: {
+    goBackHomeAssignment() {
       this.$emit("goBack");
-    }
-  }
+    },
+  },
 };
 </script>
       <style>
@@ -73,15 +60,6 @@ export default {
   z-index: 19999;
 } */
 .class-assignment {
-  /* z-index: 20000;
-  position: fixed;
-  z-index: 34000;
-  top: 132px;
-  left: 5028px;
-  right: 0;
-  background-color: #000;
-  padding: 32px;
- */
   width: calc(100% - 258px);
   height: calc(100vh - 154px);
   display: flex;
@@ -113,63 +91,44 @@ export default {
   background: #fff;
   width: 100%;
   padding: 20px 0;
- /* position: relative; */
   line-height: 32px;
   box-shadow: 0 4px 2px -2px rgb(0 0 0 / 10%);
-
+  box-sizing: border-box;
 }
-.icon-back{
+.icon-back {
   position: fixed;
-    top: 132px;
-    left: 228px;
-    font-size: 36px;
-    color: #6558ef;
-    margin: 20px 30px;
-    cursor: pointer;
+  top: 132px;
+  left: 228px;
+  font-size: 36px;
+  color: #6558ef;
+  margin: 20px 30px;
+  cursor: pointer;
 }
-.icon-back:hover{
+.icon-back:hover {
   color: #7d72f7;
 }
-.assignment-button,.grade-button{
+
+.button-header{
   margin: 0 20px;
   font-size: 20px;
   font-weight: 600;
   cursor: pointer;
-  color: #5b5b5b;
+  box-sizing: border-box;
+  color: #5b5b5b !important;
+  border-bottom: 3px solid #fff;
+
 }
-.color-show {
+.button-header:hover {
+  color: #6558ef !important;
+  border-bottom: 3px solid;
+}
+.popup-assgiment-header .router-link-active{
+  color: #6558ef !important;
+  border-bottom: 3px solid;
+}
+/* .color-show {
   border-bottom: 3px solid;
 
   color: #6558ef;
-}
-.popup-assgiment-body {
-  margin: 20px 0 0 10px;
-  display: flex;
-  flex-direction: column;
-}
-.assginment-list {
-  display: flex;
-    /* flex-direction: column; */
-    /* justify-content: center; */
-    /* align-items: center; */
-    width: 100%;
-    flex-wrap: wrap;
-    min-height: 100px;
-    margin-bottom: 20px;
-    background-color: #f4f5f8;
-    cursor: pointer;
-    border-radius: 5px;
-    padding: 10px 20px 20px;
-}
-.assginment-list:hover{
-  box-shadow: 3px 3px 3px  rgba(0, 0, 0, 0.2);
-}
-.assignment-popup-title {
-  font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 3px;
-}
-.assignment-popup-due {
-    margin-bottom: 5px;
-}
+} */
 </style>

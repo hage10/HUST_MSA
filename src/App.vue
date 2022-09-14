@@ -199,7 +199,7 @@ a:-webkit-any-link {
   font-size: 13px;
 }
 .m-textarea:focus {
-  border: 1px solid #ffcb3e;
+  border: 1px solid #6558ef;
 }
 ::-webkit-scrollbar {
   width: 10px;

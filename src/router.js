@@ -7,74 +7,83 @@ import StudentDetail from './view/student/StudentDetail'
 import TeacherContainer from './view/teacher/TeacherContainer'
 import TeacherDetail from './view/teacher/TeacherDetail'
 import ClassManage from './view/teacher/ClassManage'
-// import TeacherAssignment from './view/teacher/TeacherAssignment'
 import HomeAssignmentTeacher from './view/teacher/HomeAssignmentTeacher'
-// import ClassAssignment from './view/teacher/ClassAssignment'
+import ContentPopupAssignment from './view/teacher/ContentPopupAssignment'
+import ContentPopupGrade from './view/teacher/ContentPopupGrade'
+import ContentPopupCreate from './view/teacher/ContentPopupCreate'
 
 import AdminContainer from './view/admin/AdminContainer'
 import AccountManage from './view/admin/AccountManage'
 
 const routes = [
-    {
-        path: "/",
-        component: Login
-    },
-    {
-        path: "/student",
-        name:'student',
-        component: StudentContainer,
-        children:[
-            {
-                path: '/student/detail',
-                component: StudentDetail
-              },
-              {
-                path: '/student/assignment',
-                component: TheAssignment
-              },
-        ]
-    },
-    {
-        path: "/teacher",
-        name:'teacher',
-        component: TeacherContainer,
-        children:[
-            {
-                path: '/teacher/detailteacher',
-                component: TeacherDetail
-              },
-              {
-                path: '/teacher/homeassignment/',
-                component: HomeAssignmentTeacher,
-                // children:[
-                //   {
-                //       path: '/teacher/homeassignment/classassignment',
-                //       component: ClassAssignment
-                //     },
+  {
+    path: "/",
+    component: Login
+  },
+  {
+    path: "/student",
+    name: 'student',
+    component: StudentContainer,
+    children: [
+      {
+        path: '/student/detail',
+        component: StudentDetail
+      },
+      {
+        path: '/student/assignment',
+        component: TheAssignment
+      },
+    ]
+  },
+  {
+    path: "/teacher",
+    name: 'teacher',
+    component: TeacherContainer,
+    children: [
+      {
+        path: '/teacher/detailteacher',
+        component: TeacherDetail
+      },
+      {
+        path: '/teacher/homeassignment/',
+        component: HomeAssignmentTeacher,
+        children: [
+          {
+            path: '/teacher/homeassignment/detailassignment',
+            component: ContentPopupAssignment
+          },
+          {
+            path: '/teacher/homeassignment/detailgrade',
+            component: ContentPopupGrade
+          }, 
+          {
+            path: '/teacher/homeassignment/createassignment',
+            component: ContentPopupCreate
+          }
 
-              // ]
-              },
-              {
-                path: '/teacher/classmanage',
-                component: ClassManage
-              },
         ]
-    },
-    {
-        path: "/admin",
-        name:'admin',
-        component: AdminContainer,
-        children:[
-            {
-                path: '/admin/accountmanage',
-                component: AccountManage
-              },
-        ]
-    },
+      },
+      {
+        path: '/teacher/classmanage',
+        component: ClassManage
+      },
+    ]
+  },
+  {
+    path: "/admin",
+    name: 'admin',
+    component: AdminContainer,
+    children: [
+      {
+        path: '/admin/accountmanage',
+        component: AccountManage
+      },
+    ]
+  },
 
 ];
 const router = createRouter({
-    history: createWebHashHistory(process.env.BASE_URL),
-    routes,
+  history: createWebHashHistory(process.env.BASE_URL),
+  routes,
 })
 export default router
