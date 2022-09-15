@@ -24,7 +24,7 @@
       </div>
     </div>
   </div>
-  <PopupDetailClass v-if="isShowPopupDetailClass" :isShowPopupDetailClass="isShowPopupDetailClass"     @goBack="
+  <PopupDetailClass :isShowPopupDetailClass="isShowPopupDetailClass"     @goBack="
       () => {
         isShowPopupDetailClass = false;
       }
@@ -40,7 +40,7 @@ export default {
   data() {
     return {
       classList: classNames,
-      isShowPopupDetailClass: '',
+      isShowPopupDetailClass: false,
     };
   },
   methods:{

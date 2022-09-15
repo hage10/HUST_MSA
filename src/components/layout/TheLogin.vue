@@ -94,7 +94,7 @@ export default {
       this.role="/student"
     }
     if (this.username == "teacher" && this.pass== "teacher") {
-      this.role="/teacher"
+      this.role="/teacher/detailteacher"
     }
     if (this.username == "admin" && this.pass== "admin") {
       this.role="/admin"

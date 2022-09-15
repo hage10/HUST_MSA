@@ -4,6 +4,7 @@
       class="assginment-list"
       v-for="assignment in assigmentList"
       :key="assignment.assignmentId"
+      @dblclick="goToGrade"
     >
       <div class="wrapper-asignment">
         <div class="assignment-popup-title">
@@ -19,19 +20,30 @@
       </div>
     </div>
   </div>
+  <PopupGrade v-if="isShowPopupGrade"/>
+
 </template>
 <script>
+        import PopupGrade from './PopupGrade.vue';
+
 import { assignments } from "./assignmentName";
 import Button from "@/components/base/Button.vue";
 export default {
   data() {
     return {
       assigmentList: assignments,
+      isShowPopupGrade:false,
     };
   },
   components:{
-    Button
-  }
+    Button,
+    PopupGrade
+  },
+  methods: {
+    goToGrade(){
+      this.isShowPopupGrade=true;
+    }
+  },
 };
 </script>
 <style>

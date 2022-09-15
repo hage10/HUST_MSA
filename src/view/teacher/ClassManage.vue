@@ -21,7 +21,7 @@
       <div class="table-student">
         <TheTable
           :tableColumns="tableColumns"
-          :tableDataList="tableDataList"
+          :tableDataList="tableDataListStudent"
           @chooseAnEmployee="chooseAnEmployee"
         />
         <div class="footer-manage">
@@ -62,11 +62,11 @@ export default {
       //-------------------------------
       // các mảng cột và hàng truyền vào cho table
       tableColumns: studentColumns,
-      tableDataList: [],
+      tableDataListStudent: [],
       // các biến lưu dữ liệu của paging
       //   totalRecord: 0,
       currentPage: 1,
-      pagingSize: 100,
+      pagingSize: 20,
     };
   },
   methods: {
@@ -75,7 +75,7 @@ export default {
      * Author TrungTQ
      * */
     getQueryStringFilter() {
-      var paramStrs = `pageSize=${this.pagingSize}&pageNumber=${this.currentPage}`;
+      var paramStrs = `_limit=${this.pagingSize}&_page=${this.currentPage}`;
       if (this.searchTerms !== undefined && this.searchTerms !== "") {
         paramStrs += `&searchTerms=${this.searchTerms}`;
       }
@@ -91,8 +91,7 @@ export default {
       var vm = this;
       EmployeeApi.getFilterPaging(this.getQueryStringFilter()).then((res) => {
         console.log(res);
-        vm.tableDataList = res.data.data.data;
-        vm.totalRecord = res.data.data.totalRecord;
+        vm.tableDataListStudent = res;
         this.emitter.emit("hideLoader");
       });
     },

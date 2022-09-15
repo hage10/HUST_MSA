@@ -60,12 +60,13 @@
     flex-direction: column;
     width: 100%;
     justify-content: space-between;
+    align-items: center;
     padding: 10px 20px 20px 20px;
     height: 100%;
   }
   .form-wrapper {
     display: flex;
-    height: 90%;
+    width: 90%;
     justify-content: space-between;
   }
   .title-and-content,

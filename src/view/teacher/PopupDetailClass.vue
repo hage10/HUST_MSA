@@ -4,10 +4,7 @@
     <div
       :class="[
         'class-assignment',
-        {
-          'detail-show': isShowPopupDetailClass,
-          'detail-hide': !isShowPopupDetailClass,
-        },
+        {'detail-show': isShowPopupDetailClass},
       ]"
     >
       <div class="popup-assgiment-header">
@@ -68,21 +65,20 @@ export default {
   z-index: 34000;
   position: fixed;
   top: 10px;
-  background-color: #fff;
+  background-color: red;
   /* padding: 0 20px 20px; */
   overflow: auto;
+  margin-top: 130px;
+
+  transform: translate(110% , 0);
+  transition: 0.4s;
 }
-.detail-show {
-  left: 228px;
-  opacity: 1;
-  transition: 0.7s;
-  top: 132px;
+
+.detail-show{
+  transform: translate(0 , 0);
+  transition: 0.4s;
 }
-/* .detail-hide {
-  right: 5px;
-  opacity: 0.5;
-  transition: 0.7s;
-} */
+
 .popup-assgiment-header {
   display: flex;
   position: sticky;
