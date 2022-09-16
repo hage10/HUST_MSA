@@ -70,7 +70,7 @@ export default class BaseApi {
      * @param {any} paramStrs
      */
     getFilterPaging(paramStrs) {
-        return BaseApiConfig.get(`${this.apiController}?${paramStrs}`);
+        return BaseApiConfig.get(`${this.apiController}/paging?${paramStrs}`);
     }
 
     /**

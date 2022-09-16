@@ -71,7 +71,7 @@
                 @showFunctionList="showFunctionList"
                 @hideFunctionList="hideFunctionList"
                 :toolId="item.id"
-                :toolCode="item.employeeCode"
+                :toolUser="item.fullName"
                 @btnDeleteOnClick="btnDeleteOnClick"
               />
             </p>

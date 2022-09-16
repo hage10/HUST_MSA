@@ -139,17 +139,18 @@ export default {
       }
     },
     btnSaveOnClick() {
-      this.save("save");
+      this.save();
     },
   },
   created() {
     if (this.mode == "add") {
+      console.log(this.mode);
+
       EmployeeApi.getNewCode()
         .then((res) => {
           let newEmployeeCode = res.data.data;
           this.employeeModel.employeeCode = newEmployeeCode;
           this.$refs.txtEmployeeCodeRef.focus();
-          this.employeeModel.gender = 1;
         })
         .catch((err) => {
           console.log(err);

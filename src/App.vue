@@ -1,19 +1,6 @@
 <template>
   <!-- <the-container/> -->
   <router-view></router-view>
-  <DialogConfirm
-    :popupListButton="listButton"
-    :popupType="popupType"
-    :popupText="popupText"
-    v-if="isShowPopup"
-    @popupOnConfirm="popupOnConfirm"
-  />
-  <ToastMessenger
-    :mesType="mesType"
-    :mesText="mesText"
-    :isShowMes="isShowMes"
-    :hideMes="hideMes"
-  />
   <Loader :isShowLoader="isShowLoader" />
   <AddClass
     v-if="isShowAddClass"
@@ -34,104 +21,25 @@
 </template>
 
 <script>
-import DialogConfirm from "./components/base/DialogConfirm.vue";
-import ToastMessenger from "./components/base/ToastMessenger.vue";
 import Loader from "./components/base/Loader.vue";
 import AddClass from "./components/base/AddClass.vue";
 import PopupAddStudent from "./components/base/PopupAddStudent.vue";
 export default {
   name: "App",
   components: {
-    DialogConfirm,
-    ToastMessenger,
     Loader,
     AddClass,
-    PopupAddStudent
+    PopupAddStudent,
   },
   data() {
     return {
-      // các biến truyền vào cho popup
-      isShowPopup: false,
-      popupText: "",
-      popupType: "",
-      listButton: "",
-      // giá trị ẩn hoặc hiện toastMessenger
-      isShowMes: false,
-      mesText: "",
-      mesType: "",
       isShowLoader: false,
       isShowAddClass: false,
-      isShowAddStudent:false,
+      isShowAddStudent: false,
     };
   },
-  methods: {
-    popupOnConfirm(btnClicked) {
-      switch (btnClicked) {
-        /*có*/
-        case "x":
-          if (this.modeForPopup == "delete") {
-            this.emitter.emit("confirmToDelete");
-            this.isShowPopup = false;
-          }
-          /*Không*/
-          break;
-        case "y":
-          if (this.modeForPopup == "saveChange") {
-            this.isShowPopup = false;
-            this.emitter.emit("hideDialog");
-          }
-          break;
-        /*Hủy*/
-        case "z":
-          if (this.modeForPopup == "saveChange") {
-            this.isShowPopup = false;
-          }
-          break;
-        /*Đóng*/
-        case "t":
-          if (this.modeForPopup == "messenger") {
-            this.isShowPopup = false;
-          }
-          break;
-        /*Không*/
-        case "w":
-          if (this.modeForPopup == "delete") {
-            this.isShowPopup = false;
-          }
-          break;
-        /*Đồng ý*/
-        case "u":
-          if (this.modeForPopup == "messenger") {
-            this.isShowPopup = false;
-          }
-          break;
-        default:
-          break;
-      }
-    },
-    hideMes() {
-      this.isShowMes = false;
-    },
-  },
+
   created() {
-    this.emitter.on("showPopup", (a) => {
-      console.log(a.split("###")[0]);
-      console.log(a.split("###")[1]);
-      console.log(a.split("###")[2]);
-      this.isShowPopup = true;
-      this.popupText = a.split("###")[0];
-      this.popupType = a.split("###")[1];
-      this.listButton = a.split("###")[2];
-      this.modeForPopup = a.split("###")[3];
-    });
-    this.emitter.on("showMes", (b) => {
-      this.mesText = b.split("###")[0];
-      this.mesType = b.split("###")[1];
-      this.isShowMes = true;
-    });
-    this.emitter.on("hideMes", () => {
-      this.isShowMes = false;
-    });
     this.emitter.on("showLoader", () => {
       this.isShowLoader = true;
     });
@@ -248,5 +156,4 @@ a:-webkit-any-link {
   font-family: "GoogleSans-Regular";
   src: url("./assets/fonts/notosans-regular.2cb88a13.woff2") format("opentype");
 }
-
 </style>

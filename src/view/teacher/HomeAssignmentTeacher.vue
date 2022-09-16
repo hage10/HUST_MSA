@@ -11,7 +11,7 @@
           to="/teacher/homeassignment/detailassignment"
             v-for="column in classList"
             :key="column.className"
-            class="card"
+            class="card-class"
             :style="column.color"
             @click="goTodetail"
           >
@@ -68,7 +68,7 @@ export default {
   margin-top: 30px;
 }
 
-.card {
+.card-class {
   height: 150px;
   width: 394px;
   margin-left: 24px;

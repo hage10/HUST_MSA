@@ -7,7 +7,7 @@
       <div class="teacher-toolbar">
         <div class="choose-class">
           <span>Chọn lớp</span>
-          <Combobox></Combobox>
+          <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a class" />
         </div>
         <div class="search-account">
           <input
@@ -43,17 +43,16 @@
 </template>
 <script>
 import Button from "@/components/base/Button.vue";
-import Combobox from "@/components/base/Combobox.vue";
 import TheTable from "@/components/base/Table.vue";
 import EmployeeApi from "../../api/entities/EmployeeApi";
-
+import Dropdown from 'primevue/dropdown';
 import { studentColumns } from "./studentColumns";
 
 export default {
   components: {
     Button,
-    Combobox,
     TheTable,
+    Dropdown
   },
   data() {
     return {

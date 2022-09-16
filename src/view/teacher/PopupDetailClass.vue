@@ -2,10 +2,7 @@
   <div class="popup">
     <!-- <div class="assignment-modal"></div> -->
     <div
-      :class="[
-        'class-assignment',
-        {'detail-show': isShowPopupDetailClass},
-      ]"
+      :class="['class-assignment', { 'detail-show': isShowPopupDetailClass }]"
     >
       <div class="popup-assgiment-header">
         <router-link to="/teacher/homeassignment">
@@ -65,18 +62,18 @@ export default {
   z-index: 34000;
   position: fixed;
   top: 10px;
-  background-color: red;
+  background-color: #fff;
   /* padding: 0 20px 20px; */
   overflow: auto;
-  margin-top: 130px;
-
-  transform: translate(110% , 0);
-  transition: 0.4s;
+  margin-top: 122px;
+  margin-left: 20px;
+  transform: translate(110%, 0);
+  transition: 0.8s;
 }
 
-.detail-show{
-  transform: translate(0 , 0);
-  transition: 0.4s;
+.detail-show {
+  transform: translate(0, 0);
+  transition: 0.8s;
 }
 
 .popup-assgiment-header {
@@ -93,8 +90,8 @@ export default {
 }
 .icon-back {
   position: fixed;
-  top: 132px;
-  left: 228px;
+  top: 0px;
+  left: 0px;
   font-size: 36px;
   color: #6558ef;
   margin: 20px 30px;
@@ -104,7 +101,7 @@ export default {
   color: #7d72f7;
 }
 
-.button-header{
+.button-header {
   margin: 0 20px;
   font-size: 20px;
   font-weight: 600;
@@ -112,13 +109,12 @@ export default {
   box-sizing: border-box;
   color: #5b5b5b !important;
   border-bottom: 3px solid #fff;
-
 }
 .button-header:hover {
   color: #6558ef !important;
   border-bottom: 3px solid;
 }
-.popup-assgiment-header .router-link-active{
+.popup-assgiment-header .router-link-active {
   color: #6558ef !important;
   border-bottom: 3px solid;
 }

@@ -67,7 +67,7 @@ export default {
       pagingSize: 100,
       // các biến liên quan đến xử lí với dialog
       isShowDialog: false,
-      dialogMode: "",
+      dialogMode: "add",
       isReOpenDialog: false,
       // lưu giá trị nhận được từ inputSearch
       searchTerms: "",
@@ -80,7 +80,7 @@ export default {
      */
     btnAddOnClick() {
       this.isShowDialog = true;
-      // this.dialogMode = "add";
+      this.dialogMode = "add";
     },
     /**
      * Nhận sự kiện khi table chọn 1 nhân viên và truyền lên kèm theo id nhân viên => mở dilalog sửa
@@ -165,11 +165,7 @@ export default {
       this.isShowDialog = false;
     });
     // lắng nghe sự kiện nhân bản nhân viên
-    this.emitter.on("cloneEmployee", (employeeId) => {
-      this.isShowDialog = true;
-      this.dialogMode = "clone";
-      this.myEmployeeId = employeeId;
-    });
+
   },
 };
 </script>

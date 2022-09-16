@@ -9,7 +9,6 @@ import TeacherDetail from './view/teacher/TeacherDetail'
 import ClassManage from './view/teacher/ClassManage'
 import HomeAssignmentTeacher from './view/teacher/HomeAssignmentTeacher'
 import ContentPopupAssignment from './view/teacher/ContentPopupAssignment'
-import ContentPopupGrade from './view/teacher/ContentPopupGrade'
 import ContentPopupCreate from './view/teacher/ContentPopupCreate'
 
 import AdminContainer from './view/admin/AdminContainer'
@@ -52,10 +51,6 @@ const routes = [
             path: '/teacher/homeassignment/detailassignment',
             component: ContentPopupAssignment
           },
-          {
-            path: '/teacher/homeassignment/detailgrade',
-            component: ContentPopupGrade
-          }, 
           {
             path: '/teacher/homeassignment/createassignment',
             component: ContentPopupCreate
