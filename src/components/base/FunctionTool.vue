@@ -2,20 +2,12 @@
   <div class="function-tool">
     <div class="remove-button" @click="btnDeleteOnClick">Xóa</div>
   </div>
-  <ConfirmDialog></ConfirmDialog>
-  <f:facet> <Toast /></f:facet>
 </template>
   
   <script>
-import ConfirmDialog from "primevue/confirmdialog";
 import EmployeeApi from "@/api/entities/EmployeeApi";
-import Toast from "primevue/toast";
 
 export default {
-  components: {
-    ConfirmDialog,
-    Toast,
-  },
   name: "TheTool",
   props: {
     toolId: String,

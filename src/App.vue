@@ -18,9 +18,14 @@
       }
     "
   />
+   <Toast />
+   <ConfirmDialog></ConfirmDialog>
+
 </template>
 
 <script>
+import Toast from "primevue/toast";
+import ConfirmDialog from "primevue/confirmdialog";
 import Loader from "./components/base/Loader.vue";
 import AddClass from "./components/base/AddClass.vue";
 import PopupAddStudent from "./components/base/PopupAddStudent.vue";
@@ -30,6 +35,8 @@ export default {
     Loader,
     AddClass,
     PopupAddStudent,
+    Toast,
+    ConfirmDialog,
   },
   data() {
     return {

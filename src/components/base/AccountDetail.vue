@@ -84,6 +84,7 @@
 // import { EmployeeModel } from "@/models/EmployeeModels";
 import Button from "./Button.vue";
 import EmployeeApi from "@/api/entities/EmployeeApi";
+
 export default {
   name: "AccountDetail",
   components: {
@@ -121,20 +122,43 @@ export default {
           .then((res) => {
             console.log(res);
             this.$emit("closeForm");
+            this.$toast.add({
+              severity: "success",
+              summary: "Thêm thành công!",
+              detail: "vui lòng kiểm tra",
+              life: 3000,
+            });
+            this.emitter.emit("load");
           })
           .catch((err) => {
             this.errorMsg(err);
+            this.$toast.add({
+              severity: "success",
+              summary: "Thêm thất bại!",
+              detail: "vui lòng kiểm tra lại",
+              life: 3000,
+            });
           });
       } else if (this.mode == "edit") {
-        console.log(this.employeeModel);
         EmployeeApi.update(this.employeeId, this.employeeModel)
           .then(async (res) => {
             console.log(res);
-            this.emitter.emit("showMes", "Cập nhật thành công!###success");
+            this.$toast.add({
+              severity: "success",
+              summary: "Cập nhật thành công!",
+              detail: "vui lòng kiểm tra",
+              life: 3000,
+            });
             this.$emit("closeForm");
           })
           .catch((err) => {
             this.errorMsg(err);
+            this.$toast.add({
+              severity: "success",
+              summary: "Cập nhật thất bại!",
+              detail: "vui lòng kiểm tra lại",
+              life: 3000,
+            });
           });
       }
     },
@@ -155,7 +179,7 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-    }else if (this.mode == "edit") {
+    } else if (this.mode == "edit") {
       /**
        * đầu vào là mode edit thì gọi api lấy mã nhân viên theo Id
        * Author: TrungTQ
