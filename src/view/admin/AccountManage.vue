@@ -43,7 +43,7 @@
   <script>
 import TheTable from "../../components/base/Table.vue";
 import { accountColumns } from "./AccountColumns.js";
-import EmployeeApi from "../../api/entities/EmployeeApi";
+import UserApi from "../../api/entities/UserApi";
 import Button from "@/components/base/Button.vue";
 import AccountDetail from "@/components/base/AccountDetail.vue";
 export default {
@@ -64,7 +64,7 @@ export default {
       // các biến lưu dữ liệu của paging
       totalRecord: 0,
       currentPage: 1,
-      pagingSize: 100,
+      pagingSize: 20,
       // các biến liên quan đến xử lí với dialog
       isShowDialog: false,
       dialogMode: "add",
@@ -119,7 +119,7 @@ export default {
      * Author TrungTQ
      * */
     getQueryStringFilter() {
-      var paramStrs = `pageSize=${this.pagingSize}&pageNumber=${this.currentPage}`;
+      var paramStrs = `PageNumber=${this.currentPage}&PageSize=${this.pagingSize}`;
       if (this.searchTerms !== undefined && this.searchTerms !== "") {
         paramStrs += `&searchTerms=${this.searchTerms}`;
       }
@@ -133,10 +133,9 @@ export default {
     load() {
       this.emitter.emit("showLoader");
       var vm = this;
-      EmployeeApi.getFilterPaging(this.getQueryStringFilter()).then((res) => {
+      UserApi.getFilterPaging(this.getQueryStringFilter()).then((res) => {
         console.log(res);
-        vm.tableDataList = res.data.data.data;
-        vm.totalRecord = res.data.data.totalRecord;
+        vm.tableDataList = res.data;
         this.emitter.emit("hideLoader");
       });
     },

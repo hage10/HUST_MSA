@@ -10,7 +10,12 @@ export default class BaseApi {
      * @returns 
      */
     getAll() {
-        return BaseApiConfig.get(`${this.apiController}`);
+        return BaseApiConfig.get(`${this.apiController}`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: sessionStorage.getItem("token"),
+            }
+        });
     }
 
     /**
@@ -19,7 +24,12 @@ export default class BaseApi {
      * @returns 
      */
     add(body) {
-        return BaseApiConfig.post(`${this.apiController}`, body);
+        return BaseApiConfig.post(`${this.apiController}`, body, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: sessionStorage.getItem("token"),
+            }
+        });
     }
 
     /**
@@ -28,7 +38,12 @@ export default class BaseApi {
      * @returns 
      */
     getById(id) {
-        return BaseApiConfig.get(`${this.apiController}/${id}`);
+        return BaseApiConfig.get(`${this.apiController}/${id}`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: sessionStorage.getItem("token"),
+            }
+        });
     }
 
     /**
@@ -38,7 +53,12 @@ export default class BaseApi {
      * @returns 
      */
     update(id, body) {
-        return BaseApiConfig.put(`${this.apiController}/${id}`, body);
+        return BaseApiConfig.put(`${this.apiController}/${id}`, body, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: sessionStorage.getItem("token"),
+            }
+        });
     }
 
     /**
@@ -47,7 +67,12 @@ export default class BaseApi {
      * @returns 
      */
     delete(id) {
-        return BaseApiConfig.delete(`${this.apiController}/${id}`);
+        return BaseApiConfig.delete(`${this.apiController}/${id}`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: sessionStorage.getItem("token"),
+            }
+        });
     }
 
     /**
@@ -70,7 +95,12 @@ export default class BaseApi {
      * @param {any} paramStrs
      */
     getFilterPaging(paramStrs) {
-        return BaseApiConfig.get(`${this.apiController}/paging?${paramStrs}`);
+        return BaseApiConfig.get(`${this.apiController}?${paramStrs}`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: sessionStorage.getItem("token"),
+            }
+        });
     }
 
     /**

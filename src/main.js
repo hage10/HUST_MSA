@@ -15,7 +15,6 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import mitt from "mitt";
 const emitter = mitt();
-
 library.add(fas, fab, far)
 const app = createApp(App);
 app.use(router);

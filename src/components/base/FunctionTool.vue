@@ -5,7 +5,7 @@
 </template>
   
   <script>
-import EmployeeApi from "@/api/entities/EmployeeApi";
+import UserApi from "@/api/entities/UserApi";
 
 export default {
   name: "TheTool",
@@ -24,17 +24,12 @@ export default {
      * Author TrungTQ
      * */
     btnDeleteOnClick() {
-      // this.isHide = true;
-      // this.emitter.emit(
-      //   "showPopup",
-      //   `Bạn có thực sự muốn xóa tài khoản không?###question###xw###delete`
-      // );
       this.$confirm.require({
         message: `Bạn có thực sự muốn xóa tài khoản <${this.toolUser}> không`,
         header: "Xác nhận",
         icon: "pi pi-exclamation-triangle",
         accept: () => {
-          EmployeeApi.delete(this.toolId)
+          UserApi.delete(this.toolId)
             .then((res) => {
               console.log(res);
               this.$confirm.close();
@@ -44,7 +39,6 @@ export default {
                 detail: "vui lòng kiểm tra",
                 life: 3000,
               });
-
               this.emitter.emit("load");
             })
             .catch((err) => {
@@ -68,20 +62,6 @@ export default {
         },
       });
     },
-  },
-  created() {
-    // this.emitter.on("confirmToDelete", () => {
-    //   EmployeeApi.delete(this.myEmployeeId)
-    //     .then((res) => {
-    //       console.log(res);
-    //       this.emitter.emit("showMes", "Xóa thành công!###success");
-    //       //   this.emitter.emit("load");
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //       this.emitter.emit("showMes", "Xóa thất bại!###danger");
-    //     });
-    // });
   },
 };
 </script>

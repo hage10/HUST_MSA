@@ -13,7 +13,7 @@
               class="input-login"
               type="text"
               placeholder="Tên đăng nhập"
-              v-model="username"
+              v-model="userModel.email"
             />
           </div>
           <div class="form-group">
@@ -24,7 +24,7 @@
               name=""
               id="password"
               placeholder="Mật khẩu"
-              v-model="pass"
+              v-model="userModel.password"
             />
           </div>
           <div class="show-pass">
@@ -38,13 +38,23 @@
               <p>Hiển thị mật khẩu</p>
             </label>
           </div>
-          <router-link :to="role" class="btn-login">
+          <router-link to="/" class="btn-login">
             <Button
               buttonText="Đăng nhập"
               buttonClass="button-primary btn-350"
               @click="btnLogin"
             />
           </router-link>
+          <router-link to="/admin" class="btn-login" >
+            <button ref="admin" style="display: none" ></button>
+          </router-link>
+          <router-link to="/teacher" class="btn-login">
+            <button ref="teacher" style="display: none" ></button>
+          </router-link>
+          <router-link to="/student" class="btn-login">
+            <button ref="student" style="display: none" ></button>
+          </router-link>
+          
         </div>
         <div class="download-app">
           <p>Tải app tại</p>
@@ -54,20 +64,22 @@
           </div>
         </div>
         <div class="footer-login">
-            <div >
-                <font-awesome-icon icon="phone" class="icon-footer"/>
-            </div>
-            <div class="main-footer">
-                <p>TƯ VẤN VÀ HỖ TRỢ</p>
-                <p>Hotline:1900xxxx</p>
-            </div>
+          <div>
+            <font-awesome-icon icon="phone" class="icon-footer" />
+          </div>
+          <div class="main-footer">
+            <p>TƯ VẤN VÀ HỖ TRỢ</p>
+            <p>Hotline:1900xxxx</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+// import UserModel from "../../models/UserModels"
 import Button from "../base/Button.vue";
+import AuthApi from "@/api/entities/AuthApi";
 export default {
   name: "TheLogin",
   components: {
@@ -76,9 +88,11 @@ export default {
   data() {
     return {
       visibility: "password",
-      role:'',
-      username:'',
-      pass:''
+      role: "",
+      email: "",
+      pass: "",
+      userModel: {},
+      rememberMe:true
     };
   },
 
@@ -89,19 +103,47 @@ export default {
     hidePass() {
       this.visibility = "password";
     },
-    btnLogin(){
-    if (this.username == "student" && this.pass== "student") {
-      this.role="/student"
-    }
-    if (this.username == "teacher" && this.pass== "teacher") {
-      this.role="/teacher/detailteacher"
-    }
-    if (this.username == "admin" && this.pass== "admin") {
-      this.role="/admin"
-    }
-    }
+    btnLogin() {
+      AuthApi.login(this.userModel.email, this.userModel.password)
+        .then(async (res) => {
+          console.log(res);
+          sessionStorage.setItem("token", 'bearer '+ res.data.token);
+          if(res.data.role=='admin'){
+            this.$refs.admin.click();
+          }
+          if(res.data.role=='teacher'){
+            this.$refs.teacher.click();
+          }
+          if(res.data.role=='student'){
+            this.$refs.student.click();
+          }
+          this.$toast.add({
+            severity: "success",
+            summary: "Đăng nhập thành công!",
+            detail: "vui lòng kiểm tra",
+            life: 3000,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          this.$toast.add({
+            severity: "error",
+            summary: "Đăng nhập thất bại!",
+            detail: "vui lòng kiểm tra email và mật khẩu",
+            life: 3000,
+          });
+        });
+      // if (this.userModel.email == "student" && this.userModel.password== "student") {
+      //   this.role="/student"
+      // }
+      // if (this.userModel.email == "teacher" && this.userModel.password== "teacher") {
+      //   this.role="/teacher/detailteacher"
+      // }
+      // if (this.userModel.email == "admin" && this.userModel.password== "admin") {
+      //   this.role="/admin"
+      // }
+    },
   },
-
 };
 </script>
 <style>
@@ -231,27 +273,27 @@ export default {
   background-size: contain;
   background-repeat: no-repeat;
 }
-.footer-login{
-    background-color: #DCDCDC;
-    width: 100%;
-    height: 75px;
-    border-bottom-right-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.footer-login {
+  background-color: #dcdcdc;
+  width: 100%;
+  height: 75px;
+  border-bottom-right-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.icon-footer{
-    font-size:30px;
-    padding-right: 16px;
-    color: #686868;
+.icon-footer {
+  font-size: 30px;
+  padding-right: 16px;
+  color: #686868;
 }
-.main-footer{
-    font-weight: 600;
+.main-footer {
+  font-weight: 600;
 }
-.main-footer>p:first-child{
-    color: #027185;
+.main-footer > p:first-child {
+  color: #027185;
 }
-.main-footer>p:last-child{
-    color: #daa02e;
+.main-footer > p:last-child {
+  color: #daa02e;
 }
 </style>

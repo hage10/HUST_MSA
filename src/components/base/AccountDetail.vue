@@ -17,7 +17,8 @@
           <input
             type="text"
             class="m-input input-24"
-            v-model="employeeModel.employeeCode"
+            v-model="userModel.username"
+            ref="txtUserRef"
           />
         </div>
         <div class="prop-item">
@@ -25,7 +26,7 @@
           <input
             type="text"
             class="m-input input-24"
-            v-model="employeeModel.bankAccountNumber"
+            v-model="userModel.password"
           />
         </div>
         <div class="prop-item">
@@ -33,7 +34,15 @@
           <input
             type="text"
             class="m-input input-24"
-            v-model="employeeModel.fullName"
+            v-model="userModel.fullName"
+          />
+        </div>
+        <div class="prop-item">
+          <p>Vai trò</p>
+          <input
+            type="text"
+            class="m-input input-24"
+            v-model="userModel.roleId"
           />
         </div>
         <div class="prop-item">
@@ -41,7 +50,7 @@
           <input
             type="text"
             class="m-input input-24"
-            v-model="employeeModel.gender"
+            v-model="userModel.mss"
           />
         </div>
         <div class="prop-item">
@@ -49,7 +58,7 @@
           <input
             type="text"
             class="m-input input-24"
-            v-model="employeeModel.phoneNumber"
+            v-model="userModel.phoneNumber"
           />
         </div>
         <div class="prop-item">
@@ -57,7 +66,7 @@
           <input
             type="text"
             class="m-input input-24"
-            v-model="employeeModel.email"
+            v-model="userModel.email"
           />
         </div>
       </div>
@@ -81,9 +90,9 @@
   </div>
 </template>
 <script>
-// import { EmployeeModel } from "@/models/EmployeeModels";
+// import { userModel } from "@/models/userModels";
 import Button from "./Button.vue";
-import EmployeeApi from "@/api/entities/EmployeeApi";
+import UserApi from "@/api/entities/UserApi";
 
 export default {
   name: "AccountDetail",
@@ -106,7 +115,7 @@ export default {
   },
   data() {
     return {
-      employeeModel: {},
+      userModel: {},
     };
   },
   methods: {
@@ -118,7 +127,7 @@ export default {
     },
     save() {
       if (this.mode == "add") {
-        EmployeeApi.add(this.employeeModel)
+        UserApi.add(this.userModel)
           .then((res) => {
             console.log(res);
             this.$emit("closeForm");
@@ -133,14 +142,14 @@ export default {
           .catch((err) => {
             this.errorMsg(err);
             this.$toast.add({
-              severity: "success",
+              severity: "error",
               summary: "Thêm thất bại!",
               detail: "vui lòng kiểm tra lại",
               life: 3000,
             });
           });
       } else if (this.mode == "edit") {
-        EmployeeApi.update(this.employeeId, this.employeeModel)
+        UserApi.update(this.employeeId, this.userModel)
           .then(async (res) => {
             console.log(res);
             this.$toast.add({
@@ -167,29 +176,17 @@ export default {
     },
   },
   created() {
-    if (this.mode == "add") {
-      console.log(this.mode);
-
-      EmployeeApi.getNewCode()
-        .then((res) => {
-          let newEmployeeCode = res.data.data;
-          this.employeeModel.employeeCode = newEmployeeCode;
-          this.$refs.txtEmployeeCodeRef.focus();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else if (this.mode == "edit") {
+if (this.mode == "edit") {
       /**
        * đầu vào là mode edit thì gọi api lấy mã nhân viên theo Id
        * Author: TrungTQ
        */
       console.log("lấy nhân viên có id ", this.employeeId);
-      EmployeeApi.getById(this.employeeId).then((res) => {
+      UserApi.getById(this.employeeId).then((res) => {
         console.log(res);
-        this.employeeModel = res.data.data;
+        this.userModel = res.data;
         this.reSelectCbb = !this.reSelectCbb;
-        this.originalModel = Object.assign({}, this.employeeModel);
+        this.originalModel = Object.assign({}, this.userModel);
         this.$refs.txtEmployeeCodeRef.focus();
       });
     }
@@ -214,7 +211,7 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 450px;
-  height: 537px;
+  height: 605px;
   background-color: #fff;
   border-radius: 3px;
   overflow: hidden;
