@@ -107,20 +107,19 @@ export default {
       AuthApi.login(this.userModel.email, this.userModel.password)
         .then(async (res) => {
           console.log(res);
-          sessionStorage.setItem("token", 'bearer '+ res.data.token);
-          if(res.data.role=='admin'){
-            this.$refs.admin.click();
-          }
-          if(res.data.role=='teacher'){
+          sessionStorage.setItem("token", 'bearer '+ res.data);
+          // if(res.data.role=='admin'){
             this.$refs.teacher.click();
-          }
-          if(res.data.role=='student'){
-            this.$refs.student.click();
-          }
+          // }
+          // if(res.data.role=='teacher'){
+          //   this.$refs.teacher.click();
+          // }
+          // if(res.data.role=='student'){
+          //   this.$refs.student.click();
+          // }
           this.$toast.add({
             severity: "success",
             summary: "Đăng nhập thành công!",
-            detail: "vui lòng kiểm tra",
             life: 3000,
           });
         })

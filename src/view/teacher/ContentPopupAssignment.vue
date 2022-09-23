@@ -3,15 +3,15 @@
     <div
       class="assginment-list"
       v-for="assignment in assigmentList"
-      :key="assignment.assignmentId"
+      :key="assignment.id"
       @dblclick="goToGrade"
     >
       <div class="wrapper-asignment">
         <div class="assignment-popup-title">
-          {{ assignment.assignmentTitle }}
+          {{ assignment.title }}
         </div>
         <div class="assignment-popup-due">
-          Due to: {{ assignment.assignmentDue }}
+          Due to: {{ assignment.dueTo }}
         </div>
       </div>
       <div class="assignment-tool">
@@ -24,16 +24,19 @@
 
 </template>
 <script>
-        import PopupGrade from './PopupGrade.vue';
-
-import { assignments } from "./assignmentName";
+import PopupGrade from './PopupGrade.vue';
+import AssignmentApi from '@/api/entities/AssigmentApi';
+// import { assignments } from "./assignmentName";
 import Button from "@/components/base/Button.vue";
 export default {
   data() {
     return {
-      assigmentList: assignments,
+      assigmentList: "",
       isShowPopupGrade:false,
     };
+  },
+  props: {
+    chooseClass:Number
   },
   components:{
     Button,
@@ -44,6 +47,15 @@ export default {
       this.isShowPopupGrade=true;
     }
   },
+  created(){
+    this.emitter.on("chooseClass", classId => {
+      console.log(classId);
+      AssignmentApi.getAssignmentByClassId(classId).then((res)=>{
+      console.log(res);
+      this.assigmentList=res.data
+    })
+    });
+  }
 };
 </script>
 <style>

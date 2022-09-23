@@ -13,15 +13,6 @@ export const studentColumns = [
         width: "min-width: 227.4px;",
         style: "text-align: center;",
     },
-
-
-    {
-        fieldName: "classname",
-        displayName: "Lớp",
-        formatType: "gender",
-        width: "min-width: 227.4px;",
-        style: "text-align: center",
-    },
     {
         fieldName: "phoneNumber",
         displayName: "SỐ ĐIỆN THOẠI",

@@ -7,7 +7,12 @@
       <div class="teacher-toolbar">
         <div class="choose-class">
           <span>Chọn lớp</span>
-          <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a class" />
+          <Dropdown
+            v-model="selectedClass"
+            :options="classes"
+            optionLabel="name"
+            placeholder="Select a class"
+          />
         </div>
         <div class="search-account">
           <input
@@ -25,34 +30,29 @@
           @chooseAnEmployee="chooseAnEmployee"
         />
         <div class="footer-manage">
-        <Button
-          buttonText="Tạo lớp"
-          buttonClass="button-primary"
-          @Click="btnAddClassOnClick"
-        />
-        <Button
-          buttonText="Thêm sinh viên vào lớp"
-          buttonClass="button-primary"
-          @Click="btnAddStudentOnClick"
-        />
-      </div>
-      </div>
 
+          <Button
+            buttonText="Thêm sinh viên vào lớp"
+            buttonClass="button-primary"
+            @Click="btnAddStudentOnClick"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import Button from "@/components/base/Button.vue";
 import TheTable from "@/components/base/Table.vue";
-import EmployeeApi from "../../api/entities/EmployeeApi";
-import Dropdown from 'primevue/dropdown';
+import Dropdown from "primevue/dropdown";
 import { studentColumns } from "./studentColumns";
+import ClassApi from "@/api/entities/ClassApi";
 
 export default {
   components: {
     Button,
     TheTable,
-    Dropdown
+    Dropdown,
   },
   data() {
     return {
@@ -66,40 +66,27 @@ export default {
       //   totalRecord: 0,
       currentPage: 1,
       pagingSize: 20,
+      selectedClass: "",
+      cities: [],
     };
   },
   methods: {
-    /**
-     * Từ searchTerms, pagingSize, currentPage => load ra query tương ứng để gọi api filter
-     * Author TrungTQ
-     * */
-    getQueryStringFilter() {
-      var paramStrs = `_limit=${this.pagingSize}&_page=${this.currentPage}`;
-      if (this.searchTerms !== undefined && this.searchTerms !== "") {
-        paramStrs += `&searchTerms=${this.searchTerms}`;
-      }
-      return paramStrs;
-    },
-    /**
-     * Gọi api filter để thực hiện lấy dữ liệu đã được tìm kiếm và phân trang,
-     * nhận res.data là list employee truyền cho Table và ToltalRecord để truyền cho pagingBar
-     * Author TrungTQ
-     * */
     load() {
       this.emitter.emit("showLoader");
-      var vm = this;
-      EmployeeApi.getFilterPaging(this.getQueryStringFilter()).then((res) => {
-        console.log(res);
-        vm.tableDataListStudent = res;
+      ClassApi.getUserByClassId(1).then((res) => {
+        this.tableDataListStudent = res.data;
         this.emitter.emit("hideLoader");
       });
     },
-    btnAddClassOnClick(){
-      this.emitter.emit("showAddClass");
-    },
-    btnAddStudentOnClick(){
+
+    btnAddStudentOnClick() {
       this.emitter.emit("showAddStudent");
-    }
+    },
+  },
+  beforeCreate() {
+    ClassApi.getAll().then((res) => {
+      this.classes = res.data;
+    });
   },
   created() {
     this.load();
@@ -124,20 +111,22 @@ export default {
   font-weight: 600;
   margin-right: 12px;
 }
-.table-student{
-    width: 100%;
+.table-student {
+  width: 100%;
   height: calc(100% - 68px);
   padding: 0 20px 20px 20px;
   display: flex;
   flex-direction: column;
-
 }
-.footer-manage{
-    display: flex;
-    margin-top: 20px;
-    justify-content: flex-end;
+.footer-manage {
+  display: flex;
+  margin-top: 20px;
+  justify-content: flex-end;
 }
-.footer-manage>button{
-    margin-left: 24px;
+.footer-manage > button {
+  margin-left: 24px;
+}
+.p-dropdown {
+  width: 14rem;
 }
 </style>

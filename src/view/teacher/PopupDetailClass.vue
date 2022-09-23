@@ -29,18 +29,22 @@
 </template>
       <script>
 export default {
+
   props: {
     isShowPopupDetailClass: {
       type: Boolean,
       default: false,
     },
+    chooseClass:Number
   },
   methods: {
     goBackHomeAssignment() {
       this.$emit("goBack");
     },
   },
+
 };
+
 </script>
       <style>
 /* .assignment-modal {

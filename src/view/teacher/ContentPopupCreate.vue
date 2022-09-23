@@ -5,11 +5,11 @@
         <div class="title-and-content">
           <div class="form-assignment">
             <span>Tiêu đề</span>
-            <input type="text" class="m-input" />
+            <input type="text" class="m-input" v-model="assignmentModel.title" />
           </div>
           <div class="form-assignment">
             <span>Nội dung</span>
-            <textarea name="" id="" rows="14" class="m-textarea"></textarea>
+            <textarea name="" id="" rows="14" class="m-textarea" v-model="assignmentModel.content"></textarea>
           </div>
         </div>
         <div class="due-and-file">
@@ -29,12 +29,12 @@
           </div>
           <div class="form-assignment">
             <span>Thời hạn</span>
-            <input type="date" name="" id="" class="m-input input-240" />
+            <input type="date" name="" id="" class="m-input input-240" v-model="assignmentModel.dueTo" />
           </div>
         </div>
       </div>
       <div class="footer-assignment">
-        <Button buttonText="Tạo Assignment" buttonClass="button-primary" />
+        <Button buttonText="Tạo Assignment" buttonClass="button-primary" @click="btnCreateAssignment"/>
       </div>
     </div>
   </div>
@@ -43,10 +43,23 @@
 import FileUpload from "primevue/fileupload";
 import Button from "@/components/base/Button.vue";
 export default {
+  data() {
+    return {
+      assignmentModel:{},
+      classIdd: ""
+    };
+  },
   components: {
     Button,
     FileUpload,
   },
+  methods:{
+    btnCreateAssignment(){
+      alert(this.classIdd)
+    }
+  },
+  created(){
+  }
 };
 </script>
   <style>

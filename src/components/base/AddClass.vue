@@ -5,11 +5,11 @@
       <div class="add-class-body">
         <div class="add-content">
           <span>Tên lớp</span>
-          <input type="text" class="m-input input-350" placeholder="Nhập tên lớp" />
+          <input type="text" class="m-input input-350" placeholder="Nhập tên lớp" v-model="classModel.name"/>
         </div>
         <div class="add-class-footer">
           <Button buttonText="Hủy" buttonClass="button-secondary" @click="btnCancleAddClass"/>
-          <Button buttonText="Tạo" buttonClass="button-primary" />
+          <Button buttonText="Tạo" buttonClass="button-primary" @click="btnAddClass"/>
         </div>
       </div>
     </div>
@@ -17,9 +17,15 @@
 </template>
 <script>
 import Button from "./Button.vue";
+import ClassApi from "@/api/entities/ClassApi";
 export default {
   components: {
     Button,
+  },
+  data() {
+    return {
+      classModel: {},
+    };
   },
   props:{
     isShowAddClass:{
@@ -30,6 +36,30 @@ export default {
   methods:{
     btnCancleAddClass(){
         this.$emit("hideAddClass");
+    },
+    btnAddClass(){
+      ClassApi.add(this.classModel)
+          .then((res) => {
+            console.log(res);
+            this.$emit("hideAddClass");
+            this.$toast.add({
+              severity: "success",
+              summary: "Thêm thành công!",
+              detail: "vui lòng kiểm tra",
+              life: 3000,
+            });
+            this.emitter.emit("load");
+          })
+          .catch((err) => {
+            this.$emit("hideAddClass");
+            this.errorMsg(err);
+            this.$toast.add({
+              severity: "error",
+              summary: "Thêm thất bại!",
+              detail: "vui lòng kiểm tra lại",
+              life: 3000,
+            });
+          });
     }
   }
 };

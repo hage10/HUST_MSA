@@ -5,18 +5,24 @@
     </div>
     <!-- <router-view></router-view> -->
     <div class="assignment-content">
+      <div class="tool-header">
+        <Button
+            buttonText="Tạo lớp"
+            buttonClass="button-primary"
+            @Click="btnAddClassOnClick"
+          />
+      </div>
       <div tag="main" name="card" class="body-content">
         <div class="classroom-group">
           <router-link
           to="/teacher/homeassignment/detailassignment"
             v-for="column in classList"
-            :key="column.className"
+            :key="column.name"
             class="card-class"
-            :style="column.color"
-            @click="goTodetail"
+            @click="goTodetail(column.classId)"
           >
             <div class="description">
-              <span>{{ column.className }}</span>
+              <span>{{ column.name }}</span>
             </div>
           <!-- </div> -->
           </router-link>
@@ -24,29 +30,42 @@
       </div>
     </div>
   </div>
-  <PopupDetailClass :isShowPopupDetailClass="isShowPopupDetailClass"     @goBack="
+  <PopupDetailClass :isShowPopupDetailClass="isShowPopupDetailClass" @goBack="
       () => {
         isShowPopupDetailClass = false;
       }
     "/>
 </template>
 <script>
-import { classNames } from "./className";
+  import ClassApi from "../../api/entities/ClassApi"
+// import { classNames } from "./className";
 import PopupDetailClass from "./PopupDetailClass.vue";
+import Button from "@/components/base/Button.vue";
 export default {
   components: {
     PopupDetailClass,
+    Button
 },
   data() {
     return {
-      classList: classNames,
+      classList: "",
       isShowPopupDetailClass: false,
     };
   },
   methods:{
-    goTodetail(){
-      this.isShowPopupDetailClass=true;
-    }
+    goTodetail(classId){
+      this.isShowPopupDetailClass = true;
+      this.emitter.emit("chooseClass",classId);
+    },
+    btnAddClassOnClick() {
+      this.emitter.emit("showAddClass");
+    },
+  },
+  created(){
+    ClassApi.getAll().then((res)=>{
+      console.log(res);
+      this.classList=res.data
+    })
   }
 
 };
@@ -60,7 +79,14 @@ export default {
   flex-direction: column;
   overflow: auto;
 }
-
+.tool-header{
+  padding: 24px 0 20px 42px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background-color: #fff;
+}
 .classroom-group {
   display: flex;
   width: 100%;
@@ -79,9 +105,10 @@ export default {
   box-shadow: 0 40px 40px -20px rgba(0, 0, 0, 0.2);
   transition: 0.3s ease-in-out transform;
   cursor: pointer;
+  background-color: #b2acf6;
 }
 
-.card:hover {
+.card-class:hover {
   transform: translate3d(0px, 0px, 0px);
 }
 .description {
@@ -89,7 +116,7 @@ export default {
 }
 .description > span {
   font-size: 18px;
-  color: #000;
+  color: #fff;
 }
 @keyframes mouseOver {
   0% {
