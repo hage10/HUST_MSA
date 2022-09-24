@@ -28,13 +28,11 @@ import Toast from "primevue/toast";
 import ConfirmDialog from "primevue/confirmdialog";
 import Loader from "./components/base/Loader.vue";
 import AddClass from "./components/base/AddClass.vue";
-import PopupAddStudent from "./components/base/PopupAddStudent.vue";
 export default {
   name: "App",
   components: {
     Loader,
     AddClass,
-    PopupAddStudent,
     Toast,
     ConfirmDialog,
   },

@@ -14,6 +14,22 @@ class ClassApi extends BaseApi {
             }
         });
     }
+    addStudentsToClass(idClass,idUser){
+        return BaseApiConfig.post(`${this.apiController}/${idClass}/users/${idUser}`,{}, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: sessionStorage.getItem("token"),
+            }
+        });
+    }
+    removeStudentsToClass(idClass,idUser){
+        return BaseApiConfig.post(`${this.apiController}/${idClass}/users/${idUser}`,{}, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: sessionStorage.getItem("token"),
+            }
+        });
+    }
 }
 
 export default new ClassApi();

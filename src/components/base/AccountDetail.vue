@@ -142,11 +142,11 @@ export default {
           .catch((err) => {
             this.errorMsg(err);
             this.$toast.add({
-              severity: "error",
-              summary: "Thêm thất bại!",
-              detail: "vui lòng kiểm tra lại",
-              life: 3000,
-            });
+                severity: "error",
+                summary: `Xóa thất bại!`,
+                detail: "vui lòng kiểm tra lại",
+                life: 3000,
+              });
           });
       } else if (this.mode == "edit") {
         UserApi.update(this.employeeId, this.userModel)

@@ -73,11 +73,11 @@ export default {
   bottom: 0;
   background-color: #000;
   opacity: 0.4;
-  z-index: 19999;
+  z-index: 1;
 }
 
 .dialog-content {
-  z-index: 20000;
+  z-index: 1;
   position: fixed;
   top: 50%;
   left: 50%;
