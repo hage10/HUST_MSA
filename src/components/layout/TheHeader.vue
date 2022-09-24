@@ -15,15 +15,12 @@
       <div class="user-name">Nguyễn Văn An</div>
     </div>
   </div>
-  <notification v-if="isShowNoti" />
 </template>
 
 <script>
-import Notification from "../base/Notification.vue";
 export default {
   name: "TheHeader",
   components: {
-    Notification,
   },
   data() {
     return {

@@ -24,7 +24,7 @@
           <font-awesome-icon icon="magnifying-glass" class="icon-search" />
         </div>
       </div>
-      <div class="table-student" >
+      <div class="table-student">
         <DataTable :value="tableDataListStudent" responsiveLayout="scroll">
           <Column field="fullName" header="HỌ TÊN"></Column>
           <Column field="mssv" header="MSSV"></Column>
@@ -32,7 +32,11 @@
           <Column field="phoneNumber" header="SỐ ĐIỆN THOẠI"></Column>
           <Column field="id" header="Chức năng">
             <template #body="slotProps">
-              <Button icon="pi pi-trash" class="p-button-rounded p-button-danger mb-2" @click="btnDelete(slotProps.data.id)"/>
+              <Button
+                icon="pi pi-trash"
+                class="p-button-rounded p-button-danger mb-2"
+                @click="btnDelete(slotProps.data.id)"
+              />
             </template>
           </Column>
         </DataTable>
@@ -40,8 +44,9 @@
           <Button
             v-if="selectedClass"
             label="Thêm sinh viên vào lớp"
-            icon="pi pi-external-link"
+            icon="pi pi-plus"
             @click="openBasic"
+            class="p-button-lg"
           />
         </div>
       </div>
@@ -87,7 +92,6 @@ import Column from "primevue/column";
 export default {
   components: {
     Button,
-    // TheTable,
     Dropdown,
     Dialog,
     AutoComplete,
@@ -165,6 +169,7 @@ export default {
             detail: "Thêm sinh viên thành công!",
             life: 3000,
           });
+          this.load(this.selectedClass.classId);
         })
         .catch((err) => {
           console.log(err);
@@ -192,6 +197,7 @@ export default {
                 detail: "Xóa sinh viên thành công!",
                 life: 3000,
               });
+              this.load(this.selectedClass.classId);
             })
             .catch((err) => {
               console.log(err);
@@ -266,6 +272,10 @@ export default {
   justify-content: center;
 }
 .p-datatable .p-datatable-tbody > tr > td {
-  text-align: center;
+  text-align: center !important;
+  border: none !important;;
+}
+td:last-child {
+    align-items: center;
 }
 </style>

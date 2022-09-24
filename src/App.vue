@@ -2,14 +2,6 @@
   <!-- <the-container/> -->
   <router-view></router-view>
   <Loader :isShowLoader="isShowLoader" />
-  <AddClass
-    v-if="isShowAddClass"
-    @hideAddClass="
-      () => {
-        isShowAddClass = false;
-      }
-    "
-  />
   <PopupAddStudent
     v-if="isShowAddStudent"
     @hideAddStudent="
@@ -27,12 +19,10 @@
 import Toast from "primevue/toast";
 import ConfirmDialog from "primevue/confirmdialog";
 import Loader from "./components/base/Loader.vue";
-import AddClass from "./components/base/AddClass.vue";
 export default {
   name: "App",
   components: {
     Loader,
-    AddClass,
     Toast,
     ConfirmDialog,
   },

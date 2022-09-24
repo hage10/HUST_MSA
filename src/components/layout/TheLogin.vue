@@ -77,7 +77,6 @@
   </div>
 </template>
 <script>
-// import UserModel from "../../models/UserModels"
 import Button from "../base/Button.vue";
 import AuthApi from "@/api/entities/AuthApi";
 export default {
@@ -109,7 +108,7 @@ export default {
           console.log(res);
           sessionStorage.setItem("token", 'bearer '+ res.data);
           // if(res.data.role=='admin'){
-            this.$refs.teacher.click();
+            this.$refs.admin.click();
           // }
           // if(res.data.role=='teacher'){
           //   this.$refs.teacher.click();

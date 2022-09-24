@@ -3,8 +3,9 @@
     <div class="header-content">
       <div class="title-content">Quản lý tài khoản</div>
       <Button
-        buttonText="Thêm mới tài khoản"
-        buttonClass="button-primary"
+        label="Thêm tài khoản mới"
+        icon="pi pi-plus"
+        class="p-button-lg"
         @Click="btnAddOnClick"
       />
     </div>
@@ -20,46 +21,127 @@
         </div>
       </div>
       <div class="table-account">
-        <TheTable
-          :tableColumns="tableColumns"
-          :tableDataList="tableDataList"
-          @chooseAnEmployee="chooseAnEmployee"
-        />
+        <DataTable :value="tableDataList" responsiveLayout="scroll">
+          <Column field="username" header="Tài Khoản"></Column>
+          <Column field="fullName" header="HỌ VÀ TÊN"></Column>
+          <Column field="roleId" header="VAI TRÒ"></Column>
+          <Column field="mssv" header="MSSV"></Column>
+          <Column field="email" header="EMAIL"></Column>
+          <Column field="phoneNumber" header="SỐ ĐIỆN THOẠI"></Column>
+          <Column field="id" header="CHỨC NĂNG">
+            <template #body="slotProps">
+              <Button
+                icon="pi pi-trash"
+                class="p-button-rounded p-button-danger mb-2"
+                @click="btnDeleteUser(slotProps.data.id)"
+              />
+              <Button
+                icon="pi pi-user-edit"
+                class="p-button-rounded p-button-warning"
+                @click="btnUpdateUser(slotProps.data.id)"
+              />
+            </template>
+          </Column>
+        </DataTable>
       </div>
     </div>
   </div>
-  <AccountDetail
-    v-if="isShowDialog"
-    @closeForm="
-      () => {
-        isShowDialog = false;
-      }
-    "
-    :mode="dialogMode"
-    :employeeId="myEmployeeId"
-  ></AccountDetail>
+  <Dialog
+    header="Chi tiết tài khoản"
+    v-model:visible="displayBasic"
+    :breakpoints="{ '960px': '55vw', '640px': '40vw' }"
+    :style="{ width: '30vw' }"
+  >
+    <div class="field">
+      <label for="input">Vai trò</label>
+      <div class="flex-group">
+        <div class="field-radiobutton">
+          <RadioButton
+            inputId="1"
+            name="roleId"
+            value="1"
+            v-model="userModel.roleId"
+          />
+          <label for="1">Admin</label>
+        </div>
+        <div class="field-radiobutton">
+          <RadioButton
+            inputId="2"
+            name="roleId"
+            value="2"
+            v-model="userModel.roleId"
+          />
+          <label for="2">Teacher</label>
+        </div>
+        <div class="field-radiobutton">
+          <RadioButton
+            inputId="3"
+            name="roleId"
+            value="3"
+            v-model="userModel.roleId"
+          />
+          <label for="3">Student</label>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="input">Tài khoản</label>
+      <InputText id="input" type="username" v-model="userModel.username" />
+    </div>
+    <div class="field" v-if="this.modeAdd">
+      <label for="input">Mật khẩu</label>
+      <InputText id="input" type="username" v-model="userModel.password" />
+    </div>
+    <div class="field">
+      <label for="input">Họ và tên</label>
+      <InputText id="input" type="username" v-model="userModel.fullName" />
+    </div>
+    <div class="field">
+      <label for="input">Mã số sinh viên</label>
+      <InputText id="input" type="username" v-model="userModel.mssv" />
+    </div>
+    <div class="field">
+      <label for="input">Email</label>
+      <InputText id="input" type="username" v-model="userModel.email" />
+    </div>
+    <div class="field">
+      <label for="input">Số điện thoại</label>
+      <InputText id="input" type="username" v-model="userModel.phoneNumber" />
+    </div>
+    <template #footer>
+      <Button
+        label="Yes"
+        icon="pi pi-check"
+        @click="updateUserConfirm"
+        autofocus
+      />
+    </template>
+  </Dialog>
 </template>
   
   <script>
-import TheTable from "../../components/base/Table.vue";
-import { accountColumns } from "./AccountColumns.js";
 import UserApi from "../../api/entities/UserApi";
-import Button from "@/components/base/Button.vue";
-import AccountDetail from "@/components/base/AccountDetail.vue";
+import DataTable from "primevue/datatable";
+import Column from "primevue/column";
+import Button from "primevue/button";
+import Dialog from "primevue/dialog";
+import InputText from "primevue/inputtext";
+import RadioButton from "primevue/radiobutton";
+
 export default {
   name: "TheButton",
   components: {
-    TheTable,
     Button,
-    AccountDetail,
+    DataTable,
+    Column,
+    Dialog,
+    InputText,
+    RadioButton,
   },
   data() {
     return {
-      myEmployeeId: "",
+      modeAdd: false,
       employeeSelected: {},
-      //-------------------------------
-      // các mảng cột và hàng truyền vào cho table
-      tableColumns: accountColumns,
       tableDataList: [],
       // các biến lưu dữ liệu của paging
       totalRecord: 0,
@@ -71,53 +153,119 @@ export default {
       isReOpenDialog: false,
       // lưu giá trị nhận được từ inputSearch
       searchTerms: "",
+      displayBasic: false,
+      userModel: {},
+      roleList: null,
+      idUserUpdate: "",
     };
   },
   methods: {
-    /**
-     * Ấn button thêm mới nhân viên
-     * Author: TrungTQ
-     */
-    btnAddOnClick() {
-      this.isShowDialog = true;
-      this.dialogMode = "add";
+    btnUpdateUser(idUser) {
+      UserApi.getById(idUser).then((res) => {
+        console.log(res);
+        this.userModel = res.data;
+        this.idUserUpdate = idUser;
+      });
+      this.displayBasic = true;
+      this.modeAdd = false;
+
     },
-    /**
-     * Nhận sự kiện khi table chọn 1 nhân viên và truyền lên kèm theo id nhân viên => mở dilalog sửa
-     * @param employeeId
-     * Author TrungTQ
-     */
-    chooseAnEmployee(id) {
-      this.isShowDialog = true;
-      this.dialogMode = "edit";
-      setTimeout(() => {
-        this.isReOpenDialog = !this.isReOpenDialog;
-      }, 100);
-      this.myEmployeeId = id;
+    updateUserConfirm() {
+      if (this.modeAdd) {
+        UserApi.add(this.userModel)
+          .then((res) => {
+            this.displayBasic = false;
+            console.log(res);
+            this.$toast.add({
+              severity: "success",
+              summary: "SUCCESS",
+              detail: "Thêm thành công!",
+              life: 3000,
+            });
+            this.load();
+          })
+          .catch((err) => {
+            this.errorMsg(err);
+            this.displayBasic = false;
+            this.$toast.add({
+              severity: "error",
+              summary: `ERROR`,
+              detail: "Thêm thất bại!",
+              life: 3000,
+            });
+            
+          });
+      } else {
+        UserApi.update(this.idUserUpdate, this.userModel)
+          .then(async (res) => {
+            this.displayBasic = false;
+            console.log(res);
+            this.$toast.add({
+              severity: "success",
+              summary: "Cập nhật thành công!",
+              detail: "vui lòng kiểm tra",
+              life: 3000,
+            });
+            this.load();
+          })
+          .catch((err) => {
+            this.errorMsg(err);
+            this.displayBasic = false;
+            this.$toast.add({
+              severity: "success",
+              summary: "Cập nhật thất bại!",
+              detail: "vui lòng kiểm tra lại",
+              life: 3000,
+            });
+            this.load();
+          });
+      }
+    },
+    btnDeleteUser(idUser) {
+      this.$confirm.require({
+        message: `Bạn có thực sự muốn xóa tài khoản <${this.tableDataList.fullName}> không`,
+        header: "Xác nhận",
+        icon: "pi pi-exclamation-triangle",
+        accept: () => {
+          UserApi.delete(idUser)
+            .then((res) => {
+              console.log(res);
+              this.$confirm.close();
+              this.$toast.add({
+                severity: "success",
+                summary: "Xóa thành công!",
+                detail: "vui lòng kiểm tra",
+                life: 3000,
+              });
+            this.load();
+            })
+            .catch((err) => {
+              console.log(err);
+              this.$confirm.close();
+              this.$toast.add({
+                severity: "error",
+                summary: `Xóa thất bại!`,
+                detail: "vui lòng kiểm tra lại",
+                life: 3000,
+              });
+            });
+        },
+        reject: () => {
+          //callback to execute when user rejects the action
+          this.$confirm.close();
+        },
+        onHide: () => {
+          //Callback to execute when dialog is hidden
+          this.$confirm.close();
+        },
+      });
     },
 
-    /**
-     * Thay đổi pagingSize
-     * @param newPagingSize
-     * Author TrungTQ
-     */
-    // changePagingSize(newPagingSize) {
-    //   this.pagingSize = newPagingSize;
-    //   this.load();
-    // },
-    /**
-     * Thay đổi currentPage
-     * @param newCurentPage
-     * Author TrungTQ
-     */
-    // changeCurrentPage(newCurentPage) {
-    //   this.currentPage = newCurentPage;
-    //   this.load();
-    // },
-    /**
-     * Từ searchTerms, pagingSize, currentPage => load ra query tương ứng để gọi api filter
-     * Author TrungTQ
-     * */
+    btnAddOnClick() {
+      this.modeAdd = true;
+      this.displayBasic = true;
+      this.userModel = {};
+    },
     getQueryStringFilter() {
       var paramStrs = `PageNumber=${this.currentPage}&PageSize=${this.pagingSize}`;
       if (this.searchTerms !== undefined && this.searchTerms !== "") {
@@ -139,23 +287,8 @@ export default {
         this.emitter.emit("hideLoader");
       });
     },
-    /**
-     * Thực hiện tìm kiếm khi enter input search
-     * Author TrungTQ
-     * */
-    enterSearch() {
-      this.currentPage = 1;
-      this.load();
-    },
   },
-
   created() {
-    this.emitter.on("btnEditOnClick", (id) => {
-      this.isShowDialog = true;
-      this.dialogMode = "edit";
-      this.myEmployeeId = id;
-    });
-
     this.load();
     this.emitter.on("load", () => {
       this.load();
@@ -163,8 +296,6 @@ export default {
     this.emitter.on("hideDialog", () => {
       this.isShowDialog = false;
     });
-    // lắng nghe sự kiện nhân bản nhân viên
-
   },
 };
 </script>
@@ -186,7 +317,16 @@ export default {
   box-sizing: border-box;
   position: relative;
 }
-
+.flex-group {
+  display: flex !important;
+  justify-content: space-around;
+}
+.field-radiobutton {
+  display: flex !important;
+}
+.field-radiobutton > label {
+  margin-left: 10px;
+}
 .icon-search {
   position: absolute;
   right: 27px;
@@ -198,5 +338,23 @@ export default {
   width: 100%;
   height: calc(100% - 68px);
   padding: 0 20px 20px 20px;
+}
+td:last-child {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+}
+.field * {
+  display: block;
+}
+.field {
+  margin-bottom: 10px;
+}
+#input {
+  width: 100%;
+}
+.field > label {
+  font-weight: 600;
+  margin-bottom: 5px;
 }
 </style>

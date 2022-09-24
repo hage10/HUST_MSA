@@ -6,16 +6,12 @@
     <!-- <router-view></router-view> -->
     <div class="assignment-content">
       <div class="tool-header">
-        <Button
-            buttonText="Tạo lớp"
-            buttonClass="button-primary"
-            @Click="btnAddClassOnClick"
-          />
+        <Button label="Tạo lớp" icon="pi pi-plus" @Click="openBasic" class="p-button-lg" />
       </div>
       <div tag="main" name="card" class="body-content">
         <div class="classroom-group">
           <router-link
-          to="/teacher/homeassignment/detailassignment"
+            to="/teacher/homeassignment/detailassignment"
             v-for="column in classList"
             :key="column.name"
             class="card-class"
@@ -24,50 +20,103 @@
             <div class="description">
               <span>{{ column.name }}</span>
             </div>
-          <!-- </div> -->
+            <!-- </div> -->
           </router-link>
         </div>
       </div>
     </div>
   </div>
-  <PopupDetailClass :isShowPopupDetailClass="isShowPopupDetailClass" @goBack="
+  <PopupDetailClass
+    :isShowPopupDetailClass="isShowPopupDetailClass"
+    @goBack="
       () => {
         isShowPopupDetailClass = false;
       }
-    "/>
+    "
+  />
+  <Dialog
+    header="Tạo lớp"
+    v-model:visible="displayBasic"
+    :breakpoints="{ '960px': '55vw', '640px': '40vw' }"
+    :style="{ width: '25vw' }"
+  >
+    <span class="p-float-label">
+      <InputText type="text" v-model="classModel.name" style="width: 100%" />
+      <label for="name">Tên lớp</label>
+    </span>
+    <template #footer>
+      <Button
+        label="Yes"
+        icon="pi pi-check"
+        @click="btnAddClassOnClick"
+        autofocus
+      />
+    </template>
+  </Dialog>
 </template>
 <script>
-  import ClassApi from "../../api/entities/ClassApi"
-// import { classNames } from "./className";
+import ClassApi from "../../api/entities/ClassApi";
 import PopupDetailClass from "./PopupDetailClass.vue";
-import Button from "@/components/base/Button.vue";
+import Button from "primevue/button";
+import Dialog from "primevue/dialog";
+import InputText from "primevue/inputtext";
 export default {
   components: {
     PopupDetailClass,
-    Button
-},
+    Button,
+    Dialog,
+    InputText,
+  },
   data() {
     return {
       classList: "",
       isShowPopupDetailClass: false,
+      displayBasic: false,
+      classModel: {},
     };
   },
-  methods:{
-    goTodetail(classId){
+  methods: {
+    getListClass() {
+      ClassApi.getAll().then((res) => {
+        console.log(res);
+        this.classList = res.data;
+      });
+    },
+    openBasic() {
+      this.displayBasic = true;
+    },
+    goTodetail(classId) {
       this.isShowPopupDetailClass = true;
-      this.emitter.emit("chooseClass",classId);
+      this.emitter.emit("chooseClass", classId);
     },
     btnAddClassOnClick() {
-      this.emitter.emit("showAddClass");
+      ClassApi.add(this.classModel)
+        .then((res) => {
+          console.log(res);
+          this.$toast.add({
+            severity: "success",
+            summary: "SUCCESS!",
+            detail: "Thêm thành công",
+            life: 3000,
+          });
+          this.displayBasic = false;
+          this.getListClass();
+        })
+        .catch((err) => {
+          console.log(err);
+          this.$toast.add({
+            severity: "error",
+            summary: "ERROR!",
+            detail: "Thêm thất bại",
+            life: 3000,
+          });
+          this.displayBasic = false;
+        });
     },
   },
-  created(){
-    ClassApi.getAll().then((res)=>{
-      console.log(res);
-      this.classList=res.data
-    })
-  }
-
+  created() {
+    this.getListClass();
+  },
 };
 </script>
 <style>
@@ -79,13 +128,13 @@ export default {
   flex-direction: column;
   overflow: auto;
 }
-.tool-header{
+.tool-header {
   padding: 24px 0 20px 42px;
-    position: sticky;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    background-color: #fff;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background-color: #fff;
 }
 .classroom-group {
   display: flex;
