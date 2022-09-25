@@ -59,7 +59,7 @@
           <RadioButton
             inputId="1"
             name="roleId"
-            value="1"
+            :value="1"
             v-model="userModel.roleId"
           />
           <label for="1">Admin</label>
@@ -68,7 +68,7 @@
           <RadioButton
             inputId="2"
             name="roleId"
-            value="2"
+            :value="2"
             v-model="userModel.roleId"
           />
           <label for="2">Teacher</label>
@@ -77,7 +77,7 @@
           <RadioButton
             inputId="3"
             name="roleId"
-            value="3"
+            :value="3"
             v-model="userModel.roleId"
           />
           <label for="3">Student</label>
@@ -86,15 +86,51 @@
     </div>
     <div class="field">
       <label for="input">Tài khoản</label>
-      <InputText id="input" type="username" v-model="userModel.username" />
+      <InputText
+        id="input"
+        type="username"
+        v-model="userModel.username"
+        @focus="
+          () => {
+            touched.username = true;
+          }
+        "
+        :class="{
+          'border-red': v$.userModel.username.$invalid && touched.username,
+        }"
+      />
     </div>
     <div class="field" v-if="this.modeAdd">
       <label for="input">Mật khẩu</label>
-      <InputText id="input" type="username" v-model="userModel.password" />
+      <InputText
+        id="input"
+        type="username"
+        v-model="userModel.password"
+        @focus="
+          () => {
+            touched.password = true;
+          }
+        "
+        :class="{
+          'border-red': v$.userModel.password.$invalid && touched.password,
+        }"
+      />
     </div>
     <div class="field">
       <label for="input">Họ và tên</label>
-      <InputText id="input" type="username" v-model="userModel.fullName" />
+      <InputText
+        id="input"
+        type="username"
+        v-model="userModel.fullName"
+        @focus="
+          () => {
+            touched.fullName = true;
+          }
+        "
+        :class="{
+          'border-red': v$.userModel.fullName.$invalid && touched.fullName,
+        }"
+      />
     </div>
     <div class="field">
       <label for="input">Mã số sinh viên</label>
@@ -102,11 +138,36 @@
     </div>
     <div class="field">
       <label for="input">Email</label>
-      <InputText id="input" type="username" v-model="userModel.email" />
+      <InputText
+        id="input"
+        type="username"
+        v-model="userModel.email"
+        @focus="
+          () => {
+            touched.email = true;
+          }
+        "
+        :class="{
+          'border-red': v$.userModel.email.$invalid && touched.email,
+        }"
+      />
     </div>
     <div class="field">
       <label for="input">Số điện thoại</label>
-      <InputText id="input" type="username" v-model="userModel.phoneNumber" />
+      <InputText
+        id="input"
+        type="username"
+        v-model="userModel.phoneNumber"
+        @focus="
+          () => {
+            touched.phoneNumber = true;
+          }
+        "
+        :class="{
+          'border-red':
+            v$.userModel.phoneNumber.$invalid && touched.phoneNumber,
+        }"
+      />
     </div>
     <template #footer>
       <Button
@@ -127,7 +188,8 @@ import Button from "primevue/button";
 import Dialog from "primevue/dialog";
 import InputText from "primevue/inputtext";
 import RadioButton from "primevue/radiobutton";
-
+import { required, helpers } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
 export default {
   name: "TheButton",
   components: {
@@ -138,8 +200,52 @@ export default {
     InputText,
     RadioButton,
   },
+  setup() {
+    return { v$: useVuelidate() };
+  },
+  validations() {
+    return {
+      userModel: {
+        username: {
+          required: helpers.withMessage(
+            "Tài khoản không được để trống",
+            required
+          ),
+        },
+        password: {
+          required: helpers.withMessage(
+            "Mật khẩu không được để trống",
+            required
+          ),
+        },
+        fullName: {
+          required: helpers.withMessage(
+            "Họ và tên không được để trống",
+            required
+          ),
+        },
+        email: {
+          required: helpers.withMessage("Email không được để trống", required),
+        },
+        phoneNumber: {
+          required: helpers.withMessage(
+            "Số điện thoại không được để trống",
+            required
+          ),
+        },
+      },
+    };
+  },
   data() {
     return {
+      // giá trị cho biết các trường đã focus vào lần nào hay chưa
+      touched: {
+        username: false,
+        fullName: false,
+        password: false,
+        email: false,
+        phoneNumber: false,
+      },
       modeAdd: false,
       employeeSelected: {},
       tableDataList: [],
@@ -155,70 +261,122 @@ export default {
       searchTerms: "",
       displayBasic: false,
       userModel: {},
+      originalModel: {},
       roleList: null,
       idUserUpdate: "",
     };
   },
   methods: {
+    btnAddOnClick() {
+      this.modeAdd = true;
+      this.displayBasic = true;
+      this.userModel = {};
+      this.userModel.roleId = 3;
+      this.touched = {
+        username: false,
+        fullName: false,
+        password: false,
+        email: false,
+        phoneNumber:false,
+      };
+    },
     btnUpdateUser(idUser) {
       UserApi.getById(idUser).then((res) => {
         console.log(res);
         this.userModel = res.data;
+        this.userModel.password = "dsdfsdf";
         this.idUserUpdate = idUser;
+        this.originalModel = Object.assign({}, this.userModel);
       });
       this.displayBasic = true;
       this.modeAdd = false;
-
     },
-    updateUserConfirm() {
-      if (this.modeAdd) {
-        UserApi.add(this.userModel)
-          .then((res) => {
-            this.displayBasic = false;
-            console.log(res);
+    async updateUserConfirm() {
+      this.touched = {
+        username: true,
+        fullName: true,
+        password: true,
+        email: true,
+        phoneNumber:true,
+      };
+      const result = await this.v$.$validate();
+      if (!result) {
+        //sự kiện gửi thông tin thông tin lỗi cho popup
+        this.$confirm.require({
+          message: this.v$.$silentErrors[0].$message,
+          header: "Warning!",
+          icon: "pi pi-exclamation-triangle",
+        });
+      } else {
+        if (this.modeAdd) {
+          if (this.userModel) {
+            UserApi.add(this.userModel)
+              .then((res) => {
+                this.displayBasic = false;
+                console.log(res);
+                this.$toast.add({
+                  severity: "success",
+                  summary: "SUCCESS",
+                  detail: "Thêm thành công!",
+                  life: 3000,
+                });
+                this.load();
+              })
+              .catch((err) => {
+                console.log(err);
+                this.displayBasic = false;
+                this.$toast.add({
+                  severity: "error",
+                  summary: `ERROR`,
+                  detail: "Thêm thất bại!",
+                  life: 3000,
+                });
+              });
+          } else {
             this.$toast.add({
-              severity: "success",
-              summary: "SUCCESS",
-              detail: "Thêm thành công!",
-              life: 3000,
-            });
-            this.load();
-          })
-          .catch((err) => {
-            this.errorMsg(err);
-            this.displayBasic = false;
-            this.$toast.add({
-              severity: "error",
-              summary: `ERROR`,
+              severity: "warn",
+              summary: `WARNING`,
               detail: "Thêm thất bại!",
               life: 3000,
             });
-            
-          });
-      } else {
-        UserApi.update(this.idUserUpdate, this.userModel)
-          .then(async (res) => {
-            this.displayBasic = false;
-            console.log(res);
+          }
+        } else {
+          if (
+            JSON.stringify(this.originalModel) ===
+            JSON.stringify(this.userModel)
+          ) {
             this.$toast.add({
-              severity: "success",
-              summary: "Cập nhật thành công!",
-              detail: "vui lòng kiểm tra",
+              severity: "warn",
+              summary: "WARNING",
+              detail: "Dữ liệu chưa được thay đổi",
               life: 3000,
             });
-            this.load();
-          })
-          .catch((err) => {
-            this.errorMsg(err);
-            this.displayBasic = false;
-            this.$toast.add({
-              severity: "success",
-              summary: "Cập nhật thất bại!",
-              detail: "vui lòng kiểm tra lại",
-              life: 3000,
-            });
-            this.load();
-          });
+          } else {
+            UserApi.update(this.idUserUpdate, this.userModel)
+              .then(async (res) => {
+                this.displayBasic = false;
+                console.log(res);
+                this.$toast.add({
+                  severity: "success",
+                  summary: "SUCCESS",
+                  detail: "Cập nhật thành công!",
+                  life: 3000,
+                });
+                this.load();
+              })
+              .catch((err) => {
+                this.errorMsg(err);
+                this.displayBasic = false;
+                this.$toast.add({
+                  severity: "success",
+                  summary: "Cập nhật thất bại!",
+                  detail: "vui lòng kiểm tra lại",
+                  life: 3000,
+                });
+                this.load();
+              });
+          }
+        }
       }
     },
     btnDeleteUser(idUser) {
@@ -237,7 +395,7 @@ export default {
                 detail: "vui lòng kiểm tra",
                 life: 3000,
               });
-            this.load();
+              this.load();
             })
             .catch((err) => {
               console.log(err);
@@ -261,11 +419,6 @@ export default {
       });
     },
 
-    btnAddOnClick() {
-      this.modeAdd = true;
-      this.displayBasic = true;
-      this.userModel = {};
-    },
     getQueryStringFilter() {
       var paramStrs = `PageNumber=${this.currentPage}&PageSize=${this.pagingSize}`;
       if (this.searchTerms !== undefined && this.searchTerms !== "") {
@@ -356,5 +509,12 @@ td:last-child {
 .field > label {
   font-weight: 600;
   margin-bottom: 5px;
+}
+[notvalid] {
+  border: 1px solid #ff4747;
+}
+
+.border-red {
+  border: 1px solid red !important;
 }
 </style>

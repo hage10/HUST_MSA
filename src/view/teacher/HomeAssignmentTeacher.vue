@@ -4,14 +4,19 @@
       <div class="title-content">Assignment</div>
     </div>
     <!-- <router-view></router-view> -->
-    <div class="assignment-content">
+    <div class="assignment-main-content">
       <div class="tool-header">
-        <Button label="Tạo lớp" icon="pi pi-plus" @Click="openBasic" class="p-button-lg" />
+        <Button
+          label="Tạo lớp"
+          icon="pi pi-plus"
+          @Click="openBasic"
+          class="p-button-lg"
+        />
       </div>
       <div tag="main" name="card" class="body-content">
         <div class="classroom-group">
           <router-link
-            to="/teacher/homeassignment/detailassignment"
+            to="/teacher/homeassignment"
             v-for="column in classList"
             :key="column.name"
             class="card-class"
@@ -28,6 +33,7 @@
   </div>
   <PopupDetailClass
     :isShowPopupDetailClass="isShowPopupDetailClass"
+    :idClass="classId"
     @goBack="
       () => {
         isShowPopupDetailClass = false;
@@ -41,7 +47,7 @@
     :style="{ width: '25vw' }"
   >
     <span class="p-float-label">
-      <InputText type="text" v-model="classModel.name" style="width: 100%" />
+      <InputText type="text" v-model="classModel.name" style="width: 100%;" />
       <label for="name">Tên lớp</label>
     </span>
     <template #footer>
@@ -73,6 +79,7 @@ export default {
       isShowPopupDetailClass: false,
       displayBasic: false,
       classModel: {},
+      classId:""
     };
   },
   methods: {
@@ -87,7 +94,7 @@ export default {
     },
     goTodetail(classId) {
       this.isShowPopupDetailClass = true;
-      this.emitter.emit("chooseClass", classId);
+      this.classId=classId
     },
     btnAddClassOnClick() {
       ClassApi.add(this.classModel)
@@ -120,7 +127,7 @@ export default {
 };
 </script>
 <style>
-.assignment-content {
+.assignment-main-content {
   background-color: #fff;
   width: 100%;
   height: calc(100vh - 154px);
@@ -154,7 +161,10 @@ export default {
   box-shadow: 0 40px 40px -20px rgba(0, 0, 0, 0.2);
   transition: 0.3s ease-in-out transform;
   cursor: pointer;
-  background-color: #b2acf6;
+  /* background-color: #b2acf6; */
+  background-image: url("../../assets/imgs/bg-class.png");
+  background-size: contain;
+  background-repeat: no-repeat; 
 }
 
 .card-class:hover {

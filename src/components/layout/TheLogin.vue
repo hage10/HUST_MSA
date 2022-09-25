@@ -108,7 +108,7 @@ export default {
           console.log(res);
           sessionStorage.setItem("token", 'bearer '+ res.data);
           // if(res.data.role=='admin'){
-            this.$refs.admin.click();
+            this.$refs.teacher.click();
           // }
           // if(res.data.role=='teacher'){
           //   this.$refs.teacher.click();

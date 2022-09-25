@@ -8,8 +8,6 @@ import TeacherContainer from './view/teacher/TeacherContainer'
 import TeacherDetail from './view/teacher/TeacherDetail'
 import ClassManage from './view/teacher/ClassManage'
 import HomeAssignmentTeacher from './view/teacher/HomeAssignmentTeacher'
-import ContentPopupAssignment from './view/teacher/ContentPopupAssignment'
-import ContentPopupCreate from './view/teacher/ContentPopupCreate'
 
 import AdminContainer from './view/admin/AdminContainer'
 import AccountManage from './view/admin/AccountManage'
@@ -46,17 +44,6 @@ const routes = [
       {
         path: '/teacher/homeassignment/',
         component: HomeAssignmentTeacher,
-        children: [
-          {
-            path: '/teacher/homeassignment/detailassignment',
-            component: ContentPopupAssignment
-          },
-          {
-            path: '/teacher/homeassignment/createassignment',
-            component: ContentPopupCreate
-          }
-
-        ]
       },
       {
         path: '/teacher/classmanage',

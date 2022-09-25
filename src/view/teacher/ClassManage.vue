@@ -102,8 +102,6 @@ export default {
     return {
       displayBasic: false,
       tableDataListStudent: [],
-      // các biến lưu dữ liệu của paging
-      //   totalRecord: 0,
       currentPage: 1,
       pagingSize: 20,
       selectedClass: null,
