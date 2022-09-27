@@ -9,7 +9,7 @@
         <Button
           label="Tạo lớp"
           icon="pi pi-plus"
-          @Click="openBasic"
+          @Click="addClass"
           class="p-button-lg"
         />
       </div>
@@ -20,10 +20,22 @@
             v-for="column in classList"
             :key="column.name"
             class="card-class"
-            @click="goTodetail(column.classId)"
+            @dblclick="goTodetail(column.classId)"
           >
             <div class="description">
               <span>{{ column.name }}</span>
+              <div class="tool">
+                <Button
+                  icon="pi pi-pencil"
+                  class="p-button-rounded p-button-secondary p-button-text"
+                  @click="updateClass(column.classId)"
+                />
+                <Button
+                  icon="pi pi-trash"
+                  class="p-button-rounded p-button-secondary p-button-text"
+                  @click="btnDeleteClass(column.classId)"
+                />
+              </div>
             </div>
             <!-- </div> -->
           </router-link>
@@ -41,13 +53,13 @@
     "
   />
   <Dialog
-    header="Tạo lớp"
+    header="Thông tin lớp"
     v-model:visible="displayBasic"
     :breakpoints="{ '960px': '55vw', '640px': '40vw' }"
     :style="{ width: '25vw' }"
   >
     <span class="p-float-label">
-      <InputText type="text" v-model="classModel.name" style="width: 100%;" />
+      <InputText type="text" v-model="classModel.name" style="width: 100%" />
       <label for="name">Tên lớp</label>
     </span>
     <template #footer>
@@ -79,7 +91,8 @@ export default {
       isShowPopupDetailClass: false,
       displayBasic: false,
       classModel: {},
-      classId:""
+      classId: "",
+      modeAddClass: "",
     };
   },
   methods: {
@@ -89,36 +102,103 @@ export default {
         this.classList = res.data;
       });
     },
-    openBasic() {
+    addClass() {
       this.displayBasic = true;
+      this.modeAddClass = "add";
+      this.classModel.name=""
+    },
+    updateClass(classId) {
+      ClassApi.getById(classId).then((res)=>{
+        this.classModel.name=res.data.name
+      })
+      this.classId = classId;
+      alert(this.classId);
+      this.displayBasic = true;
+      this.modeAddClass = "update";
+
     },
     goTodetail(classId) {
       this.isShowPopupDetailClass = true;
-      this.classId=classId
+      this.classId = classId;
     },
     btnAddClassOnClick() {
-      ClassApi.add(this.classModel)
-        .then((res) => {
-          console.log(res);
-          this.$toast.add({
-            severity: "success",
-            summary: "SUCCESS!",
-            detail: "Thêm thành công",
-            life: 3000,
+      if (this.modeAddClass == "add") {
+        ClassApi.add(this.classModel)
+          .then((res) => {
+            console.log(res);
+            this.$toast.add({
+              severity: "success",
+              summary: "SUCCESS!",
+              detail: "Thêm thành công",
+              life: 3000,
+            });
+            this.displayBasic = false;
+            this.getListClass();
+          })
+          .catch((err) => {
+            console.log(err);
+            this.$toast.add({
+              severity: "error",
+              summary: "ERROR!",
+              detail: "Thêm thất bại",
+              life: 3000,
+            });
+            this.displayBasic = false;
           });
-          this.displayBasic = false;
-          this.getListClass();
-        })
-        .catch((err) => {
-          console.log(err);
-          this.$toast.add({
-            severity: "error",
-            summary: "ERROR!",
-            detail: "Thêm thất bại",
-            life: 3000,
+      } else {
+        ClassApi.update(this.classId, this.classModel)
+          .then((res) => {
+            console.log(res);
+            this.$toast.add({
+              severity: "success",
+              summary: "SUCCESS!",
+              detail: "Sửa thành công",
+              life: 3000,
+            });
+            this.displayBasic = false;
+            this.getListClass();
+          })
+          .catch((err) => {
+            console.log(err);
+            this.$toast.add({
+              severity: "error",
+              summary: "ERROR!",
+              detail: "Sửa thất bại",
+              life: 3000,
+            });
+            this.displayBasic = false;
           });
-          this.displayBasic = false;
-        });
+      }
+    },
+    btnDeleteClass(classId) {
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: "Do you want to delete this record?",
+        icon: "pi pi-info-circle",
+        acceptClass: "p-button-danger",
+        accept: () => {
+          ClassApi.delete(classId).then((res) => {
+            console.log(res);
+            this.$toast.add({
+              severity: "success",
+              summary: "SUCCESS",
+              detail: "Xóa lớp thành công",
+              life: 3000,
+            });
+            this.getListClass();
+          })
+          .catch((err)=>{
+            console.log(err);
+            this.$toast.add({
+              severity: "error",
+              summary: "ERROR!",
+              detail: "Xóa thất bại",
+              life: 3000,
+            });
+          })
+        },
+        reject: () => {},
+      });
     },
   },
   created() {
@@ -161,10 +241,10 @@ export default {
   box-shadow: 0 40px 40px -20px rgba(0, 0, 0, 0.2);
   transition: 0.3s ease-in-out transform;
   cursor: pointer;
-  /* background-color: #b2acf6; */
-  background-image: url("../../assets/imgs/bg-class.png");
+  background-color: #b2acf6;
+  /* background-image: url("../../assets/imgs/bg-class.png");
   background-size: contain;
-  background-repeat: no-repeat; 
+  background-repeat: no-repeat;  */
 }
 
 .card-class:hover {
@@ -172,10 +252,17 @@ export default {
 }
 .description {
   padding: 20px 0 0 20px;
+  display: flex;
+  justify-content: space-between;
 }
 .description > span {
   font-size: 18px;
   color: #fff;
+}
+.description .tool {
+  font-size: 18px;
+  margin-top: -15px;
+  margin-right: 5px;
 }
 @keyframes mouseOver {
   0% {

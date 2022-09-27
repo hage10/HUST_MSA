@@ -19,6 +19,7 @@
 import Toast from "primevue/toast";
 import ConfirmDialog from "primevue/confirmdialog";
 import Loader from "./components/base/Loader.vue";
+
 export default {
   name: "App",
   components: {

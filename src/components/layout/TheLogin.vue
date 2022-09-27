@@ -262,7 +262,6 @@ export default {
   background-size: contain;
   background-repeat: no-repeat;
   margin-right: 6px;
-  background-color: ;
 }
 .google-play {
   width: 110px;
