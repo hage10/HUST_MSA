@@ -30,8 +30,6 @@ export default {
   data() {
     return {
       isShowLoader: false,
-      isShowAddClass: false,
-      isShowAddStudent: false,
     };
   },
 
@@ -41,12 +39,6 @@ export default {
     });
     this.emitter.on("hideLoader", () => {
       this.isShowLoader = false;
-    });
-    this.emitter.on("showAddClass", () => {
-      this.isShowAddClass = true;
-    });
-    this.emitter.on("showAddStudent", () => {
-      this.isShowAddStudent = true;
     });
   },
 };
@@ -69,6 +61,12 @@ a:-webkit-any-link {
 .input-24 {
   width: 100%;
 }
+.p-button-label {
+    font-weight: 600;
+}
+.p-padding{
+  padding: 0.5rem 2.5rem !important;
+}
 ::placeholder {
   font-family: "GoogleSans-Italic";
   font-size: 13px;
@@ -90,7 +88,9 @@ a:-webkit-any-link {
   outline: none;
   font-size: 13px;
 }
-
+.p-inputtext {
+    width: 100%;
+}
 .m-input:focus {
   border: 1px solid #6558ef;
 }

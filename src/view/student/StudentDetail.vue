@@ -22,31 +22,23 @@
           <div class="main-info">
             <div class="prop-item">
               <p>Họ và tên</p>
-              <input type="text" class="m-input input-24" />
+              <InputText type="text" class="m-input input-24" disabled/>
             </div>
             <div class="prop-item">
-              <p>Giới tính</p>
-              <input type="text" class="m-input input-24" />
+              <p>MASS</p>
+              <InputText type="text" class="m-input input-24" disabled/>
             </div>
             <div class="prop-item">
               <p>Ngày sinh</p>
-              <input type="text" class="m-input input-24" />
+              <InputText type="text" class="m-input input-24" disabled/>
             </div>
             <div class="prop-item">
               <p>Lớp</p>
-              <input type="text" class="m-input input-24" />
-            </div>
-            <div class="prop-item">
-              <p>Ngành học</p>
-              <input type="text" class="m-input input-24" />
-            </div>
-            <div class="prop-item">
-              <p>Khóa học</p>
-              <input type="text" class="m-input input-24" />
+              <InputText type="text" class="m-input input-24" disabled/>
             </div>
             <div class="prop-item">
               <p>Email</p>
-              <input type="email" class="m-input input-24" />
+              <InputText type="email" class="m-input input-24" disabled/>
             </div>
           </div>
           
@@ -58,23 +50,56 @@
           </div>
           <div class="main-change-pass">
             <div class="prop-item">
-              <p>Mật khẩu cũ</p>
-              <input type="password" class="m-input input-24" />
+              <p>Mật Khẩu cũ</p>
+              <span class="p-input-icon-right input-24">
+                <i
+                  class="pi pi-eye"
+                  v-if="visibility == 'text'"
+                  @click="hidePass1()"
+                />
+                <i
+                  class="pi pi-eye-slash"
+                  v-if="visibility == 'password'"
+                  @click="showPass1()"
+                />
+                <InputText :type="visibility" v-model="oldPassword" />
+              </span>
             </div>
             <div class="prop-item">
               <p>Mật Khẩu mới</p>
-              <input type="password" class="m-input  input-24" />
+              <span class="p-input-icon-right input-24">
+                <i
+                  class="pi pi-eye"
+                  v-if="visibility2 == 'text'"
+                  @click="hidePass2()"
+                />
+                <i
+                  class="pi pi-eye-slash"
+                  v-if="visibility2 == 'password'"
+                  @click="showPass2()"
+                />
+                <InputText :type="visibility2" v-model="neuPassword" />
+              </span>
             </div>
             <div class="prop-item">
               <p>Nhập lại mật khẩu</p>
-              <input type="password" class="m-input input-24" />
+              <span class="p-input-icon-right input-24">
+                <i
+                  class="pi pi-eye"
+                  v-if="visibility3 == 'text'"
+                  @click="hidePass3()"
+                />
+                <i
+                  class="pi pi-eye-slash"
+                  v-if="visibility3 == 'password'"
+                  @click="showPass3()"
+                />
+                <InputText :type="visibility3" v-model="repeatPassword" />
+              </span>
             </div>
           </div>
           <div class="btn-wrapper">
-            <Button
-              buttonText="Cập nhật"
-              buttonClass="button-primary btn-120"
-            />
+            <Button label="Đổi mật khẩu" class="p-padding" />
           </div>
         </div>
       </div>
@@ -83,11 +108,41 @@
 </template>
 
 <script>
-import Button from "@/components/base/Button.vue";
+import Button from 'primevue/button';
+import InputText from "primevue/inputtext";
+
 export default {
   name: "TheButton",
   components: {
     Button,
+    InputText,
+  },
+  data() {
+    return {
+      visibility: "password",
+      visibility2: "password",
+      visibility3: "password",
+    };
+  },
+  methods: {
+    showPass1() {
+      this.visibility = "text";
+    },
+    hidePass1() {
+      this.visibility = "password";
+    },
+    showPass2() {
+      this.visibility2 = "text";
+    },
+    hidePass2() {
+      this.visibility2 = "password";
+    },
+    showPass3() {
+      this.visibility3 = "text";
+    },
+    hidePass3() {
+      this.visibility3 = "password";
+    },
   },
 };
 </script>

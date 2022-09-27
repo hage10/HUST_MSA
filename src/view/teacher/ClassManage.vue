@@ -271,7 +271,6 @@ export default {
 }
 .p-datatable .p-datatable-tbody > tr > td {
   text-align: center !important;
-  border: none !important;;
 }
 td:last-child {
     align-items: center;

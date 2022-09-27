@@ -40,12 +40,12 @@
           </div>
           <router-link to="/" class="btn-login">
             <Button
-              buttonText="Đăng nhập"
-              buttonClass="button-primary btn-350"
+              label="Đăng nhập"
               @click="btnLogin"
+              class="p-padding"
             />
           </router-link>
-          <router-link to="/admin" class="btn-login" >
+          <router-link to="/admin/accountmanage" class="btn-login" >
             <button ref="admin" style="display: none" ></button>
           </router-link>
           <router-link to="/teacher" class="btn-login">
@@ -77,7 +77,7 @@
   </div>
 </template>
 <script>
-import Button from "../base/Button.vue";
+import Button from "primevue/button";
 import AuthApi from "@/api/entities/AuthApi";
 export default {
   name: "TheLogin",
@@ -273,7 +273,7 @@ export default {
 .footer-login {
   background-color: #dcdcdc;
   width: 100%;
-  height: 75px;
+  height: 79px;
   border-bottom-right-radius: 5px;
   display: flex;
   justify-content: center;

@@ -12,17 +12,15 @@
     <div class="manage-content">
       <div class="manage-toolbar">
         <div class="search-account">
-          <input
-            type="text"
-            class="m-input input-240 input-padding-right"
-            placeholder="Tìm tài khoản"
-          />
-          <font-awesome-icon icon="magnifying-glass" class="icon-search" />
+          <span class="p-input-icon-left">
+            <i class="pi pi-search" @click="enterSearch"/>
+            <InputText type="text" v-model="keyword" placeholder="Tìm tài khoản" class="input-240" @keyup.enter="enterSearch"/>
+          </span>
         </div>
       </div>
       <div class="table-account">
         <DataTable :value="tableDataList" responsiveLayout="scroll">
-          <Column field="username" header="Tài Khoản"></Column>
+          <Column field="username" header="TÀI KHOẢN"></Column>
           <Column field="fullName" header="HỌ VÀ TÊN"></Column>
           <Column field="roleId" header="VAI TRÒ"></Column>
           <Column field="mssv" header="MSSV"></Column>
@@ -264,9 +262,19 @@ export default {
       originalModel: {},
       roleList: null,
       idUserUpdate: "",
+      keyword:""
     };
   },
   methods: {
+    enterSearch(){
+      this.tableDataList="";
+      UserApi.search(this.keyword).then((res)=>{
+        this.tableDataList=res.data;
+      })
+      this.load()
+
+
+    },
     btnAddOnClick() {
       this.modeAdd = true;
       this.displayBasic = true;
@@ -277,7 +285,7 @@ export default {
         fullName: false,
         password: false,
         email: false,
-        phoneNumber:false,
+        phoneNumber: false,
       };
     },
     btnUpdateUser(idUser) {
@@ -297,7 +305,7 @@ export default {
         fullName: true,
         password: true,
         email: true,
-        phoneNumber:true,
+        phoneNumber: true,
       };
       const result = await this.v$.$validate();
       if (!result) {
@@ -464,11 +472,7 @@ export default {
 .search-account {
   display: flex;
   justify-content: end;
-  /* width: 100%; */
-  height: 68px;
-  padding: 16px 20px;
-  box-sizing: border-box;
-  position: relative;
+  padding: 24px 20px;
 }
 .flex-group {
   display: flex !important;
