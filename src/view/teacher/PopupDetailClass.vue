@@ -11,7 +11,7 @@
           style="z-index: 40000"
         />
       </router-link>
-      <TabView>
+      <TabView  @tab-click="clicked($event)">
         <TabPanel header="Assignments">
           <div class="popup-assgiment-body">
             <div
@@ -46,7 +46,7 @@
             </div>
           </div>
         </TabPanel>
-        <TabPanel header="Create a new Assignment" @tab-click="resetModel($event)">
+        <TabPanel header="Create a new Assignment">
           <div class="assignment-content">
             <div class="main-assignment">
               <div class="form-wrapper">
@@ -227,9 +227,10 @@ export default {
     idClass: Number,
   },
   methods: {
-    resetModel(){
-      alert(123)
-      // this.assignmentModel=""
+    clicked(e){
+      if(e.index==1){
+      this.assignmentModel=""
+      }      
     },
     goBackHomeAssignment() {
       this.$emit("goBack");
