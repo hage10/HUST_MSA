@@ -10,9 +10,9 @@
         <font-awesome-icon class="icon-20" icon="bell" @btnClick="btnNotiOnClick"/>
       </div>
       <div class="user-icon">
-        <font-awesome-icon class="icon-20" icon="user" />
+        <font-awesome-icon class="icon-20" icon="user" @click="logOut"/>
       </div>
-      <div class="user-name">Nguyễn Văn An</div>
+      <div class="user-name">{{this.fullName}}</div>
     </div>
   </div>
 </template>
@@ -25,13 +25,20 @@ export default {
   data() {
     return {
       isShowNoti: false,
+      fullName:""
     };
   },
   methods: {
     btnNotiOnClick() {
       this.isShowNoti = true;
     },
+    logOut(){
+      sessionStorage.setItem("token", '');
+    }
   },
+  created(){
+    this.fullName=sessionStorage.getItem("fullName");
+  }
 };
 </script>
 

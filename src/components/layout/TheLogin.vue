@@ -106,14 +106,24 @@ export default {
       AuthApi.login(this.userModel.email, this.userModel.password)
         .then(async (res) => {
           console.log(res);
-          sessionStorage.setItem("token", 'bearer '+ res.data);
-          // if(res.data.role=='admin'){
+          sessionStorage.setItem("token", 'Bearer '+ res.data);
+          // AuthApi.getInfo().then((res)=>{
+          // sessionStorage.setItem("fullName", res.data.fullName);
+          // sessionStorage.setItem("role", res.data.stringrole);
+          // sessionStorage.setItem("id", res.data.userId);
+          // sessionStorage.setItem("username", res.data.username);
+          // sessionStorage.setItem("email", res.data.email);
+          // sessionStorage.setItem("phoneNumber", res.data.phoneNumber);
+          // sessionStorage.setItem("mssv", res.data.mssv);
+          // });
+          // this.role=sessionStorage.getItem("role")
+          // if(this.role=='admin'){
             this.$refs.admin.click();
           // }
-          // if(res.data.role=='teacher'){
+          // if(this.role=='teacher'){
           //   this.$refs.teacher.click();
           // }
-          // if(res.data.role=='student'){
+          // if(this.role=='student'){
           //   this.$refs.student.click();
           // }
           this.$toast.add({
@@ -131,15 +141,6 @@ export default {
             life: 3000,
           });
         });
-      // if (this.userModel.email == "student" && this.userModel.password== "student") {
-      //   this.role="/student"
-      // }
-      // if (this.userModel.email == "teacher" && this.userModel.password== "teacher") {
-      //   this.role="/teacher/detailteacher"
-      // }
-      // if (this.userModel.email == "admin" && this.userModel.password== "admin") {
-      //   this.role="/admin"
-      // }
     },
   },
 };
