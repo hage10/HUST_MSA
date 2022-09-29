@@ -21,7 +21,7 @@
                     <div class="icon-tooltip dashboard-icon">
                         <font-awesome-icon class="icon-20" icon="book" />
                     </div>
-                    <div class="title-tooltip">Bài tập</div>
+                    <div class="title-tooltip">Assignment</div>
                 </router-link>
             </div>
         </div>

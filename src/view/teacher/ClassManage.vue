@@ -224,8 +224,11 @@ export default {
     });
   },
   created() {
-    this.load(98);
-    this.loadUser();
+    ClassApi.getAll().then((res) => {
+      this.classes = res.data;
+    });
+    this.load(98); 
+    // this.loadUser();
   },
 };
 </script>
@@ -241,6 +244,7 @@ export default {
   display: flex;
   align-items: center;
   padding-left: 20px;
+  padding-top: 20px;
   width: 100%;
 }
 .choose-class > span {

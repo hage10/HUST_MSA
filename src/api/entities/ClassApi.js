@@ -4,7 +4,15 @@ import BaseApiConfig from "../base/BaseApiConfig.js"
 class ClassApi extends BaseApi {
     constructor() {
         super();
-        this.apiController = "api/Class";
+        this.apiController = "Class";
+    }
+    getClassByUser(){
+        return BaseApiConfig.get(`${this.apiController}/user`,{
+            headers:{
+                "Content-type":"application/json",
+                Authorization:sessionStorage.getItem("token"),
+            }
+        })
     }
     getUserByClassId(id) {
         return BaseApiConfig.get(`${this.apiController}/${id}/users`, {

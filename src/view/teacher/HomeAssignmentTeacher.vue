@@ -97,7 +97,7 @@ export default {
   },
   methods: {
     getListClass() {
-      ClassApi.getAll().then((res) => {
+        ClassApi.getClassByUser().then((res) => {
         console.log(res);
         this.classList = res.data;
       });

@@ -20,10 +20,12 @@
     "cors": "^2.8.5",
     "emitter": "^0.0.5",
     "mitt": "^3.0.0",
+    "mqtt": "^4.3.7",
     "primeflex": "^3.2.1",
     "primeicons": "^5.0.0",
     "primevue": "^3.17.0",
     "vue": "^3.2.13",
+    "vue-mqtt": "^2.0.3",
     "vue-router": "^4.1.5",
     "vuelidate": "^0.7.7"
   },

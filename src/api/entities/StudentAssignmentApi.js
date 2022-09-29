@@ -4,18 +4,18 @@ import BaseApiConfig from "../base/BaseApiConfig.js"
 class UserApi extends BaseApi {
     constructor() {
         super();
-        this.apiController = "Users";
+        this.apiController = "StudentAssignment";
     }
-    search(paramStrs){
-        return BaseApiConfig.get(`${this.apiController}/search?keyword=${paramStrs}`, {
+    getStudentAssignment(id){
+        return BaseApiConfig.get(`${this.apiController}/Assignments/${id}`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: sessionStorage.getItem("token"),
             }
         });
     }
-    changePass(body){
-        return BaseApiConfig.post(`${this.apiController}/me`, body, {
+    reviewAssignment(id1,id2,body){
+        return BaseApiConfig.post(`${this.apiController}/Assignments/${id1}/Student/${id2}`, body,{
             headers: {
                 "Content-Type": "application/json",
                 Authorization: sessionStorage.getItem("token"),

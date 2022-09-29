@@ -38,13 +38,12 @@
               <p>Hiển thị mật khẩu</p>
             </label>
           </div>
-          <router-link to="/" class="btn-login">
-            <Button
+            <button
               label="Đăng nhập"
               @click="btnLogin"
               class="p-padding"
-            />
-          </router-link>
+              ref="loginBtn"
+            ></button>
           <router-link to="/admin/accountmanage" class="btn-login" >
             <button ref="admin" style="display: none" ></button>
           </router-link>
@@ -77,12 +76,12 @@
   </div>
 </template>
 <script>
-import Button from "primevue/button";
+// import Button from "primevue/button";
 import AuthApi from "@/api/entities/AuthApi";
 export default {
   name: "TheLogin",
   components: {
-    Button,
+    // Button,
   },
   data() {
     return {
@@ -107,25 +106,30 @@ export default {
         .then(async (res) => {
           console.log(res);
           sessionStorage.setItem("token", 'Bearer '+ res.data);
-          // AuthApi.getInfo().then((res)=>{
-          // sessionStorage.setItem("fullName", res.data.fullName);
-          // sessionStorage.setItem("role", res.data.stringrole);
-          // sessionStorage.setItem("id", res.data.userId);
-          // sessionStorage.setItem("username", res.data.username);
-          // sessionStorage.setItem("email", res.data.email);
-          // sessionStorage.setItem("phoneNumber", res.data.phoneNumber);
-          // sessionStorage.setItem("mssv", res.data.mssv);
-          // });
-          // this.role=sessionStorage.getItem("role")
-          // if(this.role=='admin'){
+          AuthApi.getInfo().then((res)=>{
+          sessionStorage.setItem("fullName", res.data.fullName);
+          sessionStorage.setItem("role", res.data.stringrole);
+          sessionStorage.setItem("id", res.data.userId);
+          sessionStorage.setItem("username", res.data.username);
+          sessionStorage.setItem("email", res.data.email);
+          sessionStorage.setItem("phoneNumber", res.data.phoneNumber);
+          sessionStorage.setItem("mssv", res.data.mssv);
+          sessionStorage.setItem("password", res.data.password);
+          });
+          this.role=sessionStorage.getItem("role")
+     
+          if(this.role=='admin'){
             this.$refs.admin.click();
-          // }
-          // if(this.role=='teacher'){
-          //   this.$refs.teacher.click();
-          // }
-          // if(this.role=='student'){
-          //   this.$refs.student.click();
-          // }
+          }
+          if(this.role=='teacher'){
+            this.$refs.teacher.click();
+          }
+          if(this.role=='student'){
+            this.$refs.student.click();
+          }
+          setTimeout(()=>{
+            this.$refs.loginBtn.click();
+          },100)
           this.$toast.add({
             severity: "success",
             summary: "Đăng nhập thành công!",

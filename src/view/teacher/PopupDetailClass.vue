@@ -11,7 +11,7 @@
           style="z-index: 40000"
         />
       </router-link>
-      <TabView  @tab-click="clicked($event)">
+      <TabView @tab-click="clicked($event)">
         <TabPanel header="Assignments">
           <div class="popup-assgiment-body">
             <div
@@ -56,24 +56,22 @@
                     <input
                       type="text"
                       class="m-input"
-                      v-model="assignmentModel.title"
+                      v-model="assignmentModelAdd.title"
                     />
                   </div>
                   <div class="form-assignment">
                     <span>Nội dung</span>
-                    <textarea
-                      name=""
-                      id=""
+                    <Textarea
                       rows="14"
                       class="m-textarea"
-                      v-model="assignmentModel.content"
-                    ></textarea>
+                      v-model="assignmentModelAdd.content"
+                    ></Textarea>
                   </div>
                 </div>
                 <div class="due-and-file">
                   <div class="form-assignment">
                     <span>Thời hạn</span>
-                    <Calendar v-model="assignmentModel.dueTo" />
+                    <Calendar v-model="assignmentModelAdd.dueTo" />
                   </div>
                   <div class="form-assignment">
                     <span>File đính kèm</span>
@@ -113,18 +111,31 @@
                   :options="assignmentList"
                   optionLabel="title"
                   placeholder="Select a assignment"
-                  @change="showClass"
+                  @change="goToFeedback(selectedAssignment.id)"
                 />
               </div>
-              <DataTable :value="tableDataAssignment" responsiveLayout="scroll">
-                <Column field="fullName" header="HỌ TÊN"></Column>
-                <Column field="mssv" header="MSSV"></Column>
-                <Column field="feedBack" header="FEEDBACK"></Column>
-                <Column field="grade" header="GRADE">
-                  <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" autofocus /> </template
-                ></Column>
-              </DataTable>
+              <div class="table-account">
+                <DataTable
+                  :value="tableDataAssignment"
+                  responsiveLayout="scroll"
+                >
+                  <Column field="studentId" header="HỌ VÀ TÊN"></Column>
+                  <Column field="studentId" header="MSSV"></Column>
+                  <Column field="grade" header="ĐIỂM"></Column>
+                  <Column field="submitted" header="TÌNH TRẠNG"></Column>
+                  <Column field="submittedAt" header="SUBMITED AT"></Column>
+                  <Column field="feedback" header="ĐÁNH GIÁ"></Column>
+                  <Column field="studentId" header="CHỨC NĂNG">
+                    <template #body="slotProps">
+                      <Button
+                        icon="pi pi-pencil"
+                        class="p-button-rounded p-button-success mb-2"
+                        @click="btnReview(slotProps.data.studentId)"
+                      />
+                    </template>
+                  </Column>
+                </DataTable>
+              </div>
             </div>
           </div>
         </TabPanel>
@@ -141,7 +152,11 @@
       <div class="title-and-content">
         <div class="form-assignment">
           <span>Tiêu đề</span>
-          <input type="text" class="m-input" v-model="assignmentModel.title" />
+          <input
+            type="text"
+            class="m-input"
+            v-model="assignmentModelUpdate.title"
+          />
         </div>
         <div class="form-assignment">
           <span>Nội dung</span>
@@ -150,14 +165,14 @@
             id=""
             rows="14"
             class="m-textarea"
-            v-model="assignmentModel.content"
+            v-model="assignmentModelUpdate.content"
           ></textarea>
         </div>
       </div>
       <div class="due-and-file">
         <div class="form-assignment">
           <span>Thời hạn</span>
-          <Calendar v-model="assignmentModel.dueTo" />
+          <Calendar v-model="assignmentModelUpdate.dueTo" />
         </div>
         <div class="form-assignment">
           <span>File đính kèm</span>
@@ -185,8 +200,28 @@
       />
     </div>
   </Dialog>
+  <Dialog header="Đánh giá" v-model:visible="display">
+    <div class="field-review">
+      <span>Điểm</span>
+      <InputText type="text" v-model="reviewModel.grade" />
+    </div>
+    <div class="field-review">
+      <span>FeedBack</span>
+      <InputText type="text" v-model="reviewModel.feedback" />
+    </div>
+    <div style="display: flex; justify-content: center">
+      <Button
+        label="Submit"
+        icon="pi pi-upload"
+        class="p-button-lg"
+        @click="submitReviewAssignment"
+      />
+    </div>
+  </Dialog>
 </template>
 <script>
+import StudentAssignmentApi from "@/api/entities/StudentAssignmentApi";
+import InputText from "primevue/inputtext";
 import TabView from "primevue/tabview";
 import TabPanel from "primevue/tabpanel";
 import AssignmentApi from "@/api/entities/AssigmentApi";
@@ -197,15 +232,19 @@ import Dropdown from "primevue/dropdown";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import Dialog from "primevue/dialog";
-
+import Textarea from "primevue/textarea";
 export default {
   data() {
     return {
       assignmentList: "",
-      assignmentModel: {},
+      assignmentModelUpdate: {},
+      assignmentModelAdd: {},
       selectedAssignment: null,
       displayBasic: false,
       assignmentId: "",
+      studentId: "",
+      display: false,
+      reviewModel: {},
     };
   },
   components: {
@@ -218,6 +257,8 @@ export default {
     DataTable,
     Column,
     Dialog,
+    Textarea,
+    InputText,
   },
   props: {
     isShowPopupDetailClass: {
@@ -227,14 +268,14 @@ export default {
     idClass: Number,
   },
   methods: {
-    clicked(e){
-      if(e.index==1){
-      this.assignmentModel=""
-      }      
+    clicked(e) {
+      if (e.index == 1) {
+        this.assignmentModel = "";
+      }
     },
     goBackHomeAssignment() {
       this.$emit("goBack");
-      alert(this.idClass);
+      // alert(this.idClass);
     },
     btnDeleteAssignment(assignmentId) {
       this.$confirm.require({
@@ -252,7 +293,7 @@ export default {
                 detail: "Xóa assignment thành công",
                 life: 3000,
               });
-              this.getListClass();
+              this.loadAssignmentByClassId();
             })
             .catch((err) => {
               console.log(err);
@@ -270,12 +311,12 @@ export default {
     btnEditAssignment(assignmentId) {
       this.assignmentId = assignmentId;
       AssignmentApi.getById(assignmentId).then((res) => {
-        this.assignmentModel = res.data;
+        this.assignmentModelUpdate = res.data;
       });
       this.displayBasic = true;
     },
     btnSaveAssignment() {
-      AssignmentApi.update(this.assignmentId, this.assignmentModel)
+      AssignmentApi.update(this.assignmentId, this.assignmentModelUpdate)
         .then(async (res) => {
           this.displayBasic = false;
           console.log(res);
@@ -291,17 +332,18 @@ export default {
           this.errorMsg(err);
           this.displayBasic = false;
           this.$toast.add({
-            severity: "success",
-            summary: "Cập nhật thất bại!",
-            detail: "vui lòng kiểm tra lại",
+            severity: "error",
+            summary: "ERROR",
+            detail: "Cập nhật thất bại!",
             life: 3000,
           });
         });
     },
     btnAddAssignment() {
-      alert(this.idClass);
-      this.assignmentModel.classId = this.idClass;
-      AssignmentApi.add(this.assignmentModel)
+      AssignmentApi.postAssignmentByClassId(
+        this.idClass,
+        this.assignmentModelAdd
+      )
         .then((res) => {
           console.log(res);
           this.$toast.add({
@@ -311,6 +353,7 @@ export default {
             life: 3000,
           });
           this.loadAssignmentByClassId();
+          this.assignmentModelAdd = "";
         })
         .catch((err) => {
           console.log(err);
@@ -329,6 +372,43 @@ export default {
         this.assignmentList = res.data;
       });
     },
+    goToFeedback(assignmentId) {
+      console.log(assignmentId);
+      this.assignmentId = assignmentId;
+      StudentAssignmentApi.getStudentAssignment(assignmentId).then((res) => {
+        console.log(res);
+        this.tableDataAssignment = res.data;
+      });
+    },
+    btnReview(id) {
+      console.log(id);
+      this.studentId = id;
+      this.display = true;
+    },
+    submitReviewAssignment() {
+      StudentAssignmentApi.reviewAssignment(
+        this.assignmentId,
+        this.studentId,
+        this.reviewModel
+      ).then((res) => {
+        console.log(res);
+        this.$toast.add({
+            severity: "success",
+            summary: "SUCCESS!",
+            detail: "Thành công",
+            life: 3000,
+          });
+      })
+      .catch((err)=>{
+        console.log(err);
+        this.$toast.add({
+            severity: "error",
+            summary: "ERROR",
+            detail: "Xảy ra lỗi",
+            life: 3000,
+          });
+      });
+    },
   },
   created() {
     this.loadAssignmentByClassId();
@@ -340,6 +420,14 @@ export default {
         console.log(this.idClass);
         this.assignmentList = res.data;
       });
+    },
+    studentAssignment() {
+      StudentAssignmentApi.getStudentAssignment(this.assignmentId).then(
+        (res) => {
+          console.log(res);
+          this.tableDataAssignment = res.data;
+        }
+      );
     },
   },
 };
@@ -444,6 +532,9 @@ export default {
   font-size: 16px;
   margin-bottom: 5px;
 }
+.choose-assignment {
+  margin-bottom: 20px;
+}
 .main-assignment {
   display: flex;
   flex-direction: column;
@@ -493,5 +584,12 @@ export default {
   resize: none;
   margin-bottom: 6px;
   font-size: 14px;
+}
+.field-review {
+  margin-bottom: 20px;
+}
+.field-review > span {
+  margin-bottom: 8px;
+  font-weight: 600;
 }
 </style>

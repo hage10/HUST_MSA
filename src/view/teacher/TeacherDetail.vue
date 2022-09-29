@@ -8,10 +8,6 @@
         <div class="avatar-img">
           <img src="../../assets/imgs/jpg.png" alt="" />
         </div>
-        <div class="student-id">
-          <div>MSGV:</div>
-          <div class="id">20186666</div>
-        </div>
       </div>
       <div class="info-area">
         <div class="your-info">
@@ -22,23 +18,48 @@
           <div class="main-info">
             <div class="prop-item">
               <p>Họ và tên</p>
-              <InputText type="text" class="m-input input-24" disabled />
+              <InputText
+                type="text"
+                class="m-input input-24"
+                disabled
+                v-model="fullName"
+              />
             </div>
             <div class="prop-item">
-              <p>Giới tính</p>
-              <InputText type="text" class="m-input input-24" disabled />
+              <p>Mã số</p>
+              <InputText
+                type="text"
+                class="m-input input-24"
+                disabled
+                v-model="mssv"
+              />
             </div>
             <div class="prop-item">
-              <p>Ngày sinh</p>
-              <InputText type="text" class="m-input input-24" disabled />
+              <p>Vai trò</p>
+              <InputText
+                type="text"
+                class="m-input input-24"
+                disabled
+                v-model="role"
+              />
             </div>
             <div class="prop-item">
               <p>Số điện thoại</p>
-              <InputText type="text" class="m-input input-24" disabled />
+              <InputText
+                type="text"
+                class="m-input input-24"
+                disabled
+                v-model="phoneNumber"
+              />
             </div>
             <div class="prop-item">
               <p>Email</p>
-              <InputText type="email" class="m-input input-24" disabled />
+              <InputText
+                type="email"
+                class="m-input input-24"
+                disabled
+                v-model="email"
+              />
             </div>
           </div>
         </div>
@@ -77,7 +98,10 @@
                   v-if="visibility2 == 'password'"
                   @click="showPass2()"
                 />
-                <InputText :type="visibility2" v-model="neuPassword" />
+                <InputText
+                  :type="visibility2"
+                  v-model="passwordModel.password"
+                />
               </span>
             </div>
             <div class="prop-item">
@@ -93,12 +117,19 @@
                   v-if="visibility3 == 'password'"
                   @click="showPass3()"
                 />
-                <InputText :type="visibility3" v-model="repeatPassword" />
+                <InputText
+                  :type="visibility3"
+                  v-model="passwordModel.confirmPassword"
+                />
               </span>
             </div>
           </div>
           <div class="btn-wrapper">
-            <Button label="Đổi mật khẩu" class="p-padding" />
+            <Button
+              label="Đổi mật khẩu"
+              class="p-padding"
+              @click="changePass"
+            />
           </div>
         </div>
       </div>
@@ -109,6 +140,7 @@
 <script>
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
+import UserApi from "@/api/entities/UserApi";
 export default {
   name: "TheButton",
   components: {
@@ -120,9 +152,65 @@ export default {
       visibility: "password",
       visibility2: "password",
       visibility3: "password",
+      fullName: "",
+      phoneNumber: "",
+      email: "",
+      role: "",
+      mssv: "",
+      password: "",
+      passwordModel: {},
     };
   },
   methods: {
+    changePass() {
+      if (this.password != this.oldPassword) {
+        this.$toast.add({
+          severity: "warn",
+          summary: "WARNING",
+          detail: "Mật khẩu cũ không đúng!",
+          life: 3000,
+        });
+      } else if (
+        this.passwordModel.password != this.passwordModel.confirmPassword
+      ) {
+        this.$toast.add({
+          severity: "warn",
+          summary: "WARNING",
+          detail: "Xác nhận mật khẩu không trùng khớp!",
+          life: 3000,
+        });
+      } 
+      else if(this.password ==this.passwordModel.password && this.password== this.passwordModel.confirmPassword){
+        this.$toast.add({
+          severity: "warn",
+          summary: "WARNING",
+          detail: "Mẩu khẩu mới không được giống mật khẩu cũ!",
+          life: 3000,
+        });
+      }
+      else {
+        UserApi.changePass(this.passwordModel).then((res) => {
+          console.log(res);
+          this.$toast.add({
+            severity: "success",
+            summary: "SUCCES",
+            detail: "Đổi mật khẩu thành công!",
+            life: 3000,
+          });
+          sessionStorage.setItem("password", this.passwordModel.password);
+          this.password = sessionStorage.getItem("password");
+        })
+        .catch((err)=>{
+          console.log(err);
+          this.$toast.add({
+            severity: "error",
+            summary: "ERROR",
+            detail: "Có lỗi vui lòng thử lại sau!",
+            life: 3000,
+          });
+        });
+      }
+    },
     showPass1() {
       this.visibility = "text";
     },
@@ -141,6 +229,14 @@ export default {
     hidePass3() {
       this.visibility3 = "password";
     },
+  },
+  created() {
+    this.fullName = sessionStorage.getItem("fullName");
+    this.phoneNumber = sessionStorage.getItem("phoneNumber");
+    this.email = sessionStorage.getItem("email");
+    this.role = sessionStorage.getItem("role");
+    this.mssv = sessionStorage.getItem("mssv");
+    this.password = sessionStorage.getItem("password");
   },
 };
 </script>

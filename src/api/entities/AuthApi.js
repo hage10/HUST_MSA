@@ -4,7 +4,7 @@ import BaseApiConfig from "../base/BaseApiConfig.js"
 class AuthApi extends BaseApi {
     constructor() {
         super();
-        this.apiController = "api/Auth";
+        this.apiController = "Auth";
     }
 
     login(email, password){

@@ -54,6 +54,9 @@ a:-webkit-any-link {
   cursor: pointer;
   text-decoration: none;
 }
+.position-re{
+  position: relative;
+}
 .icon-20 {
   height: 20px;
   width: 20px;

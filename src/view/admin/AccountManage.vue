@@ -22,7 +22,7 @@
         <DataTable :value="tableDataList" responsiveLayout="scroll">
           <Column field="username" header="TÀI KHOẢN"></Column>
           <Column field="fullName" header="HỌ VÀ TÊN"></Column>
-          <Column field="roleId" header="VAI TRÒ"></Column>
+          <Column field="roles" header="VAI TRÒ"></Column>
           <Column field="mssv" header="MSSV"></Column>
           <Column field="email" header="EMAIL"></Column>
           <Column field="phoneNumber" header="SỐ ĐIỆN THOẠI"></Column>
@@ -56,27 +56,27 @@
         <div class="field-radiobutton">
           <RadioButton
             inputId="1"
-            name="roleId"
+            name="roles"
             :value="1"
-            v-model="userModel.roleId"
+            v-model="userModel.roles"
           />
           <label for="1">Admin</label>
         </div>
         <div class="field-radiobutton">
           <RadioButton
             inputId="2"
-            name="roleId"
+            name="roles"
             :value="2"
-            v-model="userModel.roleId"
+            v-model="userModel.roles"
           />
           <label for="2">Teacher</label>
         </div>
         <div class="field-radiobutton">
           <RadioButton
             inputId="3"
-            name="roleId"
+            name="roles"
             :value="3"
-            v-model="userModel.roleId"
+            v-model="userModel.roles"
           />
           <label for="3">Student</label>
         </div>
@@ -162,8 +162,7 @@
           }
         "
         :class="{
-          'border-red':
-            v$.userModel.phoneNumber.$invalid && touched.phoneNumber,
+          'border-red': v$.userModel.phoneNumber.$invalid && touched.phoneNumber,
         }"
       />
     </div>
@@ -262,7 +261,7 @@ export default {
       originalModel: {},
       roleList: null,
       idUserUpdate: "",
-      keyword:""
+      keyword:"",
     };
   },
   methods: {
@@ -279,7 +278,7 @@ export default {
       this.modeAdd = true;
       this.displayBasic = true;
       this.userModel = {};
-      this.userModel.roleId = 3;
+      this.userModel.roles = 3;
       this.touched = {
         username: false,
         fullName: false,
@@ -318,6 +317,7 @@ export default {
       } else {
         if (this.modeAdd) {
           if (this.userModel) {
+            this.userModel.roles=[this.userModel.roles];
             UserApi.add(this.userModel)
               .then((res) => {
                 this.displayBasic = false;
@@ -360,6 +360,7 @@ export default {
               life: 3000,
             });
           } else {
+            this.userModel.roles=[this.userModel.roles];
             UserApi.update(this.idUserUpdate, this.userModel)
               .then(async (res) => {
                 this.displayBasic = false;
@@ -468,6 +469,13 @@ export default {
   height: calc(100vh - 154px);
   display: flex;
   flex-direction: column;
+  overflow: auto;
+}
+.manage-toolbar {
+    position: sticky;
+    z-index: 2;
+    top: 0;
+    background-color: #fff;
 }
 .search-account {
   display: flex;
@@ -520,5 +528,9 @@ td:last-child {
 
 .border-red {
   border: 1px solid red !important;
+}
+.p-datatable-thead{
+  position: sticky;
+  top: 0;
 }
 </style>
