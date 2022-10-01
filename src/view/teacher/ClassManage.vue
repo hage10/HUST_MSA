@@ -16,12 +16,10 @@
           />
         </div>
         <div class="search-account">
-          <input
-            type="text"
-            class="m-input input-240 input-padding-right"
-            placeholder="Tìm sinh viên"
-          />
-          <font-awesome-icon icon="magnifying-glass" class="icon-search" />
+          <span class="p-input-icon-left">
+            <i class="pi pi-search" @click="enterSearch"/>
+            <InputText type="text" v-model="keyword" placeholder="Tìm sinh viên" class="input-240" @keyup.enter="enterSearch"/>
+          </span>
         </div>
       </div>
       <div class="table-student" v-if="selectedClass">
@@ -35,7 +33,7 @@
               <Button
                 icon="pi pi-trash"
                 class="p-button-rounded p-button-danger mb-2"
-                @click="btnDelete(slotProps.data.id)"
+                @click="btnDelete(slotProps.data.id,slotProps.data.fullName)"
               />
             </template>
           </Column>
@@ -88,6 +86,7 @@ import AutoComplete from "primevue/autocomplete";
 import Button from "primevue/button";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
+import InputText from "primevue/inputtext";
 export default {
   components: {
     Button,
@@ -96,6 +95,7 @@ export default {
     AutoComplete,
     DataTable,
     Column,
+    InputText
   },
   data() {
     return {
@@ -165,9 +165,9 @@ export default {
           });
         });
     },
-    btnDelete(idUser) {
+    btnDelete(idUser,name) {
       this.$confirm.require({
-        message: `Bạn có thực sự muốn xóa sinh viên này không`,
+        message: `Bạn có thực sự muốn xóa sinh viên <${name}> ra khỏi lớp`,
         header: "Xác nhận",
         icon: "pi pi-exclamation-triangle",
         accept: () => {

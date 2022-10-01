@@ -53,7 +53,7 @@
                 <div class="title-and-content">
                   <div class="form-assignment">
                     <span>Tiêu đề</span>
-                    <input
+                    <InputText
                       type="text"
                       class="m-input"
                       v-model="assignmentModelAdd.title"
@@ -72,6 +72,7 @@
                   <div class="form-assignment">
                     <span>Thời hạn</span>
                     <Calendar v-model="assignmentModelAdd.dueTo" />
+                    <!-- <Calendar inputId="time24" v-model="assignmentModelAdd.dueTo" :showTime="true"   /> -->
                   </div>
                   <div class="form-assignment">
                     <span>File đính kèm</span>
@@ -122,7 +123,21 @@
                   <Column field="student.fullName" header="HỌ VÀ TÊN"></Column>
                   <Column field="student.mssv" header="MSSV"></Column>
                   <Column field="grade" header="ĐIỂM"></Column>
-                  <Column field="submitted" header="TÌNH TRẠNG"></Column>
+                  <Column field="submitFiles" header="FILE">
+                    <template #body="slotProps">
+                      <div>
+                        <div
+                          style="text-decoration: none"
+                          v-for="(file, index) in slotProps.data.submitFiles"
+                          :key="index"
+                        >
+                          <a :href="`https://localhost:7089${file.path}`">{{
+                            file.path
+                          }}</a>
+                        </div>
+                      </div>
+                    </template></Column
+                  >
                   <Column field="submittedAt" header="SUBMITED AT"></Column>
                   <Column field="feedback" header="ĐÁNH GIÁ"></Column>
                   <Column field="studentId" header="CHẤM ĐIỂM">
@@ -221,6 +236,7 @@
 </template>
 <script>
 import StudentAssignmentApi from "@/api/entities/StudentAssignmentApi";
+import FormatData from "../../models/Format.js";
 import InputText from "primevue/inputtext";
 import TabView from "primevue/tabview";
 import TabPanel from "primevue/tabpanel";
@@ -241,10 +257,11 @@ export default {
       assignmentModelAdd: {},
       selectedAssignment: null,
       displayBasic: false,
+      display: false,
       assignmentId: "",
       studentId: "",
-      display: false,
       reviewModel: {},
+      tableDataAssignment: [],
     };
   },
   components: {
@@ -268,6 +285,9 @@ export default {
     idClass: Number,
   },
   methods: {
+    formatDateToValue(_date) {
+      return FormatData.formatDateToValue(_date);
+    },
     clicked(e) {
       if (e.index == 1) {
         this.assignmentModel = "";
@@ -373,12 +393,14 @@ export default {
       });
     },
     goToFeedback(assignmentId) {
+      this.emitter.emit("showLoader");
       console.log(assignmentId);
       this.assignmentId = assignmentId;
       StudentAssignmentApi.getStudentAssignment(assignmentId).then((res) => {
         console.log(res);
-        this.tableDataAssignment = res.data;
+        this.tableDataAssignment = [...res.data];
       });
+      this.emitter.emit("hideLoader");
     },
     btnReview(id) {
       console.log(id);
@@ -390,24 +412,27 @@ export default {
         this.assignmentId,
         this.studentId,
         this.reviewModel
-      ).then((res) => {
-        console.log(res);
-        this.$toast.add({
+      )
+        .then((res) => {
+          console.log(res);
+          this.$toast.add({
             severity: "success",
             summary: "SUCCESS!",
             detail: "Thành công",
             life: 3000,
           });
-      })
-      .catch((err)=>{
-        console.log(err);
-        this.$toast.add({
+          this.goToFeedback(this.assignmentId);
+        })
+        .catch((err) => {
+          console.log(err);
+          this.$toast.add({
             severity: "error",
             summary: "ERROR",
             detail: "Xảy ra lỗi",
             life: 3000,
           });
-      });
+        });
+      this.display = false;
     },
   },
   created() {
@@ -420,14 +445,6 @@ export default {
         console.log(this.idClass);
         this.assignmentList = res.data;
       });
-    },
-    studentAssignment() {
-      StudentAssignmentApi.getStudentAssignment(this.assignmentId).then(
-        (res) => {
-          console.log(res);
-          this.tableDataAssignment = res.data;
-        }
-      );
     },
   },
 };

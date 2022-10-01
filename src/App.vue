@@ -82,6 +82,9 @@ a:-webkit-any-link {
 .input-padding-right {
   padding-right: 32px !important;
 }
+.i-file{
+  
+}
 .m-button {
   background-color: #2196f3;
   border: 1px solid #2196f3;

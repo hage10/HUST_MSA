@@ -22,7 +22,11 @@
         <DataTable :value="tableDataList" responsiveLayout="scroll">
           <Column field="username" header="TÀI KHOẢN"></Column>
           <Column field="fullName" header="HỌ VÀ TÊN"></Column>
-          <Column field="roles" header="VAI TRÒ"></Column>
+          <Column field="roles" header="VAI TRÒ">
+            <template #body="slotProps">
+              <p>{{slotProps.data.roles.join(' ')}}</p>
+            </template>
+          </Column>
           <Column field="mssv" header="MSSV"></Column>
           <Column field="email" header="EMAIL"></Column>
           <Column field="phoneNumber" header="SỐ ĐIỆN THOẠI"></Column>
@@ -31,7 +35,7 @@
               <Button
                 icon="pi pi-trash"
                 class="p-button-rounded p-button-danger mb-2"
-                @click="btnDeleteUser(slotProps.data.id)"
+                @click="btnDeleteUser(slotProps.data.id,slotProps.data.username)"
               />
               <Button
                 icon="pi pi-user-edit"
@@ -266,13 +270,11 @@ export default {
   },
   methods: {
     enterSearch(){
-      this.tableDataList="";
       UserApi.search(this.keyword).then((res)=>{
+        console.log(res.data);
+        this.tableDataLis=[];
         this.tableDataList=res.data;
       })
-      this.load()
-
-
     },
     btnAddOnClick() {
       this.modeAdd = true;
@@ -291,6 +293,7 @@ export default {
       UserApi.getById(idUser).then((res) => {
         console.log(res);
         this.userModel = res.data;
+        [this.userModel.roleIDs]=this.userModel.roleIDs;
         this.userModel.password = "dsdfsdf";
         this.idUserUpdate = idUser;
         this.originalModel = Object.assign({}, this.userModel);
@@ -388,9 +391,9 @@ export default {
         }
       }
     },
-    btnDeleteUser(idUser) {
+    btnDeleteUser(idUser,name) {
       this.$confirm.require({
-        message: `Bạn có thực sự muốn xóa tài khoản <${this.tableDataList.fullName}> không`,
+        message: `Bạn có thực sự muốn xóa tài khoản <${name}> không`,
         header: "Xác nhận",
         icon: "pi pi-exclamation-triangle",
         accept: () => {

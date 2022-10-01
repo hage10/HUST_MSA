@@ -22,10 +22,10 @@ class AssignmentApi extends BaseApi {
             }
         });
     }
-    submit(id){
-        return BaseApiConfig.put(`${this.apiController}/${id}/submit`,{}, {
+    submit(id, files) {
+        return BaseApiConfig.post(`${this.apiController}/${id}/submit`, files, {
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "multipart/form-data",
                 Authorization: sessionStorage.getItem("token"),
             }
         });
