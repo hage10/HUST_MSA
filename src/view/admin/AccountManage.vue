@@ -56,27 +56,27 @@
         <div class="field-radiobutton">
           <RadioButton
             inputId="1"
-            name="roles"
+            name="roleIDs"
             :value="1"
-            v-model="userModel.roles"
+            v-model="userModel.roleIDs"
           />
           <label for="1">Admin</label>
         </div>
         <div class="field-radiobutton">
           <RadioButton
             inputId="2"
-            name="roles"
+            name="roleIDs"
             :value="2"
-            v-model="userModel.roles"
+            v-model="userModel.roleIDs"
           />
           <label for="2">Teacher</label>
         </div>
         <div class="field-radiobutton">
           <RadioButton
             inputId="3"
-            name="roles"
+            name="roleIDs"
             :value="3"
-            v-model="userModel.roles"
+            v-model="userModel.roleIDs"
           />
           <label for="3">Student</label>
         </div>
@@ -278,7 +278,7 @@ export default {
       this.modeAdd = true;
       this.displayBasic = true;
       this.userModel = {};
-      this.userModel.roles = 3;
+      this.userModel.roleIDs = 3;
       this.touched = {
         username: false,
         fullName: false,
@@ -317,7 +317,7 @@ export default {
       } else {
         if (this.modeAdd) {
           if (this.userModel) {
-            this.userModel.roles=[this.userModel.roles];
+            this.userModel.roleIDs=[this.userModel.roleIDs];
             UserApi.add(this.userModel)
               .then((res) => {
                 this.displayBasic = false;
@@ -360,7 +360,7 @@ export default {
               life: 3000,
             });
           } else {
-            this.userModel.roles=[this.userModel.roles];
+            this.userModel.roleIDs=[this.userModel.roleIDs];
             UserApi.update(this.idUserUpdate, this.userModel)
               .then(async (res) => {
                 this.displayBasic = false;
@@ -374,7 +374,7 @@ export default {
                 this.load();
               })
               .catch((err) => {
-                this.errorMsg(err);
+                console.log(err);
                 this.displayBasic = false;
                 this.$toast.add({
                   severity: "success",

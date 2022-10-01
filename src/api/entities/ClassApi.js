@@ -31,7 +31,7 @@ class ClassApi extends BaseApi {
         });
     }
     removeStudentsToClass(idClass,idUser){
-        return BaseApiConfig.post(`${this.apiController}/${idClass}/users/${idUser}`,{}, {
+        return BaseApiConfig.delete(`${this.apiController}/${idClass}/users/${idUser}`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: sessionStorage.getItem("token"),

@@ -62,7 +62,7 @@ export default {
       items: [
         {
           label: "Quit",
-          icon: "pi pi-fw pi-power-off",
+          icon: "pi pi-fw pi-sign-out",
         },
       ],
       isShowNoti: false,

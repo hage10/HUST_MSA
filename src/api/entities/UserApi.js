@@ -22,6 +22,14 @@ class UserApi extends BaseApi {
             }
         });
     }
+    getStudent(pageNumber,pageSize){
+        return BaseApiConfig.get(`${this.apiController}/students?PageNumber=${pageNumber}&PageSize=${pageSize}`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: sessionStorage.getItem("token"),
+            }
+        });
+    }
 }
 
 export default new UserApi();

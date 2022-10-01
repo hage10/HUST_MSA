@@ -38,22 +38,23 @@
               <p>Hiển thị mật khẩu</p>
             </label>
           </div>
-            <button
-              label="Đăng nhập"
-              @click="btnLogin"
-              class="p-padding"
-              ref="loginBtn"
-            ></button>
-          <router-link to="/admin/accountmanage" class="btn-login" >
-            <button ref="admin" style="display: none" ></button>
+          <button
+            type="button"
+            @click="btnLogin"
+            class="p-padding m-button"
+            ref="loginBtn"
+          >
+            Đăng nhập
+          </button>
+          <router-link to="/admin/accountmanage" class="btn-login">
+            <button ref="admin" style="display: none"></button>
           </router-link>
-          <router-link to="/teacher" class="btn-login">
-            <button ref="teacher" style="display: none" ></button>
+          <router-link to="/teacher/detailteacher" class="btn-login">
+            <button ref="teacher" style="display: none"></button>
           </router-link>
           <router-link to="/student" class="btn-login">
-            <button ref="student" style="display: none" ></button>
+            <button ref="student" style="display: none"></button>
           </router-link>
-          
         </div>
         <div class="download-app">
           <p>Tải app tại</p>
@@ -90,7 +91,7 @@ export default {
       email: "",
       pass: "",
       userModel: {},
-      rememberMe:true
+      rememberMe: true,
     };
   },
 
@@ -105,31 +106,31 @@ export default {
       AuthApi.login(this.userModel.email, this.userModel.password)
         .then(async (res) => {
           console.log(res);
-          sessionStorage.setItem("token", 'Bearer '+ res.data);
-          AuthApi.getInfo().then((res)=>{
-          sessionStorage.setItem("fullName", res.data.fullName);
-          sessionStorage.setItem("role", res.data.stringrole);
-          sessionStorage.setItem("id", res.data.userId);
-          sessionStorage.setItem("username", res.data.username);
-          sessionStorage.setItem("email", res.data.email);
-          sessionStorage.setItem("phoneNumber", res.data.phoneNumber);
-          sessionStorage.setItem("mssv", res.data.mssv);
-          sessionStorage.setItem("password", res.data.password);
+          sessionStorage.setItem("token", "Bearer " + res.data);
+          AuthApi.getInfo().then((res) => {
+            sessionStorage.setItem("fullName", res.data.fullName);
+            sessionStorage.setItem("role", res.data.stringrole);
+            sessionStorage.setItem("id", res.data.userId);
+            sessionStorage.setItem("username", res.data.username);
+            sessionStorage.setItem("email", res.data.email);
+            sessionStorage.setItem("phoneNumber", res.data.phoneNumber);
+            sessionStorage.setItem("mssv", res.data.mssv);
+            sessionStorage.setItem("password", res.data.password);
           });
-          this.role=sessionStorage.getItem("role")
-     
-          if(this.role=='admin'){
+          this.role = sessionStorage.getItem("role");
+
+          if (this.role == "admin") {
             this.$refs.admin.click();
           }
-          if(this.role=='teacher'){
+          if (this.role == "teacher") {
             this.$refs.teacher.click();
           }
-          if(this.role=='student'){
+          if (this.role == "student") {
             this.$refs.student.click();
           }
-          setTimeout(()=>{
+          setTimeout(() => {
             this.$refs.loginBtn.click();
-          },100)
+          }, 100);
           this.$toast.add({
             severity: "success",
             summary: "Đăng nhập thành công!",

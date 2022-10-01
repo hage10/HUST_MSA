@@ -24,7 +24,7 @@
           <font-awesome-icon icon="magnifying-glass" class="icon-search" />
         </div>
       </div>
-      <div class="table-student">
+      <div class="table-student" v-if="selectedClass">
         <DataTable :value="tableDataListStudent" responsiveLayout="scroll">
           <Column field="fullName" header="HỌ TÊN"></Column>
           <Column field="mssv" header="MSSV"></Column>
@@ -42,7 +42,6 @@
         </DataTable>
         <div class="footer-manage">
           <Button
-            v-if="selectedClass"
             label="Thêm sinh viên vào lớp"
             icon="pi pi-plus"
             @click="openBasic"
@@ -102,13 +101,11 @@ export default {
     return {
       displayBasic: false,
       tableDataListStudent: [],
-      currentPage: 1,
-      pagingSize: 20,
       selectedClass: null,
-      cities: [],
       users: {},
       filteredUser: [],
       useModels: null,
+      classes: "",
     };
   },
   methods: {
@@ -129,28 +126,16 @@ export default {
         }
       }, 200);
     },
-    showClass() {
-      this.load(this.selectedClass.classId);
-    },
-    getQueryStringFilter() {
-      var paramStrs = `PageNumber=${this.currentPage}&PageSize=${this.pagingSize}`;
-      if (this.searchTerms !== undefined && this.searchTerms !== "") {
-        paramStrs += `&searchTerms=${this.searchTerms}`;
-      }
-      return paramStrs;
-    },
-    loadUser() {
-      UserApi.getFilterPaging(this.getQueryStringFilter()).then((res) => {
-        console.log(res);
-        this.users = res.data;
-      });
-    },
-    load(idClass) {
+    loadStudentAClass() {
       this.emitter.emit("showLoader");
-      ClassApi.getUserByClassId(idClass).then((res) => {
+      ClassApi.getUserByClassId(this.selectedClass.classId).then((res) => {
         this.tableDataListStudent = res.data;
-        this.emitter.emit("hideLoader");
+      this.emitter.emit("hideLoader");
+
       });
+    },
+    showClass() {
+      this.loadStudentAClass();
     },
     openBasic() {
       this.displayBasic = true;
@@ -167,7 +152,7 @@ export default {
             detail: "Thêm sinh viên thành công!",
             life: 3000,
           });
-          this.load(this.selectedClass.classId);
+          this.loadStudentAClass(this.selectedClass.classId);
         })
         .catch((err) => {
           console.log(err);
@@ -195,7 +180,7 @@ export default {
                 detail: "Xóa sinh viên thành công!",
                 life: 3000,
               });
-              this.load(this.selectedClass.classId);
+              this.loadStudentAClass(this.selectedClass.classId);
             })
             .catch((err) => {
               console.log(err);
@@ -219,16 +204,18 @@ export default {
     },
   },
   beforeCreate() {
-    ClassApi.getAll().then((res) => {
+    ClassApi.getClassByUser().then((res) => {
       this.classes = res.data;
     });
   },
   created() {
-    ClassApi.getAll().then((res) => {
+    ClassApi.getClassByUser().then((res) => {
       this.classes = res.data;
     });
-    this.load(98); 
-    // this.loadUser();
+    UserApi.getStudent(1, 20).then((res) => {
+      console.log(res);
+      this.users = res.data;
+    });
   },
 };
 </script>
@@ -277,6 +264,6 @@ export default {
   text-align: center !important;
 }
 td:last-child {
-    align-items: center;
+  align-items: center;
 }
 </style>

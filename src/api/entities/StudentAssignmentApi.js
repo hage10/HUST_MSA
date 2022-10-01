@@ -15,7 +15,7 @@ class UserApi extends BaseApi {
         });
     }
     reviewAssignment(id1,id2,body){
-        return BaseApiConfig.post(`${this.apiController}/Assignments/${id1}/Student/${id2}`, body,{
+        return BaseApiConfig.put(`${this.apiController}/Assignments/${id1}/Student/${id2}`, body,{
             headers: {
                 "Content-Type": "application/json",
                 Authorization: sessionStorage.getItem("token"),

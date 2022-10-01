@@ -23,7 +23,7 @@ class AssignmentApi extends BaseApi {
         });
     }
     submit(id){
-        return BaseApiConfig.post(`${this.apiController}/${id}/submit`, {
+        return BaseApiConfig.put(`${this.apiController}/${id}/submit`,{}, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: sessionStorage.getItem("token"),

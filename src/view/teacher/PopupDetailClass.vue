@@ -119,18 +119,18 @@
                   :value="tableDataAssignment"
                   responsiveLayout="scroll"
                 >
-                  <Column field="studentId" header="HỌ VÀ TÊN"></Column>
-                  <Column field="studentId" header="MSSV"></Column>
+                  <Column field="student.fullName" header="HỌ VÀ TÊN"></Column>
+                  <Column field="student.mssv" header="MSSV"></Column>
                   <Column field="grade" header="ĐIỂM"></Column>
                   <Column field="submitted" header="TÌNH TRẠNG"></Column>
                   <Column field="submittedAt" header="SUBMITED AT"></Column>
                   <Column field="feedback" header="ĐÁNH GIÁ"></Column>
-                  <Column field="studentId" header="CHỨC NĂNG">
+                  <Column field="studentId" header="CHẤM ĐIỂM">
                     <template #body="slotProps">
                       <Button
                         icon="pi pi-pencil"
                         class="p-button-rounded p-button-success mb-2"
-                        @click="btnReview(slotProps.data.studentId)"
+                        @click="btnReview(slotProps.data.student.id)"
                       />
                     </template>
                   </Column>

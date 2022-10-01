@@ -10,9 +10,8 @@
       }
     "
   />
-   <Toast />
-   <ConfirmDialog></ConfirmDialog>
-
+  <Toast />
+  <ConfirmDialog></ConfirmDialog>
 </template>
 
 <script>
@@ -54,7 +53,7 @@ a:-webkit-any-link {
   cursor: pointer;
   text-decoration: none;
 }
-.position-re{
+.position-re {
   position: relative;
 }
 .icon-20 {
@@ -65,9 +64,9 @@ a:-webkit-any-link {
   width: 100%;
 }
 .p-button-label {
-    font-weight: 600;
+  font-weight: 600;
 }
-.p-padding{
+.p-padding {
   padding: 0.5rem 2.5rem !important;
 }
 ::placeholder {
@@ -83,6 +82,20 @@ a:-webkit-any-link {
 .input-padding-right {
   padding-right: 32px !important;
 }
+.m-button {
+  background-color: #2196f3;
+  border: 1px solid #2196f3;
+  font-size: 1rem;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 3px;
+}
+.m-button:hover {
+  background: #0d89ec;
+  color: #ffffff;
+  border-color: #0d89ec;
+}
 .m-input {
   height: 32px;
   border: 1px solid #bbbbbb;
@@ -92,7 +105,7 @@ a:-webkit-any-link {
   font-size: 13px;
 }
 .p-inputtext {
-    width: 100%;
+  width: 100%;
 }
 .m-input:focus {
   border: 1px solid #6558ef;
